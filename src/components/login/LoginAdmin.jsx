@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
 import {rutaAPI} from '../../config/Config';
+import Person from './loginPerson.png'
+import Collab from './collab.png'
 import $ from "jquery";
-import './login.css'
+//import './login.css'
+import './main.css';
+import './normalize.css'
 import CrearCuenta from '../crear_cuenta/CrearCuenta';
 
 export default function LoginAdmin(){
@@ -49,65 +53,44 @@ export default function LoginAdmin(){
 
     //Retornamos la Vista del Login
     return(
-        <div className="login-page" style={{backgroundColor:"silver"}}>
-            <div className="login-box">
-                <div className="login-logo">
-                    <b>iMetrix</b> Login 
-                </div>			
-                <div className="card">
-                    <div className="card-body login-card-body">
-                        <p className="login-box-msg">
-                            Llena los campos para iniciar sesión
-                        </p>
-                        <form onChange={cambiaForm} onSubmit={login}>
-                            <div className="input-group mb-3">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Correo"
-                                    name="correo"
-                    
-                                />
-
-                                <div className="input-group-append">
-                                    <div className="input-group-text">
-                                        <span className="fas fa-user"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="input-group mb-3">
-
-                                <input
-                                    type="password"
-                                    className="form-control"
-                                    placeholder="Password"
-                                    name="password"
-                                
-                                />
-
-                                <div className="input-group-append">
-                                    <div className="input-group-text">
-                                        <span className="fas fa-lock"></span>
-                                    </div>
-                                </div>
-                            </div>
-                            <button
-                                type="submit"
-                                className="btn btn-primary btn-block">Ingresar
-                            </button>
-                        </form>
-                    </div>
-                    <div className="registerButton">
-                        <button className="btn btn-warning" 
+        <div>
+        <main className="login-design">
+      <div className="waves">
+        <img src={Person} alt="" />
+      </div>
+      <div className="login">
+        <div className="login-data">
+          <img src={Collab} alt="" />
+          <h1>Inicio de Sesión</h1>
+          <form action="#" class="login-form" onChange={cambiaForm} onSubmit={login}>
+            <div className="input-group">
+              <label className="input-fill">
+                <input type="email" name="correo" id="email" placeholder="Correo Electrónico" required />
+                {/* <span className="input-label">Correo Electrónico</span> */}
+                <i className="fas fa-envelope"></i>
+              </label>
+            </div>
+            <div className="input-group">
+              <label className="input-fill">
+                <input type="password" name="password" id="password" placeholder="Contraseña" required />
+                {/* <span className="input-label">Contraseña</span> */}
+                <i className="fas fa-lock"></i>
+              </label>
+            </div>
+            
+            <button className="btn-login" 
                             data-toggle="modal" 
                             data-target="#crearCuenta">Registrarse
                         </button>
-                    </div>
-                </div>
-            </div>
-        {/* Modal para crear nueva Cuenta */}
-        <CrearCuenta/>
+            <input type="submit" value="Iniciar Sesión" className="btn-login" />
+          </form>
         </div>
+      </div>
+       {/* Modal para crear nueva Cuenta */}
+       
+    </main>
+    <CrearCuenta/>
+    </div>
     );
 }
 

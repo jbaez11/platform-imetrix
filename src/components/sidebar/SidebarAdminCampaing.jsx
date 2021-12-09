@@ -42,28 +42,66 @@ export default function SidebarAdminCampaing(){
                     data-widget="treeview"
                     role="menu"
                     data-accordion="false">
-                    <li className="nav-item">
-                        <a href="/agents" className="nav-link" style={{ color: 'white' }}>
-                            <i className="nav-icon fas fa-portrait"></i>
-                            <p>Agentes</p>
-                        </a>
-                    </li>
-                    <li className="nav-item">
-                        <a href="/keywords" className="nav-link" style={{ color: 'white' }}>
-                            <i className="nav-icon fas fa-book"></i>
-                            <p>KeyWords</p>
-                        </a>
-                    </li> 
+                    <li className="nav-item" >
+                                <a href="/agents" className="nav-link" style={{ color: 'white' }}>
+                                <i className="nav-icon far fa-address-card"></i>
+                                <p>
+                                    Agentes
+                                </p>
+                                </a>
+                            </li>
+                            
+                            <li className="nav-item">
+                                <a href="/keywords" className="nav-link" style={{ color: 'white' }}>
+                                <i className="nav-icon fas fa-bold"></i>
+                                <p>
+                                Keywords / Frases
+                                </p>
+                                </a>
+                            </li>
+                            
+                            <li className="nav-item">
+                                <a href="/auditoria" className="nav-link" style={{ color: 'white' }}>
+                                <i className="nav-icon fas fa-clipboard-list"></i>
+                                <p>
+                                Auditoria
+                                </p>
+                                </a>
+                            </li>
+                            
+                            <li className="nav-item">
+                                <a href="/puntajes" className="nav-link" style={{ color: 'white' }}>			          
+                                <i className="nav-icon fas fa-star-half-alt"></i>
+                                <p>
+                                Puntajes
+                                </p>
+                                </a>
+                            </li>
+
+                            
+
+                            <li className="nav-item">
+                                <a href="/estadisticas" className="nav-link" style={{ color: 'white' }}>			           
+                                <i className="nav-icon fas fa-chart-pie"></i>
+                                <p>
+                                Estadisticas
+                                </p>
+                                </a>
+                            </li>
+                            
+                           
                     {(() => {
                             if (role === "Administrador") {
                             return (
                                 <>
-                                    <li className="nav-item">
-                                        <a href="/consumo" className="nav-link" style={{ color: 'white' }}>
-                                            <i className="nav-icon fas fa-hourglass-half"></i>
-                                            <p>Consumo</p>
-                                        </a>
-                                    </li> 
+                                     <li className="nav-item">
+                                <a href="/consumo" className="nav-link" style={{ color: 'white' }}>
+                                <i className="nav-icon far fa-chart-bar"></i>
+                                <p>
+                                Consumo
+                                </p>
+                                </a>
+                            </li> 
                                 </>
                             )
                         } 
