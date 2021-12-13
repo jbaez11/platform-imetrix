@@ -18,7 +18,7 @@ export default function SidebarCampaing(){
                 className="brand-image"
                 style={{ opacity : 0.8 }}
                 src={Logo}/>
-                <span className="brand-text" style={{color:"black", 'text-decoration': 'none !important'}}>.</span>
+                <span className="brand-text" style={{color:"black", 'text-decoration': 'none !important',visibility:"hidden"}}>.</span>
             </a>
             <div className="sidebar">
                 <div className="user-panel mt-3 pb-3 mb-3 d-flex">
@@ -45,16 +45,16 @@ export default function SidebarCampaing(){
                     data-widget="treeview"
                     role="menu"
                     data-accordion="false">
-                    <li className="nav-item">
-                        <a href={"/campañasinicio/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
-                            <i className="nav-icon fas fa-home"></i>
-                            <p>Inicio</p>
-                        </a>
-                    </li>
                     {(() => {
                             if (role === "Administrador") {
                             return (
                                 <>
+                                    <li className="nav-item">
+                                        <a href={"/campañasinicio/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
+                                            <i className="nav-icon fas fa-home"></i>
+                                            <p>Inicio</p>
+                                        </a>
+                                    </li>
                                     <li className="nav-item">
                                         <a href={"/campañas/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
                                             <i className="nav-icon fas fa-address-card"></i>
@@ -63,7 +63,18 @@ export default function SidebarCampaing(){
                                     </li>  
                                 </>
                             )
-                        } 
+                            }else if (role ==="Auditor"){
+                                return(
+                                <>
+                                <li className="nav-item">
+                                <a href={"/campañasAuditor/"+currentUserId} className="nav-link" style={{ color: 'white' }}>
+                                    <i className="nav-icon fas fa-home"></i>
+                                    <p>Inicio</p>
+                                </a>
+                                </li>
+                                </>
+                                )
+                            } 
                         })()}              
                     </ul>
                 </nav>

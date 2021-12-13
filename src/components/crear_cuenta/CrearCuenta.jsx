@@ -88,7 +88,7 @@ export default function CrearCuenta(){
                                     </div>
                                     <input
                                         id="correo"
-                                        type="text"
+                                        type="email"
                                         className="form-control"
                                         name="correo"
                                         placeholder="Ingrese el correo"
@@ -196,7 +196,7 @@ export default function CrearCuenta(){
                                         placeholder="Ingrese el pais"
                                         minLength="2"
                                         maxLength="2"
-                                        pattern="(?=.*[A-Za-z]).{2,50}"
+                                        pattern="(?=.*[A-Z]).{2,2}"
                                         required
                                     />
                                 </div>

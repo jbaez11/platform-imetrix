@@ -21,7 +21,7 @@ export default function Sidebar(){
                 style={{ opacity : 0.8 }}
                 src={Logo}/>
 
-                <span className="brand-text "style={{color:"black", 'text-decoration': 'none !important'}}>.</span>
+                <span className="brand-text "style={{color:"black", 'text-decoration': 'none !important', visibility:"hidden"}}>.</span>
             </a>
 
             <div className="sidebar">

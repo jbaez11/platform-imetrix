@@ -34,7 +34,7 @@ export default function PerfilUser(){
                 data: dataTable,
                 columns:[
                     {title: "#"},
-                    {title: "Nombres"},
+                    {title: "Nombres y Apellidos"},
                     {title: "Correo"},
                     {title: "Fecha de Creación"},
                     {title: "Editar Perfil",

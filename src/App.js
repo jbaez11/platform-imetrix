@@ -9,6 +9,7 @@ import Start from './components/start/Start';
 import Usuarios from './components/content/users/Usuarios';
 import Campaings from './components/content/campaings/Campaings';
 import CampaingsInicio from './components/content/campaings/CampaingsInicio';
+import CamaingsAuditor from './components/content/campaings/CampaingsAuditor';
 import Clusters from './components/content/clusters/Clusters';
 import ClustersInicio from './components/content/clusters/ClustersInicio';
 import Agents from './components/content/agents/Agents';
@@ -39,8 +40,9 @@ export default function App() {
                <Route exact path="/perfilUser/:id"><PerfilUser/></Route>
                <Route exact path="/inicio/:id"><ClustersInicio/></Route>
                <Route exact path="/clusters/:id">{role ? <Clusters/> : <ClustersInicio/>} </Route>
-               <Route exact path="/campañas/:id">{role ? <Campaings/> : <CampaingsInicio/>} </Route>
+               <Route exact path="/campañas/:id">{role ? <Campaings/> : <CamaingsAuditor/>} </Route>
                <Route exact path="/campañasinicio/:id"><CampaingsInicio/></Route>
+               <Route exact path="/campañasAuditor/:id"><CamaingsAuditor/></Route>
                <Route exact path="/usuarios/:id">{role ? <Usuarios/> : <ClustersInicio/>} </Route>
                <Route exact path="/agents"> <Agents/></Route>
                <Route exact path="/keywords"> <Keywords/> </Route>

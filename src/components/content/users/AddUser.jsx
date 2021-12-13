@@ -10,9 +10,6 @@ export default function AddUser(){
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
 
-    //  const clusters = [{nombre: "IGS", _id:"61a6414552c330b900df3816",createdAt: "2021-11-30T15:20:37.131Z",foto: "3321.png",state: 1},
-    //  {nombre: "SUFI", _id:"61a642ef52c330b900df38b3",createdAt: "2021-11-30T15:20:37.131Z",foto: "3321.png",state: 1}]
-    
     const [clusters , setClusters] = React.useState([]);
 
     React.useEffect(() => {
@@ -23,7 +20,12 @@ export default function AddUser(){
     const obtenerDatos = async ()=>{
         const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
         const clust =  await data.json()
-        //console.log("cluster",clust.data);
+        for(let i in clust.data){
+            let c = clust.data[i]
+            let respuesta = await fetch(`${rutaAPI}/getCampaing/${c._id}`);
+            clust.data[i].campaings = (await respuesta.json()).data
+        }
+        console.log("cluster",clust.data);
         setClusters(clust.data)
     }
 
@@ -43,6 +45,25 @@ export default function AddUser(){
         console.log("Usuarios",usuarios)
     }
 
+    const campaingChange = campaing =>{
+        let nCampaings = usuarios.campaings
+        let index = nCampaings.findIndex(c => c._id === campaing._id)
+        if(index !== -1){
+            nCampaings.splice(index, 1)
+        }else{
+            nCampaings.push(campaing)
+        }
+        crearUsuario({
+            ...usuarios,
+            campaings: nCampaings
+        })
+        console.log("Campañas",usuarios)
+    }
+
+    let checkedSelectedCluster = cluster =>{
+        return usuarios.clusters.some(c => c._id == cluster._id)
+    }
+
     //Hook para caputar los datos del formulario
     const [usuarios, crearUsuario] = useState({
         nombres:"",
@@ -50,6 +71,7 @@ export default function AddUser(){
         password:"",
         state:"",
         clusters:[],
+        campaings:[],
         role:""
     });
 
@@ -129,8 +151,8 @@ export default function AddUser(){
                                 </div>
                                 <input
                                     id="correo"
-                                    type="text"
-                                    className="form-control text-lowercase"
+                                    type="email"
+                                    className="form-control"
                                     name="correo"
                                     placeholder="Ingrese el Correo"
                                     minLength="2"
@@ -189,7 +211,51 @@ export default function AddUser(){
                                     </div>
                                 ))}
                             </div>
-                        </div>  
+                        </div> 
+                        {clusters.map((cluster, index) =>(
+                            <>
+                            {checkedSelectedCluster(cluster) && 
+                                    <div> 
+                                         <h5>{cluster.nombre}</h5>
+                                         <div className="form-group">
+                                         <label className="small text-secondary" htmlFor="campaings">
+                                         | Seleccione las campaña(s) al que el auditor tendra acceso
+                                         </label>
+                                         <div className="input-group mb-3">
+                                             <div className="input-group-append input-group-text">
+                                             <i className="fas fa-address-card"></i>
+                                         </div>
+                                         {cluster.hasOwnProperty("campaings") && cluster.campaings.map((campaing, index)=>(
+                                             <div style={{marginLeft:"5px"}} key={`campaing-${index}`}>
+                                                 <input onChange={()=>campaingChange(campaing)} className="form-check-input" type="checkbox" value={campaing._id} checked={usuarios.campaings.some(c => c._id === campaing._id)} style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
+                                                 <label style={{marginLeft:"25px", marginTop:"1px"}} className="form-check-label">{campaing.nombre}</label>
+                                             </div>
+                                         ))}
+                                         </div>
+                                         </div> 
+                                    </div>}
+                            </>
+        
+                            // {true && (<div> 
+                            //             <h5>{cluster.nombre}</h5>
+                            //             <div className="form-group">
+                            //             <label className="small text-secondary" htmlFor="campaings">
+                            //             | Seleccione las campaña(s) al que el auditor tendra acceso
+                            //             </label>
+                            //             <div className="input-group mb-3">
+                            //                 <div className="input-group-append input-group-text">
+                            //                 <i className="fas fa-address-card"></i>
+                            //             </div>
+                            //             {cluster.hasOwnProperty("campaings") && cluster.campaings.map((campaing, index)=>(
+                            //                 <div style={{marginLeft:"5px"}} key={`campaing-${index}`}>
+                            //                     <input onChange={()=>campaingChange(campaing)} className="form-check-input" type="checkbox" value={campaing._id} checked={usuarios.campaings.some(c => c._id === campaing._id)} style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
+                            //                     <label style={{marginLeft:"25px", marginTop:"1px"}} className="form-check-label">{campaing.nombre}</label>
+                            //                 </div>
+                            //             ))}
+                            //             </div>
+                            //             </div> 
+                            //         </div>)}
+                        ))}
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="role">
                                 *Administrador o Auditor

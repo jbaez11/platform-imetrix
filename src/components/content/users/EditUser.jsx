@@ -8,9 +8,6 @@ export default function EditUser(){
     const currentUserId = localStorage.getItem("ID");
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
-    //Listado de Clusters Disponibles
-    // const clusters = [{name: "Cluster1", id:"61a52d02910dc409f77f7f3d",createdAt: "2021-11-30T15:20:37.131Z",foto: "3321.png",state: 1},
-    //{name: "Cluster2", id:"61a531ce910dc409f77f7fc7",createdAt: "2021-11-30T15:20:37.131Z",foto: "3321.png",state: 1}]
 
     const [clusters , setClusters] = React.useState([]);
 
@@ -46,6 +43,7 @@ export default function EditUser(){
         password:"",
         state:"",
         clusters:[],
+        campaings:[],
         role:"",
         id:""
     });
@@ -84,27 +82,32 @@ export default function EditUser(){
     }
 
     //Capturamos los datos para editar el usuario
-    $(document).on("click", ".editarInputs", function(e){
+    $(document).on("click", ".editarInputs", async function(e){
+        
         e.preventDefault();
 
         let data = $(this).attr("data").split(",");
-        console.log(data);
+        //console.log(data);
         $("#editarNombre").val(data[1]);
         $("#editarUsuario").val(data[2]);
         $("#editarState").val(data[3]);
         $("#editarCluster").val(data[4]);
         $("#editarRole").val(data[5]);
 
-        //Consulta ajax que trae los clusters asignados al usuario
-        // const clusters = [{name: "Cluster1", id:"61a52d02910dc409f77f7f3d"},
-        //                 {name: "Cluster2", id:"61a531ce910dc409f77f7fc7"},
-        //                ]
+        let user = await getUsers(data[0]);
+        let nClusters = []
+        if(user.data instanceof Array){
+            const userClusters = user.data.map(u => u._id)
+            //console.log("CLUSTERS", userClusters)
+            nClusters = clusters.filter(c => userClusters.includes(c._id))
+        }
+
         editarUsuario({
             'nombres':  $("#editarNombre").val(),
             'user':  $("#editarUsuario").val(),
             'password':  $("#editarPassword").val(),
             'state':  $("#editarState").val(),
-            'clusters':  clusters,
+            'clusters': nClusters,
             'role':  $("#editarRole").val(),
             'id': data[0]
         })
@@ -205,10 +208,10 @@ export default function EditUser(){
                                 </div>
                                 <input
                                     id="editarUsuario"
-                                    type="text"
-                                    className="form-control text-lowercase"
-                                    name="user"
-                                    placeholder="Ingrese el Usuario"
+                                    type="email"
+                                    className="form-control"
+                                    name="correo"
+                                    placeholder="Ingrese el Correo"
                                     minLength="2"
                                     maxLength="40"
                                     pattern="(?=.*[A-Za-z]).{2,40}"
@@ -316,6 +319,32 @@ const putData = data =>{
     }).catch(err=>{
         return err;
     });
+}
+
+//Petición Get para Usuarios asociados al Administrador
+const getUsers = (userID) =>{
+
+    const valores = window.location.href;
+    //let nuevaURL = valores.split("/");
+
+    const url = `${rutaAPI}/getCluster/${userID}`;
+    const token = localStorage.getItem("ACCESS_TOKEN");
+
+    const params = {
+        method: "GET",
+        headers: {
+            "Authorization": token,
+            "Content-Type": "application/json"
+        }
+    } 
+    return fetch(url, params).then(response =>{
+        return response.json();
+    }).then(result => {
+        return result;
+    }).catch(err=>{
+        return err;
+    })
+
 }
 
 //METODO DELETE

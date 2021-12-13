@@ -54,6 +54,7 @@ export default function Usuarios(){
                     {title: "Fecha Creación"},
                     {title: "Acciones",
                     render: function(data){
+                        //console.log("data", data)
                         return `
                         
                         <a href="" class="editarInputs" data-toggle="modal" data-target="#editarAdmin" data="${data}">

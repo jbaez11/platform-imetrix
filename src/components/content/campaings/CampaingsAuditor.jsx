@@ -7,10 +7,10 @@ import SidebarCampaing from '../../sidebar/SidebarCampaing';
 
 
 
-export default function CamaingsInicio(){
+export default function CamaingsAuditor(){
 
-    const valores = window.location.href;
-    let nuevaURL = valores.split("/");
+
+    let userID = localStorage.getItem("ID");
     
     const [campaings , setCampaings] = React.useState([]);
 
@@ -20,7 +20,7 @@ export default function CamaingsInicio(){
     }, [])
 
     const obtenerDatos = async ()=>{
-        const data = await fetch(`${rutaAPI}/getCampaing/${nuevaURL[4]}`);
+        const data = await fetch(`${rutaAPI}/getCampaingUser/${userID}`);
         const camp =  await data.json()
         //console.log("cluster",camp.data);
         setCampaings(camp.data)

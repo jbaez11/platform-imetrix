@@ -53,43 +53,42 @@ export default function LoginAdmin(){
 
     //Retornamos la Vista del Login
     return(
-        <div>
+    <div>
         <main className="login-design">
-      <div className="waves">
-        <img src={Person} alt="" />
-      </div>
-      <div className="login">
-        <div className="login-data">
-          <img src={Collab} alt="" />
-          <h1>Inicio de Sesión</h1>
-          <form action="#" class="login-form" onChange={cambiaForm} onSubmit={login}>
-            <div className="input-group">
-              <label className="input-fill">
-                <input type="email" name="correo" id="email" placeholder="Correo Electrónico" required />
-                {/* <span className="input-label">Correo Electrónico</span> */}
-                <i className="fas fa-envelope"></i>
-              </label>
-            </div>
-            <div className="input-group">
-              <label className="input-fill">
-                <input type="password" name="password" id="password" placeholder="Contraseña" required />
-                {/* <span className="input-label">Contraseña</span> */}
-                <i className="fas fa-lock"></i>
-              </label>
-            </div>
-            
-            <button className="btn-login" 
-                            data-toggle="modal" 
-                            data-target="#crearCuenta">Registrarse
-                        </button>
-            <input type="submit" value="Iniciar Sesión" className="btn-login" />
-          </form>
-        </div>
-      </div>
-       {/* Modal para crear nueva Cuenta */}
-       
+          <div className="waves">
+            <img src={Person} alt="" />
+          </div>
+            <div className="login">
+              <div className="login-data">
+                <img src={Collab} alt="" />
+                <h1>Inicio de Sesión</h1>
+                <form action="#" className="login-form" onChange={cambiaForm} onSubmit={login}>
+                  <div className="input-group">
+                    <label className="input-fill">
+                      <input style={{paddingRight:"30px"}} type="email" name="correo" id="email" placeholder="Correo Electrónico" required />
+                      {/* <span className="input-label">Correo Electrónico</span> */}
+                      <i className="fas fa-envelope"></i>
+                    </label>
+                  </div>
+                  <div className="input-group">
+                    <label className="input-fill">
+                      <input style={{paddingRight:"30px"}}type="password" name="password" id="password" placeholder="Contraseña" required />
+                      {/* <span className="input-label">Contraseña</span> */}
+                      <i className="fas fa-lock" ></i>
+                    </label>
+                  </div>
+                  
+                  <button className="btn-login" 
+                                  data-toggle="modal" 
+                                  data-target="#crearCuenta">Registrarse
+                              </button>
+                  <input type="submit" value="Iniciar Sesión" className="btn-login" />
+                </form>
+              </div>
+            </div> 
     </main>
-    <CrearCuenta/>
+      {/* Modal para crear nueva Cuenta */}
+      <CrearCuenta/>
     </div>
     );
 }

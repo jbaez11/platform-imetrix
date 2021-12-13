@@ -118,7 +118,7 @@ export default function EditProfileAdmin(){
                                     </div>
                                     <input
                                         id="editarCorreo"
-                                        type="text"
+                                        type="email"
                                         className="form-control"
                                         name="correo"
                                         placeholder="Ingrese el correo"

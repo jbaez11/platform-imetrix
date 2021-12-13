@@ -16,7 +16,7 @@ export default function SidebarAdminCampaing(){
                 className="brand-image"
                 style={{ opacity : 0.8 }}
                 src={Logo}/>
-                <span className="brand-text" style={{color:"black", 'text-decoration': 'none !important'}}>.</span>
+                <span className="brand-text" style={{color:"black", 'text-decoration': 'none !important',visibility:"hidden"}}>.</span>
             </a>
             <div className="sidebar">
                 <div className="user-panel mt-3 pb-3 mb-3 d-flex">

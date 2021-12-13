@@ -24,12 +24,14 @@ export default function Camaings(){
                                 campaing.foto,
                                 (campaing.state === 1) ? campaing.state='Habilitado':campaing.state='Inhabilitado',
                                 campaing.cluster.nombre,
+                                campaing.pais,
                                 campaing.createdAt,
                                 [campaing._id,
                                 campaing.nombre,
                                 campaing.foto,
                                 (campaing.state === 1) ? campaing.state='Habilitado':campaing.state='Inhabilitado',
                                 campaing.cluster.nombre,
+                                campaing.pais,
                                 campaing.createdAt]];
         })
 
@@ -51,11 +53,12 @@ export default function Camaings(){
                     {title: "Nombre"},
                     {title: "Imagen", render: function(data){
                         return `
-                            <img src="${rutaAPI}/getImgCampaing/${data}" style="width:480px; height:180px"/>
+                            <img src="${rutaAPI}/getImgCampaing/${data}" style="width:300px; height:180px"/>
                         `
                     }},
                     {title: "Estado"},
                     {title: "Cluster"},
+                    {title: "Pais"},
                     {title: "Fecha de Creación"},
                     {title: "Acciones",
                     render: function(data){
@@ -115,37 +118,6 @@ export default function Camaings(){
                                         </div>
                                         <div className="card-body">
                                             <table className="table table-striped dt-responsive" style={{"width":"100%"}}>
-                                            {/* <thead>
-                                                    <tr>
-                                                        <th>#</th>
-                                                        <th>Nombre</th>
-                                                        <th>Foto</th>
-                                                        <th>Estado</th>
-                                                        <th>Fecha Creación</th>
-                                                        <th>Acciones</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>1</td>
-                                                        <td>BANORTE-MX</td>
-                                                        <td>
-                                                            <img src={campañaImg} alt="" className="img-fluid"/>
-                                                        </td>
-                                                        <td>1</td>
-                                                        <th>2021-11-08T15:38:27.786Z</th>
-                                                        <td>
-                                                            <div className="btn-group">
-                                                                <button type="button" className="btn btn-warning rounded-circle mr-2">
-                                                                    <i className="nav-icon fas fa-pencil-alt"></i>
-                                                                </button>
-                                                                <button type="button" className="btn btn-danger rounded-circle mr-2">
-                                                                    <i className="nav-icon fas fa-trash"></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </tbody> */}  
                                             </table>
                                         </div>
                                     </div>
