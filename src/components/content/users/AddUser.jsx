@@ -25,7 +25,7 @@ export default function AddUser(){
             let respuesta = await fetch(`${rutaAPI}/getCampaing/${c._id}`);
             clust.data[i].campaings = (await respuesta.json()).data
         }
-        console.log("cluster",clust.data);
+        //console.log("cluster",clust.data);
         setClusters(clust.data)
     }
 
@@ -42,7 +42,7 @@ export default function AddUser(){
             ...usuarios,
             clusters: nClusters
         })
-        console.log("Usuarios",usuarios)
+        console.log("Clusters",usuarios)
     }
 
     const campaingChange = campaing =>{
@@ -206,8 +206,14 @@ export default function AddUser(){
                                 </div>
                                 {clusters.map((cluster, index)=>(
                                     <div style={{marginLeft:"5px"}} key={`cluster-${index}`}>
-                                        <input onChange={()=>clusterChange(cluster)} className="form-check-input" type="checkbox" value={cluster._id} checked={usuarios.clusters.some(c => c._id === cluster._id)} style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
-                                        <label style={{marginLeft:"25px", marginTop:"1px"}} className="form-check-label">{cluster.nombre}</label>
+                                        <input onChange={()=>clusterChange(cluster)} 
+                                        className="form-check-input" 
+                                        type="checkbox" 
+                                        value={cluster._id} 
+                                        checked={usuarios.clusters.some(c => c._id === cluster._id)} 
+                                        style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
+                                        <label style={{marginLeft:"25px", marginTop:"1px"}} 
+                                        className="form-check-label">{cluster.nombre}</label>
                                     </div>
                                 ))}
                             </div>
@@ -215,46 +221,26 @@ export default function AddUser(){
                         {clusters.map((cluster, index) =>(
                             <>
                             {checkedSelectedCluster(cluster) && 
-                                    <div> 
-                                         <h5>{cluster.nombre}</h5>
-                                         <div className="form-group">
-                                         <label className="small text-secondary" htmlFor="campaings">
+                                <div> 
+                                    <h5>{cluster.nombre}</h5>
+                                        <div className="form-group">
+                                        <label className="small text-secondary" htmlFor="campaings">
                                          | Seleccione las campaña(s) al que el auditor tendra acceso
-                                         </label>
-                                         <div className="input-group mb-3">
-                                             <div className="input-group-append input-group-text">
-                                             <i className="fas fa-address-card"></i>
-                                         </div>
-                                         {cluster.hasOwnProperty("campaings") && cluster.campaings.map((campaing, index)=>(
-                                             <div style={{marginLeft:"5px"}} key={`campaing-${index}`}>
-                                                 <input onChange={()=>campaingChange(campaing)} className="form-check-input" type="checkbox" value={campaing._id} checked={usuarios.campaings.some(c => c._id === campaing._id)} style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
-                                                 <label style={{marginLeft:"25px", marginTop:"1px"}} className="form-check-label">{campaing.nombre}</label>
-                                             </div>
+                                        </label>
+                                        <div className="input-group mb-3">
+                                            <div className="input-group-append input-group-text">
+                                            <i className="fas fa-address-card"></i>
+                                        </div>
+                                        {cluster.hasOwnProperty("campaings") && cluster.campaings.map((campaing, index)=>(
+                                            <div style={{marginLeft:"5px"}} key={`campaing-${index}`}>
+                                                <input onChange={()=>campaingChange(campaing)} className="form-check-input" type="checkbox" value={campaing._id} checked={usuarios.campaings.some(c => c._id === campaing._id)} style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
+                                                <label style={{marginLeft:"25px", marginTop:"1px"}} className="form-check-label">{campaing.nombre}</label>
+                                            </div>
                                          ))}
-                                         </div>
-                                         </div> 
-                                    </div>}
+                                        </div>
+                                        </div> 
+                                </div>}
                             </>
-        
-                            // {true && (<div> 
-                            //             <h5>{cluster.nombre}</h5>
-                            //             <div className="form-group">
-                            //             <label className="small text-secondary" htmlFor="campaings">
-                            //             | Seleccione las campaña(s) al que el auditor tendra acceso
-                            //             </label>
-                            //             <div className="input-group mb-3">
-                            //                 <div className="input-group-append input-group-text">
-                            //                 <i className="fas fa-address-card"></i>
-                            //             </div>
-                            //             {cluster.hasOwnProperty("campaings") && cluster.campaings.map((campaing, index)=>(
-                            //                 <div style={{marginLeft:"5px"}} key={`campaing-${index}`}>
-                            //                     <input onChange={()=>campaingChange(campaing)} className="form-check-input" type="checkbox" value={campaing._id} checked={usuarios.campaings.some(c => c._id === campaing._id)} style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
-                            //                     <label style={{marginLeft:"25px", marginTop:"1px"}} className="form-check-label">{campaing.nombre}</label>
-                            //                 </div>
-                            //             ))}
-                            //             </div>
-                            //             </div> 
-                            //         </div>)}
                         ))}
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="role">
