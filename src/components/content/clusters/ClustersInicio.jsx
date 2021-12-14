@@ -21,6 +21,9 @@ export default function Clusters(){
         const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
         const clust =  await data.json()
         console.log("cluster",clust.data);
+        clust.data.forEach(cluster => {
+            cluster.nombre=cluster.nombre.toLowerCase()
+        });
         setClusters(clust.data)
     }
 
@@ -57,7 +60,7 @@ export default function Clusters(){
                                                                 <h5 className=" text-center " style={{"text-transform": "uppercase"}}>{cluster.nombre}</h5>
                                                                 <img class="card-img-top" width="150" height="150" alt="img"  src={rutaAPI+"/getImgCluster/"+cluster.foto} />
                                                                 <br />
-                                                                <a href={`/campañasinicio/${cluster._id}`} className="btn btn-warning">Ingresar</a>
+                                                                <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
                                                             </div>
                                                         </div>
                                                     

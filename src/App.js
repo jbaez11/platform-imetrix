@@ -40,9 +40,9 @@ export default function App() {
                <Route exact path="/inicio/:id"><ClustersInicio/></Route>
                <Route exact path="/clusters/:id">{role ? <Clusters/> : <ClustersInicio/>} </Route>
                <Route exact path="/campañas/:id">{role ? <Campaings/> : <CampaingsInicio/>} </Route>
-               <Route exact path="/campañasinicio/:id"><CampaingsInicio/></Route>
+               <Route exact path="/campañasinicio/:id/:clustername"><CampaingsInicio/></Route>
                <Route exact path="/usuarios/:id">{role ? <Usuarios/> : <ClustersInicio/>} </Route>
-               <Route exact path="/agents"> <Agents/></Route>
+               <Route exact path="/agents/:bd"> <Agents/></Route>
                <Route exact path="/keywords"> <Keywords/> </Route>
                <Route exact path="/consumo"> <Consumo/> </Route>
                <Route component={PageNotFound} />

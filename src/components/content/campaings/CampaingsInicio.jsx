@@ -11,6 +11,7 @@ export default function CamaingsInicio(){
 
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
+    console.log("valors",nuevaURL);
     
     const [campaings , setCampaings] = React.useState([]);
 
@@ -19,10 +20,16 @@ export default function CamaingsInicio(){
         obtenerDatos();
     }, [])
 
+
     const obtenerDatos = async ()=>{
         const data = await fetch(`${rutaAPI}/getCampaing/${nuevaURL[4]}`);
         const camp =  await data.json()
-        console.log("cluster",camp.data);
+        console.log("camp.data",camp.data);
+        camp.data.forEach(campaing => {
+            console.log(campaing.nombre);
+            campaing.nombre = campaing.nombre[0].toUpperCase()+(campaing.nombre.slice(1)).toLowerCase();
+            console.log(campaing.nombre);
+        });
         setCampaings(camp.data)
     }
     
@@ -61,7 +68,7 @@ export default function CamaingsInicio(){
                                                                 <h5 className=" text-center">{campaing.nombre}</h5>
                                                                 <img class="card-img-top" width="150" height="150" alt="img"  src={rutaAPI+"/getImgCampaing/"+campaing.foto} />
                                                                 <br />
-                                                                <a href={`/agents`} className="btn btn-warning">Ingresar</a>
+                                                                <a href={`/agents/${nuevaURL[5]}${campaing.nombre}`} className="btn btn-warning">Ingresar</a>
                                                             </div>
                                                         </div>
                                                     
