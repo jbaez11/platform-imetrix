@@ -7,11 +7,10 @@ import SidebarCampaing from '../../sidebar/SidebarCampaing';
 
 
 
-export default function CamaingsInicio(){
+export default function CamaingsAuditor(){
 
-    const valores = window.location.href;
-    let nuevaURL = valores.split("/");
-    console.log("valors",nuevaURL);
+
+    let userID = localStorage.getItem("ID");
     
     const [campaings , setCampaings] = React.useState([]);
 
@@ -20,16 +19,10 @@ export default function CamaingsInicio(){
         obtenerDatos();
     }, [])
 
-
     const obtenerDatos = async ()=>{
-        const data = await fetch(`${rutaAPI}/getCampaing/${nuevaURL[4]}`);
+        const data = await fetch(`${rutaAPI}/getCampaingUser/${userID}`);
         const camp =  await data.json()
-        console.log("camp.data",camp.data);
-        camp.data.forEach(campaing => {
-            console.log(campaing.nombre);
-            campaing.nombre = campaing.nombre[0].toUpperCase()+(campaing.nombre.slice(1)).toLowerCase();
-            console.log(campaing.nombre);
-        });
+        //console.log("cluster",camp.data);
         setCampaings(camp.data)
     }
     
@@ -66,7 +59,7 @@ export default function CamaingsInicio(){
                                                                 <h5 style={{backgroundColor:"lightgray"}} className=" text-center">{campaing.nombre}</h5>
                                                                 <img className="card-img-top" height="100" alt="img"  src={rutaAPI+"/getImgCampaing/"+campaing.foto} />
                                                                 <br />
-                                                                <a href={`/agents/${nuevaURL[5]}${campaing.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                <a style={{marginTop:"40px"}} href={`/agents`} className="btn btn-warning">Ingresar</a>
                                                             </div>
                                                         </div>
                                                     </div>

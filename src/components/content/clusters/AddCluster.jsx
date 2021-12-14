@@ -17,8 +17,12 @@ export default function AddCluster(){
 
     //OnChange
     const cambiaFormPost = e =>{
-
-        let foto = $("#foto").get(0).files[0];
+        
+        let foto = $("#foto").get(0).files;
+        if(!foto.length){
+            return
+        }
+        foto = foto[0]
         //Validamos el Formato de la imagen
         if(foto["type"] !== "image/jpeg" && foto["type"] !== "image/png"){
             $("#foto").val("");
@@ -95,7 +99,6 @@ export default function AddCluster(){
     })
 
     return(
-
         <div className="modal" id="addCluster">
             <div className="modal-dialog">
                 <div className="modal-content">

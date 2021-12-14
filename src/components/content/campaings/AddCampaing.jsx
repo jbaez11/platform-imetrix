@@ -13,13 +13,18 @@ export default function AddCampaing(){
         nombre:"",
         foto: null,
         state: "",
-        cluster:""
+        cluster:"",
+        pais:""
     })
 
     //OnChange
     const cambiaFormPost = e =>{
 
-        let foto = $("#foto").get(0).files[0];
+        let foto = $("#foto").get(0).files;
+        if(!foto.length){
+            return
+        }
+        foto = foto[0]
         //Validamos el Formato de la imagen
         if(foto["type"] !== "image/jpeg" && foto["type"] !== "image/png"){
             $("#foto").val("");
@@ -48,7 +53,8 @@ export default function AddCampaing(){
                     'nombre': $("#nombre").val(), 
                     'foto': foto,
                     'state': $("#state").val(),
-                   // 'cluster': $("#cluster").val()
+                   // 'cluster': $("#cluster").val(),
+                    'pais': $("#pais").val()
                 })
             })        
         }
@@ -58,7 +64,7 @@ export default function AddCampaing(){
     const submitPost = async e =>{
         $('.alert').remove();
         e.preventDefault();
-        const {nombre, foto, state} = campaing;
+        const {nombre, foto, state, pais} = campaing;
 
         if(nombre === ""){
             $(".invalid-nombre").show();
@@ -74,6 +80,10 @@ export default function AddCampaing(){
         if(state === ""){
             $(".invalid-state").show();
             $(".invalid-state").html("El estado de la Campaña no puede ir Vacio!");
+        }
+        if(pais === ""){
+            $(".invalid-state").show();
+            $(".invalid-state").html("El Pais de la Campaña no puede ir Vacio!");
         }
 
         
@@ -180,6 +190,28 @@ export default function AddCampaing(){
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
                             </div>
+                            <div className="form-group">
+                                <label className="small text-secondary" htmlFor="pais">
+                                   | *Solo con el siguiente formato -- | CO-US-MX
+                                </label>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-append input-group-text">
+                                        <i className="fas fa-signature"></i>
+                                    </div>
+                                    <input
+                                        id="pais"
+                                        type="text"
+                                        className="form-control text-uppercase"
+                                        name="pais"
+                                        placeholder="Ingrese el pais"
+                                        minLength="2"
+                                        maxLength="2"
+                                        onKeyUp="this.value=this.value.toUpperCase();"
+                                        pattern="(?=.*[A-Z]).{2,2}"
+                                        required
+                                    />
+                                </div>
+                            </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
                             <div><button type="submit" className="btn btn-primary">Crear</button></div>
@@ -204,6 +236,7 @@ const postData = data =>{
     formData.append("foto", data.foto);
     formData.append("state", data.state);
     formData.append("cluster", data.cluster);
+    formData.append("pais", data.pais);
     
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {

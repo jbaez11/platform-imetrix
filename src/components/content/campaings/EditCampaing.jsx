@@ -15,6 +15,7 @@ export default function EditCampaing(){
         foto: null,
         state: "",
         cluster: "",
+        pais:"",
         id:""
     })
 
@@ -53,6 +54,7 @@ export default function EditCampaing(){
                         'foto': foto,
                         'state': $("#editState").val(),
                         // 'cluster': $("#editCluster").val(),
+                        'pais':$("#editPais").val(),
                         'id': $("#editId").val()
                     })
                 })        
@@ -64,6 +66,7 @@ export default function EditCampaing(){
                 'foto': null,
                 'state': $("#editState").val(),
                 // 'cluster': $("#editCluster").val(),
+                'pais':$("#editPais").val(),
                 'id': $("#editId").val()
             })
         }   
@@ -97,6 +100,7 @@ export default function EditCampaing(){
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCampaing/${data[2]}`);
         $("#editState").val(data[3]);
         // $("#editCluster").val(data[4]);
+        $("#editPais").val(data[5]);
         $("#editId").val(data[0]);
 
         editCampaing({
@@ -105,6 +109,7 @@ export default function EditCampaing(){
             'foto': null,
             'state': data[3],
             // 'cluster': data[4],
+            'pais':data[5],
             'id': data[0]
             
         })
@@ -248,6 +253,28 @@ export default function EditCampaing(){
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
                         </div> */}
+                          <div className="form-group">
+                                <label className="small text-secondary" htmlFor="editPais">
+                                   | *Solo con el siguiente formato -- | CO-US-MX
+                                </label>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-append input-group-text">
+                                        <i className="fas fa-signature"></i>
+                                    </div>
+                                    <input
+                                        id="editPais"
+                                        type="text"
+                                        className="form-control text-uppercase"
+                                        name="pais"
+                                        placeholder="Ingrese el pais"
+                                        minLength="2"
+                                        maxLength="2"
+                                        readOnly="readOnly"
+                                        pattern="(?=.*[A-Z]).{2,2}"
+                                        required
+                                    />
+                                </div>
+                            </div>
                     </div>
                     <div className="modal-footer d-flex justify-content-between">
                         <div><button type="submit" className="btn btn-primary">Editar</button></div>
@@ -272,6 +299,7 @@ const putData = data =>{
     formData.append("foto", data.foto);
     formData.append("state", data.state);
     formData.append("cluster", data.cluster);
+    formData.append("pais", data.pais);
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
 
