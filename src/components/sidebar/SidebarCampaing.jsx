@@ -50,13 +50,13 @@ export default function SidebarCampaing(){
                             return (
                                 <>
                                     <li className="nav-item">
-                                        <a href={"/campañasinicio/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
+                                        <a href={"/campañasinicio/"+nuevaURL[4]+"/"+nuevaURL[5]} className="nav-link" style={{ color: 'white' }}>
                                             <i className="nav-icon fas fa-home"></i>
                                             <p>Inicio</p>
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a href={"/campañas/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
+                                        <a href={"/campañas/"+nuevaURL[4]+"/"+nuevaURL[5]} className="nav-link" style={{ color: 'white' }}>
                                             <i className="nav-icon fas fa-address-card"></i>
                                             <p>Gestor Campañas</p>
                                         </a>
@@ -67,7 +67,7 @@ export default function SidebarCampaing(){
                                 return(
                                 <>
                                 <li className="nav-item">
-                                <a href={"/campañasAuditor/"+currentUserId} className="nav-link" style={{ color: 'white' }}>
+                                <a href={"/campañasAuditor/"+currentUserId+"/"+nuevaURL[5]} className="nav-link" style={{ color: 'white' }}>
                                     <i className="nav-icon fas fa-home"></i>
                                     <p>Inicio</p>
                                 </a>

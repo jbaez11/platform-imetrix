@@ -11,7 +11,7 @@ export default function Clusters(){
     let nuevaURL = valores.split("/");
 
     let role = localStorage.getItem("ROLE");
-    console.log("Rol", role)
+    
     
     const [clusters , setClusters] = React.useState([]);
 

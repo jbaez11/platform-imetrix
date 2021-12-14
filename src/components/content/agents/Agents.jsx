@@ -151,7 +151,10 @@ export default function Agents(){
 //peticion get para administradores
 
 const getData = ()=>{
-	const url = `${rutaAPITableros}/igsSufiCO/baseagents`;
+	const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+	console.log("nuevaURL",nuevaURL);
+	const url = `${rutaAPITableros}/${nuevaURL[4]}/baseagents`;
 	const token = localStorage.getItem("ACCESS_TOKEN");
 	const params = {
 		method : "GET",

@@ -56,7 +56,7 @@ export default function CamaingsAuditor(){
                                                     <div class="col-sm">
                                                         <div style={{ width: '18rem' }} className="card text-center">
                                                             <div className="card-body"  >
-                                                                <h5 style={{backgroundColor:"lightgray"}} className=" text-center">{campaing.nombre}</h5>
+                                                                <h5  className=" text-center">{campaing.nombre}</h5>
                                                                 <img className="card-img-top" height="100" alt="img"  src={rutaAPI+"/getImgCampaing/"+campaing.foto} />
                                                                 <br />
                                                                 <a style={{marginTop:"40px"}} href={`/agents`} className="btn btn-warning">Ingresar</a>

@@ -11,7 +11,6 @@ export default function CamaingsInicio(){
 
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
-    console.log("valors",nuevaURL);
     
     const [campaings , setCampaings] = React.useState([]);
 
@@ -63,10 +62,10 @@ export default function CamaingsInicio(){
                                                     <div class="col-sm">
                                                         <div style={{ width: '18rem' }} className="card text-center">
                                                             <div className="card-body"  >
-                                                                <h5 style={{backgroundColor:"lightgray"}} className=" text-center">{campaing.nombre}</h5>
+                                                                <h5  className=" text-center">{campaing.nombre}</h5>
                                                                 <img className="card-img-top" height="100" alt="img"  src={rutaAPI+"/getImgCampaing/"+campaing.foto} />
                                                                 <br />
-                                                                <a href={`/agents/${nuevaURL[5]}${campaing.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                <a href={`/agents/${nuevaURL[5]}${campaing.nombre}${campaing.pais}`} className="btn btn-warning">Ingresar</a>
                                                             </div>
                                                         </div>
                                                     </div>
