@@ -6,6 +6,9 @@ import {rutaAPITableros} from '../../../../config/Config';
 
 export default function AddCluster(){
 
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+
     /* Hook para caputar los datos del formulario */
     const [clusters, crearCluster] = useState({
         name:"",
@@ -39,7 +42,7 @@ export default function AddCluster(){
         if(resul.status === 200){
             $(".modal-footer").before(`<div class="alert alert-success">${resul.mensaje}</div>`)
             $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href=`/clusterKeywords`},3000);
+            setTimeout(()=>{window.location.href=`/clusterKeywords/`+nuevaURL[4]},3000);
         }
     }
 

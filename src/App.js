@@ -12,6 +12,8 @@ import CampaingsInicio from './components/content/campaings/CampaingsInicio';
 import CamaingsAuditor from './components/content/campaings/CampaingsAuditor';
 import Clusters from './components/content/clusters/Clusters';
 import ClustersInicio from './components/content/clusters/ClustersInicio';
+import ClustersKeywords from './components/content/keywords/clusters/Clusters';
+import Modulos from './components/content/keywords/modulos/Modulos';
 import Agents from './components/content/agents/Agents';
 import Consumo from './components/content/consumo/Consumo';
 import Keywords from './components/content/keywords/Keywords';
@@ -45,7 +47,7 @@ export default function App() {
                <Route exact path="/campañasAuditor/:id/:clustername"><CamaingsAuditor/></Route>
                <Route exact path="/usuarios/:id">{role ? <Usuarios/> : <ClustersInicio/>} </Route>
                <Route exact path="/agents/:bd"> <Agents/></Route>
-               <Route exact path="/keywords/:bd"> <Keywords/> </Route>
+               <Route exact path="/keywords/:db"> <Keywords/> </Route>
                <Route exact path="/clusterKeywords/:bd"> <ClustersKeywords/> </Route>
                <Route exact path="/moduloKeywords/:bd"> <Modulos/> </Route>
                <Route exact path="/consumo/:bd"> <Consumo/> </Route>

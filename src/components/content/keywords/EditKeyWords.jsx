@@ -7,6 +7,9 @@ import {rutaAPITableros} from '../../../config/Config';
 
 export default function EditKeyWord(){
 
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+
     /* Hook para caputar los datos del formulario */
     const [keywords, editarKeyWord] = useState({
         name:"",
@@ -39,7 +42,7 @@ export default function EditKeyWord(){
         if(resul.status === 200){
             $(".modal-footer").before(`<div class="alert alert-success">${resul.mensaje}</div>`)
             $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href=`/keywords`},3000);
+            setTimeout(()=>{window.location.href=`/keywords/`+nuevaURL[4]},3000);
         }
     }
 
@@ -107,7 +110,7 @@ export default function EditKeyWord(){
                                     showConfirmButton: true,
                                     confirmButtonText: "Cerrar"
                                     }).then(function(result){
-                                        if(result.isConfirmed) {window.location.href=`/keywords`}
+                                        if(result.isConfirmed) {window.location.href=`/keywords/`+nuevaURL[4]}
                                 })
                             } 
                             if(result.status === 200){
@@ -118,7 +121,7 @@ export default function EditKeyWord(){
                                     showConfirmButton: true,
                                     confirmButtonText: "Cerrar"
                                     }).then(function(result){
-                                        if(result.isConfirmed) {window.location.href=`/keywords`}
+                                        if(result.isConfirmed) {window.location.href=`/keywords/`+nuevaURL[4]}
                                 })
                             }
                         }

@@ -7,6 +7,8 @@ import {rutaAPITableros} from '../../../../config/Config';
 
 export default function EditModulo(){
 
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
     /* Hook para caputar los datos del formulario */
     const [modulos, editarModulo] = useState({
         name:"",
@@ -39,7 +41,7 @@ export default function EditModulo(){
         if(resul.status === 200){
             $(".modal-footer").before(`<div class="alert alert-success">${resul.mensaje}</div>`)
             $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href=`/moduloKeywords`},3000);
+            setTimeout(()=>{window.location.href=`/moduloKeywords/`+nuevaURL[4]},3000);
         }
     }
 
@@ -108,7 +110,7 @@ export default function EditModulo(){
                             showConfirmButton: true,
                             confirmButtonText: "Cerrar"
                         }).then(function(result){
-                                if(result.isConfirmed) {window.location.href=`/moduloKeywords`}
+                                if(result.isConfirmed) {window.location.href=`/moduloKeywords/`+nuevaURL[4]}
                             })
                     } 
                     if(result.status === 200){
@@ -119,7 +121,7 @@ export default function EditModulo(){
                             showConfirmButton: true,
                             confirmButtonText: "Cerrar"
                         }).then(function(result){
-                            if(result.isConfirmed) {window.location.href=`/moduloKeywords`}
+                            if(result.isConfirmed) {window.location.href=`/moduloKeywords/`+nuevaURL[4]}
                             })
                     }
                 }
