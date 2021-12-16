@@ -86,7 +86,7 @@ export default function CamaingsInicio(){
 }
 
 //Petición Get para Campañas
-const getData = () =>{
+/* const getData = () =>{
     
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
@@ -108,4 +108,4 @@ const getData = () =>{
         return err;
     })
 
-}
+} */

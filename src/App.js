@@ -45,7 +45,9 @@ export default function App() {
                <Route exact path="/campañasAuditor/:id/:clustername"><CamaingsAuditor/></Route>
                <Route exact path="/usuarios/:id">{role ? <Usuarios/> : <ClustersInicio/>} </Route>
                <Route exact path="/agents/:bd"> <Agents/></Route>
-               <Route exact path="/keywords/:db"> <Keywords/> </Route>
+               <Route exact path="/keywords/:bd"> <Keywords/> </Route>
+               <Route exact path="/clusterKeywords/:bd"> <ClustersKeywords/> </Route>
+               <Route exact path="/moduloKeywords/:bd"> <Modulos/> </Route>
                <Route exact path="/consumo/:bd"> <Consumo/> </Route>
                <Route component={PageNotFound} />
             </Switch>
