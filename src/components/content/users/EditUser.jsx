@@ -42,7 +42,7 @@ export default function EditUser(){
     }
 
 
-    const clusterChange = cluster =>{
+/*     const clusterChange = cluster =>{
         let nClusters = usuarios.clusters
         let index = nClusters.findIndex(c => c._id === cluster._id)
         if(index !== -1){
@@ -74,7 +74,7 @@ export default function EditUser(){
 
     let checkedSelectedCluster = cluster =>{
         return usuarios.clusters.some(c => c._id == cluster._id)
-    }
+    } */
 
     //Hook para caputar los datos del formulario
     const [usuarios, editarUsuario] = useState({

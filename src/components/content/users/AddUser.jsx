@@ -61,7 +61,7 @@ export default function AddUser(){
     }
 
     let checkedSelectedCluster = cluster =>{
-        return usuarios.clusters.some(c => c._id == cluster._id)
+        return usuarios.clusters.some(c => c._id === cluster._id)
     }
 
     //Hook para caputar los datos del formulario

@@ -59,6 +59,25 @@ export default function SidebarAdminCampaing(){
                                 </p>
                                 </a>
                             </li>
+
+                            <li className="nav-item">
+                                <a href="/clusterKeywords" className="nav-link" style={{ color: 'white' }}>
+                                <i className="nav-icon fas fa-bold"></i>
+                                <p>
+                                Clusters
+                                </p>
+                                </a>
+                            </li>
+
+                            
+                            <li className="nav-item">
+                                <a href="/moduloKeywords" className="nav-link" style={{ color: 'white' }}>
+                                <i className="nav-icon fas fa-bold"></i>
+                                <p>
+                                Modulos
+                                </p>
+                                </a>
+                            </li>
                             
                             <li className="nav-item">
                                 <a href="/auditoria" className="nav-link" style={{ color: 'white' }}>

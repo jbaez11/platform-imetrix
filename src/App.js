@@ -11,6 +11,8 @@ import Campaings from './components/content/campaings/Campaings';
 import CampaingsInicio from './components/content/campaings/CampaingsInicio';
 import CamaingsAuditor from './components/content/campaings/CampaingsAuditor';
 import Clusters from './components/content/clusters/Clusters';
+import ClustersKeywords from './components/content/keywords/clusters/Clusters';
+import Modulos from './components/content/keywords/modulos/Modulos';
 import ClustersInicio from './components/content/clusters/ClustersInicio';
 import Agents from './components/content/agents/Agents';
 import Consumo from './components/content/consumo/Consumo';
@@ -46,6 +48,8 @@ export default function App() {
                <Route exact path="/usuarios/:id">{role ? <Usuarios/> : <ClustersInicio/>} </Route>
                <Route exact path="/agents/:bd"> <Agents/></Route>
                <Route exact path="/keywords"> <Keywords/> </Route>
+               <Route exact path="/clusterKeywords"> <ClustersKeywords/> </Route>
+               <Route exact path="/moduloKeywords"> <Modulos/> </Route>
                <Route exact path="/consumo"> <Consumo/> </Route>
                <Route component={PageNotFound} />
             </Switch>
