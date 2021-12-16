@@ -6,6 +6,9 @@ import {rutaAPITableros} from '../../../../config/Config';
 
 export default function AddModulo(){
 
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+
     /* Hook para caputar los datos del formulario */
     const [modulos, crearModulo] = useState({
         name:"",
@@ -38,7 +41,7 @@ export default function AddModulo(){
         if(resul.status === 200){
             $(".modal-footer").before(`<div class="alert alert-success">${resul.mensaje}</div>`)
             $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href=`/moduloKeywords`},3000);
+            setTimeout(()=>{window.location.href=`/moduloKeywords/`+nuevaURL[4]},3000);
         }
     }
 

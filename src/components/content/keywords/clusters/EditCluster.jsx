@@ -6,6 +6,8 @@ import {rutaAPITableros} from '../../../../config/Config';
 
 
 export default function EditCluster(){
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
 
     /* Hook para caputar los datos del formulario */
     const [clusters, editarCluster] = useState({
@@ -40,7 +42,7 @@ export default function EditCluster(){
         if(resul.status === 200){
             $(".modal-footer").before(`<div class="alert alert-success">${resul.mensaje}</div>`)
             $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href=`/clusterKeywords`},3000);
+            setTimeout(()=>{window.location.href=`/clusterKeywords/`+nuevaURL[4]},3000);
         }
     }
 
@@ -110,7 +112,7 @@ export default function EditCluster(){
                                     showConfirmButton: true,
                                     confirmButtonText: "Cerrar"
                                     }).then(function(result){
-                                        if(result.isConfirmed) {window.location.href=`/clusterKeywords`}
+                                        if(result.isConfirmed) {window.location.href=`/clusterKeywords/`+nuevaURL[4]}
                                 })
                             } 
                             if(result.status === 200){
@@ -121,7 +123,7 @@ export default function EditCluster(){
                                     showConfirmButton: true,
                                     confirmButtonText: "Cerrar"
                                     }).then(function(result){
-                                        if(result.isConfirmed) {window.location.href=`/clusterKeywords`}
+                                        if(result.isConfirmed) {window.location.href=`/clusterKeywords/`+nuevaURL[4]}
                                 })
                             }
                         }
