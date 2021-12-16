@@ -138,7 +138,7 @@ export default function Consumo() {
                     }}
 					
                   >
-                    Seleccionar fecha {showCalendar ? "" : ""}
+                      {showCalendar ? "seleccionar nueva fecha" : "ir"}
                   </button>
 
                   {showCalendar ? (
