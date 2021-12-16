@@ -7,6 +7,8 @@ export default function SidebarAdminCampaing(){
     const userName = localStorage.getItem("NAME");
     const currentUserId = localStorage.getItem("ID");
     let role = localStorage.getItem("ROLE");
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
 
 
     return(

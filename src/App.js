@@ -12,6 +12,8 @@ import CampaingsInicio from './components/content/campaings/CampaingsInicio';
 import CamaingsAuditor from './components/content/campaings/CampaingsAuditor';
 import Clusters from './components/content/clusters/Clusters';
 import ClustersInicio from './components/content/clusters/ClustersInicio';
+import ClustersKeywords from './components/content/keywords/clusters/Clusters';
+import Modulos from './components/content/keywords/modulos/Modulos';
 import Agents from './components/content/agents/Agents';
 import Consumo from './components/content/consumo/Consumo';
 import Keywords from './components/content/keywords/Keywords';
