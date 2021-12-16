@@ -43,7 +43,7 @@ export default function SidebarAdminCampaing(){
                     role="menu"
                     data-accordion="false">
                     <li className="nav-item" >
-                                <a href="/agents" className="nav-link" style={{ color: 'white' }}>
+                                <a href={"/agents"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
                                 <i className="nav-icon far fa-address-card"></i>
                                 <p>
                                     Agentes
@@ -52,7 +52,7 @@ export default function SidebarAdminCampaing(){
                             </li>
                             
                             <li className="nav-item">
-                                <a href="/keywords" className="nav-link" style={{ color: 'white' }}>
+                                <a href={"/keywords"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
                                 <i className="nav-icon fas fa-bold"></i>
                                 <p>
                                 Keywords / Frases
@@ -61,7 +61,7 @@ export default function SidebarAdminCampaing(){
                             </li>
 
                             <li className="nav-item">
-                                <a href="/clusterKeywords" className="nav-link" style={{ color: 'white' }}>
+                                <a href={"/clusterKeywords"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
                                 <i className="nav-icon fas fa-bold"></i>
                                 <p>
                                 Clusters
@@ -71,7 +71,7 @@ export default function SidebarAdminCampaing(){
 
                             
                             <li className="nav-item">
-                                <a href="/moduloKeywords" className="nav-link" style={{ color: 'white' }}>
+                                <a href={"/moduloKeywords"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
                                 <i className="nav-icon fas fa-bold"></i>
                                 <p>
                                 Modulos
@@ -80,7 +80,7 @@ export default function SidebarAdminCampaing(){
                             </li>
                             
                             <li className="nav-item">
-                                <a href="/auditoria" className="nav-link" style={{ color: 'white' }}>
+                                <a href={"/auditoria"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
                                 <i className="nav-icon fas fa-clipboard-list"></i>
                                 <p>
                                 Auditoria
@@ -89,7 +89,7 @@ export default function SidebarAdminCampaing(){
                             </li>
                             
                             <li className="nav-item">
-                                <a href="/puntajes" className="nav-link" style={{ color: 'white' }}>			          
+                                <a href={"/puntajes"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>			          
                                 <i className="nav-icon fas fa-star-half-alt"></i>
                                 <p>
                                 Puntajes
@@ -100,7 +100,7 @@ export default function SidebarAdminCampaing(){
                             
 
                             <li className="nav-item">
-                                <a href="/estadisticas" className="nav-link" style={{ color: 'white' }}>			           
+                                <a href={"/estadisticas"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>			           
                                 <i className="nav-icon fas fa-chart-pie"></i>
                                 <p>
                                 Estadisticas
@@ -114,7 +114,7 @@ export default function SidebarAdminCampaing(){
                             return (
                                 <>
                                      <li className="nav-item">
-                                <a href="/consumo" className="nav-link" style={{ color: 'white' }}>
+                                <a href={"/consumo"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
                                 <i className="nav-icon far fa-chart-bar"></i>
                                 <p>
                                 Consumo
