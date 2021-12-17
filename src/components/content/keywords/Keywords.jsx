@@ -105,7 +105,7 @@ export default function Keywords(){
                     <div className="container-fluid">
                         <div className="row mb-2">
                             <div className="col-sm-6">
-                                <h1 className="m-0 text-dark">KeyWords</h1>
+                                {/* <h1 className="m-0 text-dark">Keywords</h1> */}
                             </div>
                         </div>
                     </div>
@@ -114,11 +114,11 @@ export default function Keywords(){
                 <div className="container-fluid">
                         <div className="row">
                         <div className="col-lg-12">
-                                    <div className="card card-primary">
-                                        <div className="card-header" style={{backgroundColor:"orange"}}>
+                                    <div className="card card-primary card-outline">
+                                        <div className="card-header">
                                         <h5 className="m-0">
 
-                                            <button className="btn btn-light" data-toggle="modal" data-target="#addKeyWord">Crear KeyWord</button>
+                                            <button className="btn btn-warning" data-toggle="modal" data-target="#addKeyWord">Crear Keyword</button>
                                         </h5>
                                         </div>
                                         <div className="card-body">

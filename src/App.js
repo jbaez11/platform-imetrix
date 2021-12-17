@@ -15,6 +15,7 @@ import ClustersInicio from './components/content/clusters/ClustersInicio';
 import ClustersKeywords from './components/content/keywords/clusters/Clusters';
 import Modulos from './components/content/keywords/modulos/Modulos';
 import Agents from './components/content/agents/Agents';
+import Auditoria from './components/content/auditoria/Auditoria';
 import Consumo from './components/content/consumo/Consumo';
 import Keywords from './components/content/keywords/Keywords';
 import PageNotFound from './components/content/pageNotFound/PageNotFound';
@@ -48,6 +49,7 @@ export default function App() {
                <Route exact path="/usuarios/:id">{role ? <Usuarios/> : <ClustersInicio/>} </Route>
                <Route exact path="/agents/:bd"> <Agents/></Route>
                <Route exact path="/keywords/:db"> <Keywords/> </Route>
+               <Route exact path="/auditoria/:db"> <Auditoria/> </Route>
                <Route exact path="/clusterKeywords/:bd"> <ClustersKeywords/> </Route>
                <Route exact path="/moduloKeywords/:bd"> <Modulos/> </Route>
                <Route exact path="/consumo/:bd"> <Consumo/> </Route>
