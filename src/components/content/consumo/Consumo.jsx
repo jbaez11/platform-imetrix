@@ -134,7 +134,7 @@ export default function Consumo() {
                     type="button"
                     onClick={() => {
                       setShowCalendar(!showCalendar);
-					  dataConsumo(startDate,endDate);
+					            dataConsumo(startDate,endDate);
                     }}
 					
                   >
@@ -142,37 +142,38 @@ export default function Consumo() {
                   </button>
 
                   {showCalendar ? (
-                    <div>
-                      <p>
-                        Fecha Inicial:{" "}
+                    <div >
+                      <p style={{"display":"inline"}}>
+                        {" "}
                         {startDate
                           ? format(startDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Inicial"}
-                        .
+                        -
                       </p>
-                      <p>
-                        Fecha Final:{" "}
+                      <p style={{"display":"inline"}}>
+                        {" "}
                         {endDate
                           ? format(endDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Final"}
-                        .
+                        
                       </p>
                     </div>
                   ) : (
-                    <div style={{ height: "450px", width: "300px" }}>
-                      <p>
-                        Fecha Inicial:{" "}
+                    <div style={{ height: "450px", width: "300px" }} >
+                      
+                      <p style={{"display":"inline"}}>
+                        {" "}
                         {startDate
                           ? format(startDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Inicial"}
-                        .
+                        -
                       </p>
-                      <p>
-                        Fecha Final::{" "}
+                      <p style={{"display":"inline"}}>
+                        {" "}
                         {endDate
                           ? format(endDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Final"}
-                        .
+                        
                       </p>
                       <DateRangePickerCalendar
                         startDate={startDate}
@@ -214,7 +215,7 @@ export default function Consumo() {
                                 TOTAL MINUTOS <br />
                               </h5>
                               <h1 style={{ textAlign: "center" }}>
-                                <span style={{ color: "#4C4C4C" }}>{totalMinutos}</span>
+                                <span style={{ color: "#4C4C4C" }}>{totalMinutos.toFixed(0)}</span>
                               </h1>
                             </div>
                           </div>
