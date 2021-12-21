@@ -1,0 +1,29 @@
+.inputBuscar {
+  width: 25% !important;
+}
+
+table {
+  min-width: 500px;
+}
+
+.containerInput {
+  align-items: end;
+  right: 0;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 25px;
+}
+
+@media (max-width: 988px) {
+  .inputBuscar {
+    width: 100% !important;
+  }
+
+  .App {
+    padding: 40px 5px;
+  }
+
+  .containerInput {
+    padding-bottom: 15px;
+  }
+}
