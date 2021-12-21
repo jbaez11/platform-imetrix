@@ -368,7 +368,7 @@ export default function Puntajes() {
                                 </div>
                               )}
                             </div>
-                            <div className="col-sm">
+                            <div className="col-sm text-center">
                               <h5 className="" style={{ color: "#FF9B00" }}>
                                 TOTAL{" "}
                                 <span style={{ color: "#CACACA" }}>
@@ -383,7 +383,7 @@ export default function Puntajes() {
                                 {sumTotalGrabaciones}
                               </span>
                             </div>
-                            <div className="col-sm">
+                            <div className="col-sm text-center">
                               <h5 className="" style={{ color: "#FF9B00" }}>
                                 PORCENTAJE{" "}
                                 <span style={{ color: "#CACACA" }}>
@@ -395,7 +395,7 @@ export default function Puntajes() {
                                 className="text-center"
                                 style={{ color: "#FF9B00", fontSize: "250%" }}
                               >
-                                {porcentajeGeneral.toFixed(1)}
+                                {porcentajeGeneral.toFixed(1)} %
                               </span>
                             </div>
                           </div>
