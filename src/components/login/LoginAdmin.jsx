@@ -77,12 +77,12 @@ export default function LoginAdmin(){
                       <i className="fas fa-lock" ></i>
                     </label>
                   </div>
-                  
-                  <button className="btn-login" 
-                                  data-toggle="modal" 
-                                  data-target="#crearCuenta">Registrarse
-                              </button>
                   <input type="submit" value="Iniciar Sesión" className="btn-login" />
+                  <button 
+                    className="btn-login" 
+                    data-toggle="modal" 
+                    data-target="#crearCuenta">Registrarse
+                  </button>
                 </form>
               </div>
             </div> 

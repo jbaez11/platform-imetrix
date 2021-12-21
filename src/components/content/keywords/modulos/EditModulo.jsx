@@ -9,6 +9,7 @@ export default function EditModulo(){
 
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
+
     /* Hook para caputar los datos del formulario */
     const [modulos, editarModulo] = useState({
         name:"",

@@ -5,6 +5,7 @@ import notie from 'notie';
 import 'notie/dist/notie.css';
 
 export default function AddCluster(){
+
     
     const currentUserId = localStorage.getItem("ID");
     //HOOK para Capturar los Datos
