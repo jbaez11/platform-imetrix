@@ -12,7 +12,6 @@ export default function Clusters(){
 
     let role = localStorage.getItem("ROLE");
     
-    
     const [clusters , setClusters] = React.useState([]);
 
     React.useEffect(() => {

@@ -1,16 +1,15 @@
-import React,{useState} from 'react'
+import React,{useState, useEffect} from 'react'
 import $ from 'jquery';
+import Swal from 'sweetalert2';
 import {rutaAPITableros} from '../../../config/Config';
-// import Checkbox from 'react';
 
-
-export default function AddAgentes(){
+export default function EditAgente(){
 
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
 
     //Hook para caputar los datos del formulario
-    const [agentes, crearAgente] = useState({
+    const [agentes, editarAgente] = useState({
         name:"",
         identification:"",
         gender:""
@@ -18,7 +17,7 @@ export default function AddAgentes(){
 
     //Onchange
     const cambiaFormPost = e =>{
-        crearAgente({
+        editarAgente({
             ...agentes,
             [e.target.name] : e.target.value
         })
@@ -32,7 +31,7 @@ export default function AddAgentes(){
         e.preventDefault();
 
         //Ejecutamos el servicio post
-        const resul = await postData(agentes);
+        const resul = await putData(agentes);
 
         if(resul.status === 400){
             $(".modal-footer").before(`<div class="alert alert-danger">${resul.mensaje}</div>`)
@@ -45,22 +44,42 @@ export default function AddAgentes(){
     
     }
 
+    /* Capturamos los datos para editar el agente */
+    $(document).on("click", ".editarInputs", async function(e){
+        
+        e.preventDefault();
+
+        let data = $(this).attr("data").split(",");
+        //console.log(data);
+        $("#editarName").val(data[1]);
+        $("#editarIdentification").val(data[2]);
+        $("#editarGender").val(data[3]);
+ 
+
+        editarAgente({
+            'name':  $("#editarName").val(),
+            'identification': $("#editarIdentification").val(),
+            'gender': $("#editarGender").val(),
+            'id': data[0]
+        })
+    })
+
 
 
     return(
-        <div className="modal" id="addAgent">
+        <div className="modal" id="editAgent">
             <div className="modal-dialog">
                 <div className="modal-content">
 
                 <div className="modal-header">
-                    <h4 className="modal-title">Crear Agente</h4>
+                    <h4 className="modal-title">EditarAgente</h4>
                     <button type="button" className="btn-close" data-dismiss="modal"></button>
                 </div>
 
                 <form onChange={cambiaFormPost} onSubmit={submitPost}>
                     <div className="modal-body">
                         <div className="form-group">
-                            <label className="small text-secondary" htmlFor="name">
+                            <label className="small text-secondary" htmlFor="editarName">
                                 *Mínimo 2 Caracteres, máximo 50, Sin números
                             </label>
                             <div className="input-group mb-3">
@@ -68,7 +87,7 @@ export default function AddAgentes(){
                                     <i className="fas fa-signature"></i>
                                 </div>
                                 <input
-                                    id="name"
+                                    id="editarName"
                                     type="text"
                                     className="form-control text-uppercase"
                                     name="name"
@@ -81,7 +100,7 @@ export default function AddAgentes(){
                             </div>
                         </div>
                         <div className="form-group">
-                                <label className="small text-secondary" htmlFor="identification">
+                                <label className="small text-secondary" htmlFor="editarIdentification">
                                    | Numero de Documento 
                                 </label>
                                 <div className="input-group mb-3">
@@ -89,7 +108,7 @@ export default function AddAgentes(){
                                         <i className="fas fa-signature"></i>
                                     </div>
                                     <input
-                                        id="identification"
+                                        id="editarIdentification"
                                         type="text"
                                         className="form-control"
                                         name="identification"
@@ -102,15 +121,14 @@ export default function AddAgentes(){
                                 </div>
                             </div>
                         <div className="form-group">
-                            <label className="small text-secondary" htmlFor="gender">
+                            <label className="small text-secondary" htmlFor="editarGender">
                                 Masculino | Femenino
                             </label>
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">
                                     <i className="fas fa-user-check"></i>
                                 </div>
-                                <select name="gender" id="gender">
-                                        <option defaultValue="" selected disabled>Seleccionar genero</option>
+                                <select name="gender" id="editarGender">
                                         <option value="F">Femenino</option>
                                         <option value="M">Masculino</option>
                                 </select>
@@ -118,7 +136,7 @@ export default function AddAgentes(){
                         </div>
                     </div>
                     <div className="modal-footer d-flex justify-content-between">
-                        <div><button type="submit" className="btn btn-success">Crear</button></div>
+                        <div><button type="submit" className="btn btn-success">Editar</button></div>
                         <div><button type="button" className="btn btn-danger" data-dismiss="modal">Cerrar</button></div>
                     </div>
                 </form>
@@ -128,24 +146,23 @@ export default function AddAgentes(){
     );
 }
 
-//PETICION POST PARA USUARIOS
-const postData = data =>{
-
-    const url = `${rutaAPITableros}/igsSufiCO/crear-agents`;
+/* PETICION PUT PARA AGENTES */
+const putData = data =>{
+   
+    const url = `${rutaAPITableros}/igsSufiCO/editar-agents/${data.id}`;
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
 
-        method: "POST",
+        method: "PUT",
 		body:JSON.stringify(data),
 		headers: {
 
-			"Authorization": token,
 			"Content-Type": "application/json"
 
 		}
 
     }
-    console.log("Data", data)
+    console.log("Data a guardar de Agentes", data)
     return fetch(url, params).then(response=>{
         return response.json();
     }).then(result=>{
@@ -154,4 +171,3 @@ const postData = data =>{
         return err;
     });
 }
-

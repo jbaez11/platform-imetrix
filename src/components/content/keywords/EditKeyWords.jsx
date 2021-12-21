@@ -194,7 +194,7 @@ export default function EditKeyWord(){
     );
 }
 
-//PETICION POST PARA KEYWORDS
+/* PETICION PUT PARA KEYWORDS */
 const putData = data =>{
    
     const url = `${rutaAPITableros}/igsSufiCO/editKeyword/${data.id}`;

@@ -93,9 +93,12 @@ export default function EditCampaing(){
 
     //Capturar datos para editar
     $(document).on("click", ".editarInputs", function(e){
+
         e.preventDefault();
+
         let data = $(this).attr("data").split(",");
-        console.log("Datos para Editar",data);
+        /* console.log("Datos para Editar",data); */
+        
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCampaing/${data[2]}`);
         $("#editState").val(data[3]);
