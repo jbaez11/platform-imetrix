@@ -7,7 +7,6 @@ import {rutaAPITableros} from '../../../config/Config';
 
 export default function Puntajes(){
 
-
     React.useEffect(() => {
         obtenerDatos();
     }, [])
@@ -69,19 +68,19 @@ export default function Puntajes(){
                         <table className="table table-dark table-hover"> 
                             <thead>
                                 <tr>
-                                   {cabeceraMostrar.map((cabecera, index)=>(
-                                    <>
-                                    <td>{cabecera} </td>
-                                    </>
+                                    {cabeceraMostrar.map((cabecera, index)=>(
+                                        <>
+                                        <td>{cabecera} </td>
+                                        </>
                                     ))}
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                {valoresMostrar.map((valor, index)=>(
-                                    <>
-                                    <td>{valor} </td>
-                                    </>
+                                    {valoresMostrar.map((valor, index)=>(
+                                        <>
+                                        <td>{valor} </td>
+                                        </>
                                     ))}
                                 </tr>
                             </tbody>

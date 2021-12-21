@@ -3,6 +3,7 @@ import "./start.css";
 import LoginAdmin from '../login/LoginAdmin';
 
 export default function Start() {
+  
     return (
         <div className="start">
             <div className="admin">

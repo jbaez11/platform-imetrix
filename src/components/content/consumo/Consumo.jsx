@@ -11,6 +11,7 @@ import { Bar } from "react-chartjs-2";
 import { rutaAPITableros } from '../../../config/Config';
 
 export default function Consumo() {
+
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focus, setFocus] = useState(START_DATE);
