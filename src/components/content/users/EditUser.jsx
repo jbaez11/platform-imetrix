@@ -161,7 +161,7 @@ export default function EditUser(){
     })
 
         //Capturamos los datos para borrar el usuario
-        $(document).on("click", ".borrarInput", function(e){
+       /*  $(document).on("click", ".borrarInput", function(e){
             e.preventDefault();
     
             let data = $(this).attr("data").split(",")[0];
@@ -211,7 +211,7 @@ export default function EditUser(){
                 }
               })
 
-        })
+        }) */
     
 
     return(

@@ -30,7 +30,7 @@ export default function AddUser(){
     }
 
 
-    const clusterChange = cluster =>{
+    const clusterChange = cluster => {
         let nClusters = usuarios.clusters
         let index = nClusters.findIndex(c => c._id === cluster._id)
         if(index !== -1){
