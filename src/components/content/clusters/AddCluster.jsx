@@ -8,7 +8,37 @@ export default function AddCluster(){
 
     
     const currentUserId = localStorage.getItem("ID");
-    //HOOK para Capturar los Datos
+
+    const [users, setUsers] = React.useState({});
+
+    React.useEffect(() => {
+        obtenerUsuarios();
+    }, [])
+
+    const obtenerUsuarios = async () =>{
+        const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
+        const user = await data.json()
+        console.log("Admin Users", user.data)
+        setUsers(user.data);
+    }
+
+    /* Users on Change */
+    const userChange = user => {
+        let nUsers = cluster.users
+        let index = nUsers.findIndex(c => c._id === user._id)
+        if(index !== -1){
+            nUsers.splice(index, 1)
+        }else{
+            nUsers.push(user)
+        }
+        crearCluster({
+            ...cluster,
+            users: nUsers
+        })
+        console.log("Usuarios para el Cluster", cluster)
+    }
+
+    //HOOK para Capturar los Datos del formulario
     const [cluster, crearCluster] = useState({
         nombre:"",
         foto: null,
@@ -62,7 +92,7 @@ export default function AddCluster(){
     const submitPost = async e =>{
         $('.alert').remove();
         e.preventDefault();
-        const {nombre, foto, state} = cluster;
+       /*  const {nombre, foto, state} = cluster;
 
         if(nombre === ""){
             $(".invalid-nombre").show();
@@ -78,7 +108,7 @@ export default function AddCluster(){
         if(state === ""){
             $(".invalid-state").show();
             $(".invalid-state").html("El estado del Cluster no puede ir Vacio!");
-        }
+        } */
 
         //Ejecutamos el servicio post
         const result = await postData(cluster);
@@ -160,22 +190,29 @@ export default function AddCluster(){
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
                             </div>
-                            <div hidden className="form-group">
+                            <div className="form-group">
                                 <label className="small text-secondary" htmlFor="users">
-                                    *Usuarios 
+                                    | Seleccione el Usuario(s) que quiere agregar al cluster
                                 </label>
                                 <div className="input-group mb-3">
                                     <div className="input-group-append input-group-text">
                                         <i className="fas fa-user-check"></i>
                                     </div>
-                                    <input
-                                        id="users"
-                                        type="text"
-                                        className="form-control"
-                                        name="users"
-                                        placeholder="Ingrese los usuarios"
-                                        minLength="24"
-                                    />
+                                    {/* {users.map((user, index) =>(
+                                        <div style={{marginLeft:"5px"}} key={`user-${index}`}>
+                                            <input onChange={ () => userChange(user)}
+                                            className="form-check-input"
+                                            type="checkbox" 
+                                            value={user._id}
+                                            checked={cluster.users.some(c => c._id === user._id)}
+                                            style={{marginLeft:"0.03cm", height:"20px", width:"20px"}}
+                                            />
+                                            <label style={{marginLeft:"25px", marginTop:"1px"}} 
+                                                className="form-check-label">{user.nombres}
+                                            </label>
+                                        </div>
+                                    ))} */}
+
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
                             </div>
