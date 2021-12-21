@@ -463,7 +463,7 @@ export default function Puntajes() {
                                 {agent.results.recordings}
                               </td>
                               <td className="text-center">
-                                {agent.results.totalScore.toFixed(1)}
+                                {agent.results.totalScore.toFixed(1)} %
                               </td>
 
                               <td className="text-center">
