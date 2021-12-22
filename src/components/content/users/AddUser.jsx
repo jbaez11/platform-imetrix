@@ -18,7 +18,7 @@ export default function AddUser(){
     }, [])
 
     const obtenerDatos = async ()=>{
-        const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
+        const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
         const clust =  await data.json()
         for(let i in clust.data){
             let c = clust.data[i]
@@ -221,7 +221,7 @@ export default function AddUser(){
                         {clusters.map((cluster, index) =>(
                             <>
                             {checkedSelectedCluster(cluster) && 
-                                <div> 
+                                <div key={index}> 
                                     <h5>{cluster.nombre}</h5>
                                         <div className="form-group">
                                         <label className="small text-secondary" htmlFor="campaings">

@@ -11,6 +11,9 @@ export default function CamaingsAuditor(){
 
 
     let userID = localStorage.getItem("ID");
+
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
     
     const [campaings , setCampaings] = React.useState([]);
 
@@ -59,7 +62,7 @@ export default function CamaingsAuditor(){
                                                                 <h5  className=" text-center">{campaing.nombre}</h5>
                                                                 <img className="card-img-top" height="100" alt="img"  src={rutaAPI+"/getImgCampaing/"+campaing.foto} />
                                                                 <br />
-                                                                <a style={{marginTop:"40px"}} href={`/agents`} className="btn btn-warning">Ingresar</a>
+                                                                <a style={{marginTop:"40px"}} href={`/agents/${nuevaURL[5]}${campaing.nombre}${campaing.pais}`} className="btn btn-warning">Ingresar</a>
                                                             </div>
                                                         </div>
                                                     </div>
