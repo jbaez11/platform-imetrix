@@ -7,13 +7,44 @@ import {rutaAPI} from '../../../config/Config';
 export default function EditCluster(){
 
     const currentUserId = localStorage.getItem("ID");
+
+    const [users, setUsers] = React.useState([]);
+
+    React.useEffect(() => {
+        obtenerUsuarios();
+    }, [])
+
+    const obtenerUsuarios = async () =>{
+        const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
+        const user = await data.json()
+        //console.log("Admin Users", user.data)
+        setUsers(user.data);
+    }
+
+    /* Users on Change */
+    const userChange = user => {
+        let nUsers = cluster.users
+        let index = nUsers.findIndex(c => c._id === user._id)
+        if(index !== -1){
+            nUsers.splice(index, 1)
+        }else{
+            nUsers.push(user)
+        }
+        editCluster({
+            ...cluster,
+            users: nUsers
+        })
+        console.log("Usuarios para el Cluster", cluster)
+    }
+
+
     //HOOK para Capturar los Datos de la campaña a editar
     const [cluster, editCluster] = useState({
         nombre:"",
         foto: null,
         state: "",
+        users: [],
         id:""
-        
     })
 
     //OnChange
@@ -50,6 +81,7 @@ export default function EditCluster(){
                         'nombre': $("#editNombre").val(), 
                         'foto': foto,
                         'state': $("#editState").val(),
+                        'users': $("#editUsers").val(),
                         'id': $("#editId").val()
                     })
                 })        
@@ -60,6 +92,7 @@ export default function EditCluster(){
                 'nombre': $("#editNombre").val(), 
                 'foto': null,
                 'state': $("#editState").val(),
+                'users': $("#editUsers").val(),
                 'id': $("#editId").val()
             })
         }   
@@ -85,20 +118,34 @@ export default function EditCluster(){
     }
 
     //Capturar datos para editar
-    $(document).on("click", ".editarInputs", function(e){
+    $(document).on("click", ".editarInputs", async function(e){
         e.preventDefault();
         let data = $(this).attr("data").split(",");
         console.log("Datos para Editar",data);
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCluster/${data[2]}`);
         $("#editState").val(data[3]);
+        $("#editUsers").val(data[4]);
         $("#editId").val(data[0]);
+
+        let user = await getUsers();
+        console.log("Users", user)
+        let nUsers = []
+
+        if(user.data instanceof Array){
+            /* console.log("Entro al InstaceOf") */
+            const userClusters = user.data.map(u => u._id)
+            /* console.log("UserClusters",userClusters) */
+            nUsers = users.filter(c => userClusters.includes(c._id))
+            console.log("nUsers", nUsers)
+        }
 
         editCluster({
 
             'nombre': data[1], 
             'foto': null,
             'state': data[3],
+            'users': nUsers,
             'id': data[0]
                 
         })
@@ -220,26 +267,32 @@ export default function EditCluster(){
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
                         </div>
-                        {/* <div hidden className="form-group">
-                            <label className="small text-secondary" htmlFor="editUsers">
-                                *Usuarios 
-                            </label>
-                            <div className="input-group mb-3">
-                                <div className="input-group-append input-group-text">
-                                    <i className="fas fa-user-check"></i>
+                        <div className="form-group">
+                                <label className="small text-secondary" htmlFor="editUsers">
+                                    | Seleccione el Usuario(s) que quiere agregar o quitar al cluster
+                                </label>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-append input-group-text">
+                                        <i className="fas fa-user-check"></i>
+                                    </div>
+                                    {users.map((user, index) =>(
+                                        <div style={{marginLeft:"5px"}} key={`user-${index}`}>
+                                            <input onChange={ () => userChange(user)}
+                                            className="form-check-input"
+                                            type="checkbox" 
+                                            value={user._id}
+                                            /* checked={cluster.users.some(c => c._id === user._id)} */
+                                            style={{marginLeft:"0.03cm", height:"20px", width:"20px"}}
+                                            />
+                                            <label style={{marginLeft:"25px", marginTop:"1px"}} 
+                                                className="form-check-label">{user.nombres}
+                                            </label>
+                                            </div>
+                                    ))}
+
                                 </div>
-                                <input
-                                    id="editUsers"
-                                    type="text"
-                                    className="form-control"
-                                    name="users"
-                                    placeholder="Ingrese los usuarios"
-                                    minLength="24"
-                                    required
-                                />
-                            </div>
-                            <div className="invalid-feedback invalid-state"></div>
-                        </div> */}
+                                <div className="invalid-feedback invalid-state"></div>
+                        </div>
                     </div>
                     <div className="modal-footer d-flex justify-content-between">
                         <div><button type="submit" className="btn btn-primary">Editar</button></div>
@@ -261,6 +314,7 @@ const putData = data =>{
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
     formData.append("state", data.state);
+    formData.append("users", JSON.stringify(data.users.map(u => u._id)));
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
 
@@ -278,6 +332,31 @@ const putData = data =>{
     }).catch(err=>{
         return err;
     });
+}
+
+const getUsers = () =>{
+
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+
+    const url = `${rutaAPI}/getUser/${nuevaURL[4]}`;
+    const token = localStorage.getItem("ACCESS_TOKEN");
+
+    const params = {
+        method: "GET",
+        headers: {
+            "Authorization": token,
+            "Content-Type": "application/json"
+        }
+    } 
+    return fetch(url, params).then(response =>{
+        return response.json();
+    }).then(result => {
+        return result;
+    }).catch(err=>{
+        return err;
+    })
+
 }
 
 //METODO DELETE

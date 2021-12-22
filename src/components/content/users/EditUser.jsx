@@ -22,7 +22,7 @@ export default function EditUser(){
     }, [])
 
     const obtenerDatos = async ()=>{
-        const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
+        const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
         const clust =  await data.json()
         for(let i in clust.data){
             let c = clust.data[i]
@@ -42,7 +42,7 @@ export default function EditUser(){
     }
 
 
-/*     const clusterChange = cluster =>{
+    const clusterChange = cluster =>{
         let nClusters = usuarios.clusters
         let index = nClusters.findIndex(c => c._id === cluster._id)
         if(index !== -1){
@@ -74,7 +74,7 @@ export default function EditUser(){
 
     let checkedSelectedCluster = cluster =>{
         return usuarios.clusters.some(c => c._id == cluster._id)
-    } */
+    }
 
     //Hook para caputar los datos del formulario
     const [usuarios, editarUsuario] = useState({
@@ -136,12 +136,14 @@ export default function EditUser(){
         $("#editarRole").val(data[6]);
 
         let user = await getUsers(data[0]);
+        console.log("Users", user)
         let nClusters = []
         let nCampaings = []
         if(user.data instanceof Array){
             const userClusters = user.data.map(u => u._id)
             //console.log("CLUSTERS", userClusters)
             nClusters = clusters.filter(c => userClusters.includes(c._id))
+            console.log("nClusters", nClusters)
         }
         if(user.data instanceof Array){
             const userCampaings = user.data.map(u => u._id)
@@ -315,15 +317,15 @@ export default function EditUser(){
                                         checked={usuarios.clusters.some(c => c._id === cluster._id)} 
                                         style={{marginLeft:"0.03cm", height:"18px", width:"18px", marginTop:"5px"}}/>
                                         <label style={{marginLeft:"25px"}} 
-                                        className="form-check-label">{cluster.nombre}</label>
+                                        className="form-check-label">{cluster.nombre}</label>   
                                     </div>
-                                ))}
+                                    ))}
                             </div>
                         </div>
                         {clusters.map((cluster, index) =>(
                             <>
                             {checkedSelectedCluster(cluster) && 
-                                    <div> 
+                                    <div key={index}> 
                                          <h5>{cluster.nombre}</h5>
                                          <div className="form-group">
                                          <label className="small text-secondary" htmlFor="editCampaings">
@@ -343,8 +345,8 @@ export default function EditUser(){
                                          </div> 
                                     </div>}
                             </>
-                        ))}
-                                     */}
+                        ))} */}
+                                    
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarRole">
                                 |Auditor
@@ -400,7 +402,7 @@ const putData = data =>{
 //Petición Get para Usuarios asociados al Administrador
 const getUsers = (userID) =>{
 
-    const valores = window.location.href;
+    //const valores = window.location.href;
     //let nuevaURL = valores.split("/");
 
     const url = `${rutaAPI}/getCluster/${userID}`;

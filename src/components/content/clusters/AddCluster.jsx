@@ -3,13 +3,25 @@ import {rutaAPI} from '../../../config/Config';
 import $ from 'jquery';
 import notie from 'notie';
 import 'notie/dist/notie.css';
+import { useEffect } from 'react';
 
 export default function AddCluster(){
 
     
     const currentUserId = localStorage.getItem("ID");
 
-    const [users, setUsers] = React.useState({});
+    const [users, setUsers] = React.useState([]);
+
+    const [states, setStates] = React.useState([
+        {
+            nombre: "habilitado",
+            value: "1"
+        },
+        {
+            nombre:"Inhabilitado",
+            value: "0"
+        }
+    ]);
 
     React.useEffect(() => {
         obtenerUsuarios();
@@ -18,8 +30,9 @@ export default function AddCluster(){
     const obtenerUsuarios = async () =>{
         const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
         const user = await data.json()
-        console.log("Admin Users", user.data)
+        //console.log("Admin Users", user.data)
         setUsers(user.data);
+        console.log("Users", user.data)
     }
 
     /* Users on Change */
@@ -45,6 +58,10 @@ export default function AddCluster(){
         state: "",
         users: []
     })
+
+    useEffect(()=>{
+        console.log("Actualización de Cluster", cluster)
+    }, [cluster])
 
     //OnChange
     const cambiaFormPost = e =>{
@@ -74,16 +91,17 @@ export default function AddCluster(){
             let datosFoto = new FileReader();
             datosFoto.readAsDataURL(foto);
 
-            $(datosFoto).on("load", function(event){
+            $(datosFoto).one("load",  function(event) {
+
                 let rutaFoto = event.target.result;
                 $(".previsualizarImg").attr("src", rutaFoto);
 
                 crearCluster({
-                    'nombre': $("#nombre").val(), 
-                    'foto': foto,
-                    'state': $("#state").val(),
-                    'users': $("#users").val()
+                    ...cluster,
+                    foto,
+                    'state': $("#state").val()
                 })
+                
             })        
         }
     }
@@ -148,6 +166,7 @@ export default function AddCluster(){
                                         <i className="fas fa-signature"></i>
                                     </div>
                                     <input
+                                        onChange={(e) => crearCluster({...cluster,nombre: e.target.value})}
                                         id="nombre"
                                         type="text"
                                         className="form-control text-uppercase"
@@ -182,15 +201,18 @@ export default function AddCluster(){
                                     <div className="input-group-append input-group-text">
                                         <i className="fas fa-user-check"></i>
                                     </div>
-                                    <select name="state" id="state">
-                                        <option value="" selected disabled hidden>Seleccionar estado</option>
-                                        <option value="1">Habilitado</option>
-                                        <option value="0">Inhabilitado</option>
+                                    <select onChange={(e) => crearCluster({...cluster,state: e.target.value})} 
+                                    name="state" 
+                                    id="state">
+                                        <option value="" selected disabled>Seleccionar estado</option>
+                                        {states.map((state, key) => (
+                                            <option value={state.value} key={key} >{state.nombre}</option>
+                                        ))}
                                     </select>
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
                             </div>
-                            <div className="form-group">
+                            <div  className="form-group">
                                 <label className="small text-secondary" htmlFor="users">
                                     | Seleccione el Usuario(s) que quiere agregar al cluster
                                 </label>
@@ -198,7 +220,7 @@ export default function AddCluster(){
                                     <div className="input-group-append input-group-text">
                                         <i className="fas fa-user-check"></i>
                                     </div>
-                                    {/* {users.map((user, index) =>(
+                                    {users.map((user, index) =>(
                                         <div style={{marginLeft:"5px"}} key={`user-${index}`}>
                                             <input onChange={ () => userChange(user)}
                                             className="form-check-input"
@@ -211,7 +233,7 @@ export default function AddCluster(){
                                                 className="form-check-label">{user.nombres}
                                             </label>
                                         </div>
-                                    ))} */}
+                                    ))}
 
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
@@ -231,13 +253,14 @@ export default function AddCluster(){
 //PETICION POST PARA CLUSTERS
 const postData = data =>{
     const currentUserId = localStorage.getItem("ID");
-    data.users = currentUserId;
+    data.createdBy = currentUserId;
     const url = `${rutaAPI}/addCluster`
     let formData = new FormData();
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
     formData.append("state", data.state);
-    formData.append("users", data.users);
+    formData.append("users", JSON.stringify(data.users.map(u => u._id)));
+    formData.append("createdBy", data.createdBy);
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
 

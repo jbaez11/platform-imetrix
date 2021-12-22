@@ -11,7 +11,8 @@ export default function Clusters(){
     let nuevaURL = valores.split("/");
 
     let role = localStorage.getItem("ROLE");
-    
+
+    /* Bloque para solicitar los clusters del Administrador */
     const [clusters , setClusters] = React.useState([]);
 
     React.useEffect(() => {
@@ -19,15 +20,39 @@ export default function Clusters(){
         obtenerDatos();
     }, [])
 
+    /* Obtiene los clusters del Administrador */
     const obtenerDatos = async ()=>{
-        const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
+        const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
         const clust =  await data.json()
-        console.log("cluster",clust.data);
+        //console.log("cluster",clust.data);
         clust.data.forEach(cluster => {
             cluster.nombre=cluster.nombre.toLowerCase()
         });
         setClusters(clust.data)
     }
+    /* Bloque para solicitar los clusters del Administrador */
+    
+    /* ---------------------------------------------------------------------------- */
+
+    /* Bloque solicitar los clusters del Usuario */
+    const [clustersUser , setUserClusters] = React.useState([]);
+
+    React.useEffect(() => {
+        //console.log('useEffect');
+        obtenerUserClusters();
+    }, [])
+
+    /* Obtiene los clusters del Usuario */
+    const obtenerUserClusters = async ()=>{
+        const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
+        const clust =  await data.json()
+        console.log("User Clusters",clust.data);
+        clust.data.forEach(cluster => {
+            cluster.nombre=cluster.nombre.toLowerCase()
+        });
+        setUserClusters(clust.data)
+    }
+    /* Bloque solicitar los clusters del Usuario */
 
 return(
 <div className="sidebar-mini">
@@ -53,33 +78,75 @@ return(
                                 <div className="card-body">
                                     <div className="container">
                                         <div className="row">
-                                            {clusters.map((cluster)=>(
-                                            <div class="col-sm">
-                                                <div style={{ width: '18rem' }} className="card text-center">
-                                                    <div className="card-body"  >
-                                                        <h5 className=" text-center " style={{"text-transform": "uppercase"}}>{cluster.nombre}</h5>
-                                                        <img class="card-img-top" width="150" height="150" alt="img"  src={rutaAPI+"/getImgCluster/"+cluster.foto} />
-                                                        <br />
-                                                       
-                                                        {(() =>{
-                                                            if(role === "Administrador"){
-                                                                return (
-                                                                    <>
-                                                                     <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
-                                                                    </>
-                                                                )
-                                                            }else if(role === "Auditor"){
-                                                                return (
-                                                                    <>
-                                                                    <a href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
-                                                                   </>
-                                                                )
-                                                            }
-                                                        })()}
+                                        {(() =>{
+                                            if(role === "Administrador"){
+                                                return(
+                                                    <>
+                                                     {clusters.map((cluster)=>(
+                                                    <div class="col-sm">
+                                                        <div style={{ width: '18rem' }} className="card text-center">
+                                                            <div className="card-body"  >
+                                                                <h5 className=" text-center " style={{"text-transform": "uppercase"}}>{cluster.nombre}</h5>
+                                                                <img class="card-img-top" width="150" height="150" alt="img"  src={rutaAPI+"/getImgCluster/"+cluster.foto} />
+                                                                <br />
+                                                               
+                                                                {(() =>{
+                                                                    if(role === "Administrador"){
+                                                                        return (
+                                                                            <>
+                                                                             <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                            </>
+                                                                        )
+                                                                    }else if(role === "Auditor"){
+                                                                        return (
+                                                                            <>
+                                                                            <a href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                           </>
+                                                                        )
+                                                                    }
+                                                                })()}
+                                                            </div>
+                                                        </div>  
                                                     </div>
-                                                </div>  
-                                            </div>
-                                            ))}
+                                                    ))}
+                                                    </>
+                                                )
+                                               
+                                            }else if(role === "Auditor"){
+                                                return(
+                                                    <>
+                                                    {clustersUser.map((cluster)=>(
+                                                    <div class="col-sm">
+                                                        <div style={{ width: '18rem' }} className="card text-center">
+                                                            <div className="card-body"  >
+                                                                <h5 className=" text-center " style={{"text-transform": "uppercase"}}>{cluster.nombre}</h5>
+                                                                <img class="card-img-top" width="150" height="150" alt="img"  src={rutaAPI+"/getImgCluster/"+cluster.foto} />
+                                                                <br />
+                                                               
+                                                                {(() =>{
+                                                                    if(role === "Administrador"){
+                                                                        return (
+                                                                            <>
+                                                                             <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                            </>
+                                                                        )
+                                                                    }else if(role === "Auditor"){
+                                                                        return (
+                                                                            <>
+                                                                            <a href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                           </>
+                                                                        )
+                                                                    }
+                                                                })()}
+                                                            </div>
+                                                        </div>  
+                                                    </div>
+                                                    ))}
+                                                    </>
+                                                ) 
+                                            }
+                                        })()}
+                                            
                                         </div>
                                     </div>
                                 </div>
