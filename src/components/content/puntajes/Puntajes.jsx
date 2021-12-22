@@ -163,6 +163,7 @@ export default function Puntajes() {
   };
 
   const tabla2 = async (ini, fin, cabeceras, name) => {
+    console.log("cabeceras", cabeceras);
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
     let fechaFinalOriginal = new Date(fin).toISOString();
@@ -176,11 +177,22 @@ export default function Puntajes() {
     let recordScoreByKeywords = [];
 
     for (let i = 0; i < data.length; i++) {
+      //console.log("data.length", data.length);
       for (let key in data[i].recordingsSummary) {
         if (key === name) {
           for (let j = 0; j < data[i].recordingsSummary[key].length; j++) {
-            data[i].recordingsSummary[key][j].results.cierre =
-              data[i].recordingsSummary[key][j].results.cierre * 100;
+            /* data[i].recordingsSummary[key][j].results.cabeceras[0] =
+              data[i].recordingsSummary[key][j].results.cabeceras[0] * 100;
+            data[i].recordingsSummary[key][j].results.cabeceras[1] =
+              data[i].recordingsSummary[key][j].results.cabeceras[1] * 100;
+            data[i].recordingsSummary[key][j].results.cabeceras[2] =
+              data[i].recordingsSummary[key][j].results.cabeceras[2] * 100;
+            data[i].recordingsSummary[key][j].results.cabeceras[3] =
+              data[i].recordingsSummary[key][j].results.cabeceras[3] * 100;
+            data[i].recordingsSummary[key][j].results.cabeceras[4] =
+              data[i].recordingsSummary[key][j].results.cabeceras[4] * 100;
+            data[i].recordingsSummary[key][j].results.totalScore =
+              data[i].recordingsSummary[key][j].results.totalScore * 100; */
             data[i].recordingsSummary[key][j].results.despedida =
               data[i].recordingsSummary[key][j].results.despedida * 100;
             data[i].recordingsSummary[key][j].results.producto =
@@ -199,6 +211,7 @@ export default function Puntajes() {
         }
       }
     }
+    console.log("recordScoreByKeywords", recordScoreByKeywords);
     setGrabaciones(recordScoreByKeywords);
   };
 
