@@ -19,6 +19,10 @@ export default function Puntajes() {
   };
 
   const [showCalendar, setShowCalendar] = useState(true);
+  //activadores de tablas
+  const [activeTabla1, setActiveTabla1] = useState(false);
+  const [activeTabla2, setActiveTabla2] = useState(false);
+  const [activeTabla3, setActiveTabla3] = useState(false);
 
   const [sumTotalGrabaciones, setSumTotalGrabaciones] = useState(0);
   const [porcentajeGeneral, setPorcentajeGeneral] = useState(0);
@@ -35,11 +39,16 @@ export default function Puntajes() {
   //  end  utilizadas en la segunda tabla
   //    utilizadas en la TERCERA tabla
   const [keywords, setKeywords] = useState([]);
+  const [tableKeywords, setTableKeywords] = useState([]);
 
   //  end  utilizadas en la TERCERA tabla
   const handleChange = (e) => {
     setBusqueda(e.target.value);
     filtrar(e.target.value);
+    setActiveTabla2(false);
+    setActiveTabla3(false);
+    setKeywords([]);
+    setGrabaciones([]);
   };
 
   const filtrar = (terminoBusqueda) => {
@@ -213,6 +222,72 @@ export default function Puntajes() {
     }
     console.log("recordScoreByKeywords", recordScoreByKeywords);
     setGrabaciones(recordScoreByKeywords);
+    setTableGrabaciones(recordScoreByKeywords);
+  };
+
+  const tabla3 = async (keyfile) => {
+    const getKeywords = await getKeywordsData(keyfile);
+    let data = getKeywords.data;
+    console.log("data", data);
+    function secondsToTime(seconds) {
+      return new Date(seconds * 1000).toISOString().substr(11, 11);
+    }
+    console.log("keyfile", keyfile);
+    let keywords = data[0].contents;
+    let keywordsArray = [];
+    let id = 0;
+    for (let key in keywords) {
+      for (let i = 0; i < keywords[key].results.length; i++) {
+        console.log("mostrar", keywords[key].results[i]);
+        id++;
+        let keywordPackage = {
+          id: id + key,
+          name: key,
+          module: keywords[key].clasification.module,
+          category: keywords[key].clasification.category,
+        };
+        keywords[key].results[i]["from"] = secondsToTime(
+          keywords[key].results[i]["from"]
+        );
+        keywords[key].results[i]["to"] = secondsToTime(
+          keywords[key].results[i]["to"]
+        );
+        keywordPackage["speaker"] = keywords[key].results[i]["speaker"];
+        keywordPackage["from"] = keywords[key].results[i]["from"];
+        keywordPackage["to"] = keywords[key].results[i]["to"];
+        keywordPackage["confidence"] = keywords[key].results[i]["confidence"];
+        console.log("package", keywordPackage);
+        keywordsArray.push(keywordPackage);
+      }
+      if (keywords[key].results.length == 0) {
+        let keywordPackage = {
+          id: id + key,
+          name: key,
+          module: keywords[key].clasification.module,
+          category: keywords[key].clasification.category,
+        };
+        keywordPackage["speaker"] = "-";
+        keywordPackage["from"] = "-";
+        keywordPackage["to"] = "-";
+        keywordPackage["confidence"] = "-";
+        console.log("keywordsPackage", keywordPackage);
+        keywordsArray.push(keywordPackage);
+      }
+      //id++;
+    }
+    console.log("keywordsArray", keywordsArray);
+    let keywordsFound = [];
+    let keywordsNotFound = [];
+    for (let i = 0; i < keywordsArray.length; i++) {
+      if (keywordsArray[i].speaker !== "-") {
+        keywordsFound.push(keywordsArray[i]);
+      } else {
+        keywordsNotFound.push(keywordsArray[i]);
+      }
+    }
+    keywordsArray = keywordsFound.concat(keywordsNotFound);
+    console.log("keywordArray", keywordsArray);
+    setKeywords(keywordsArray);
   };
 
   const dataAuditoria = async (ini, fin) => {
@@ -234,47 +309,7 @@ export default function Puntajes() {
     tabla1(puntajes);
   };
 
-  React.useEffect(() => {
-    obtenerDatos();
-  }, []);
-
-  const [cabeceraMostrar, setCabeceraMostrar] = useState([]);
   const [cabecerasMostrar, setCabecerasMostrar] = useState([]);
-  const [valoresMostrar, setValoresMostrar] = useState([]);
-
-  function obtenerCabecera(data) {
-    /* console.log("Data Inicial", data[0])
-        console.log("Atributos", Object.keys(data[0]))
-        console.log("Valores", Object.values(data[0])) */
-
-    let cabeceras = Object.keys(data[0]);
-    let valores = Object.values(data[0]);
-    let trueCabeceras = [];
-    let trueValores = [];
-    for (let i = 0; i < cabeceras.length; i++) {
-      if (
-        !(
-          cabeceras[i] === "_id" ||
-          cabeceras[i] === "__v" ||
-          cabeceras[i] === "createdAt"
-        )
-      ) {
-        trueCabeceras.push(cabeceras[i]);
-        trueValores.push(valores[i]);
-      }
-    }
-
-    setCabeceraMostrar(trueCabeceras);
-    setValoresMostrar(trueValores);
-    //console.log("CabecerasFinales",trueCabeceras)
-  }
-
-  const obtenerDatos = async () => {
-    const data = await fetch(`${rutaAPITableros}/igsSufiCO/getPruebas`);
-    const prueba = await data.json();
-    /* console.log("Pruebas",prueba.data); */
-    obtenerCabecera(prueba.data);
-  };
 
   return (
     <div className="sidebar-mini">
@@ -316,6 +351,9 @@ export default function Puntajes() {
                                   setAgentes([]);
                                   setSumTotalGrabaciones(0);
                                   setPorcentajeGeneral(0);
+                                  setActiveTabla1(true);
+                                  setActiveTabla2(false);
+                                  setActiveTabla3(false);
                                 }}
                               >
                                 <i class="far fa-calendar-alt"></i>
@@ -430,10 +468,16 @@ export default function Puntajes() {
                       </div>
                       <button
                         className="btn btn-warning btn-sm rounded-pill"
+                        hidden={activeTabla1 ? false : true}
                         onClick={() => {
                           filtrar("");
                           filtrar2("");
                           setBusqueda("");
+
+                          setActiveTabla2(false);
+                          setActiveTabla3(false);
+                          setGrabaciones([]);
+                          //setAgentes([]);
                           //setAgentes([])
                           //setGrabaciones([])
                           //setKeywords([])
@@ -445,7 +489,10 @@ export default function Puntajes() {
                       <br />
 
                       {/* <div className="table-responsive"> */}
-                      <table className="table  table-borderless table-hover">
+                      <table
+                        className="table  table-borderless table-hover"
+                        hidden={activeTabla1 ? false : true}
+                      >
                         <thead
                           style={{
                             backgroundColor: "#CACACA",
@@ -489,6 +536,9 @@ export default function Puntajes() {
                                       endDate,
                                       agent.name
                                     );
+
+                                    setActiveTabla2(true);
+
                                     //tabla2(startDate, endDate, agent.name);
                                   }}
                                 >
@@ -504,13 +554,16 @@ export default function Puntajes() {
                       {/**TAbla 2 */}
                       <button
                         className="btn btn-warning btn-sm rounded-pill"
+                        hidden={activeTabla2 ? false : true}
                         onClick={() => {
                           filtrar("");
                           filtrar2("");
                           setBusqueda("");
+                          setActiveTabla2(false);
+                          setActiveTabla3(false);
                           //setAgentes([])
-                          //setGrabaciones([])
-                          //setKeywords([])
+                          setGrabaciones([]);
+                          setKeywords([]);
                         }}
                       >
                         <i class="fas fa-arrow-left"></i> Volver
@@ -519,7 +572,10 @@ export default function Puntajes() {
                       <br />
 
                       {/* <div className="table-responsive"> */}
-                      <table className="table  table-borderless table-hover">
+                      <table
+                        className="table  table-borderless table-hover"
+                        hidden={activeTabla2 ? false : true}
+                      >
                         <thead
                           style={{
                             backgroundColor: "#CACACA",
@@ -571,7 +627,8 @@ export default function Puntajes() {
                                   className="btn btn-success btn-sm rounded-pill"
                                   onClick={() => {
                                     filtrar2(grabacion.keyfile);
-                                    //tabla2(startDate,endDate,agent.name)
+                                    tabla3(grabacion.keyfile);
+                                    setActiveTabla3(true);
                                   }}
                                 >
                                   Ver mas...
@@ -583,26 +640,57 @@ export default function Puntajes() {
                       </table>
                       {/**Tabla 2 end */}
 
-                      <table className="table table-dark table-hover">
-                        <thead>
+                      {/* <!--Table3 -->                */}
+                      <br />
+                      <br />
+                      <button
+                        className="btn btn-warning btn-sm rounded-pill"
+                        hidden={activeTabla3 ? false : true}
+                        onClick={() => {
+                          filtrar2("");
+                          setKeywords([]);
+
+                          setActiveTabla3(false);
+                        }}
+                      >
+                        <i class="fas fa-arrow-left"></i> Volver
+                      </button>
+                      <br />
+                      <br />
+                      {/* <div className="table-responsive"> */}
+                      <table
+                        className="table  table-borderless table-hover"
+                        hidden={activeTabla3 ? false : true}
+                      >
+                        <thead
+                          style={{
+                            backgroundColor: "#CACACA",
+                            color: "white",
+                            fontSize: "small",
+                          }}
+                        >
                           <tr>
-                            {cabeceraMostrar.map((cabecera, index) => (
-                              <>
-                                <td>{cabecera} </td>
-                              </>
-                            ))}
+                            <th>KEYWORD</th>
+                            <th>CATEGORIA</th>
+                            <th>MODULO</th>
+                            <th>DESDE</th>
+                            <th>HASTA</th>
                           </tr>
                         </thead>
-                        <tbody>
-                          <tr>
-                            {valoresMostrar.map((valor, index) => (
-                              <>
-                                <td>{valor} </td>
-                              </>
-                            ))}
-                          </tr>
+                        <tbody style={{ fontSize: "small" }}>
+                          {keywords.map((keyword) => (
+                            <tr key={keyword.name}>
+                              <td>{keyword.name}</td>
+                              <td>{keyword.category}</td>
+                              <td>{keyword.module}</td>
+                              <td>{keyword.from}</td>
+                              <td>{keyword.to}</td>
+                            </tr>
+                          ))}
                         </tbody>
                       </table>
+                      {/* </div> */}
+                      {/* end table 3 */}
                     </div>
                   </div>
                 </div>
@@ -649,6 +737,30 @@ const getDataModulos = () => {
   const params = {
     method: "GET",
     headers: {
+      "Content-Type": "application/json",
+    },
+  };
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+const getKeywordsData = (keyfile) => {
+  const valores = window.location.href;
+  let nuevaURL = valores.split("/");
+  console.log("nuevaURL", nuevaURL);
+  const url = `${rutaAPITableros}/${nuevaURL[4]}/keywords?keyfile=${keyfile}`;
+  const token = localStorage.getItem("ACCESS_TOKEN");
+  const params = {
+    method: "GET",
+    headers: {
+      Authorization: token,
       "Content-Type": "application/json",
     },
   };
