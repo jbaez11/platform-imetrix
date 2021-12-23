@@ -97,13 +97,13 @@ return(
                                                                              <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
                                                                             </>
                                                                         )
-                                                                    }else if(role === "Auditor"){
+                                                                    }/* else if(role === "Auditor"){
                                                                         return (
                                                                             <>
                                                                             <a href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
                                                                            </>
                                                                         )
-                                                                    }
+                                                                    } */
                                                                 })()}
                                                             </div>
                                                         </div>  
@@ -124,16 +124,16 @@ return(
                                                                 <br />
                                                                
                                                                 {(() =>{
-                                                                    if(role === "Administrador"){
+                                                                    /* if(role === "Administrador"){
                                                                         return (
                                                                             <>
                                                                              <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
                                                                             </>
                                                                         )
-                                                                    }else if(role === "Auditor"){
+                                                                    }else  */if(role === "Auditor"){
                                                                         return (
                                                                             <>
-                                                                            <a href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                            <a href={`/campañasAuditor/${nuevaURL[4]}/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
                                                                            </>
                                                                         )
                                                                     }

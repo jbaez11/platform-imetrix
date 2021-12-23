@@ -1,12 +1,56 @@
 import React,{useState} from 'react'
+import { useEffect } from "react";
 import {rutaAPI} from '../../../config/Config';
 import $ from 'jquery';
 import notie from 'notie';
 import 'notie/dist/notie.css';
 
 export default function AddCampaing(){
+
+    const currentUserId = localStorage.getItem("ID");
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
+
+    const [users, setUsers] = React.useState([]);
+
+    const [states, setStates] = React.useState([
+        {
+          nombre: "habilitado",
+          value: "1",
+        },
+        {
+          nombre: "Inhabilitado",
+          value: "0",
+        },
+      ]);
+
+    React.useEffect(() => {
+        obtenerUsuarios();
+    }, []);
+    
+    const obtenerUsuarios = async () => {
+        const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
+        const user = await data.json();
+        //console.log("Admin Users", user.data)
+        setUsers(user.data);
+        console.log("Users", user.data);
+    };
+    
+    /* Users on Change */
+    const userChange = (user) => {
+        let nUsers = campaing.users;
+        let index = nUsers.findIndex((c) => c._id === user._id);
+        if (index !== -1) {
+          nUsers.splice(index, 1);
+        } else {
+          nUsers.push(user);
+        }
+        crearCampaing({
+          ...campaing,
+          users: nUsers,
+        });
+        console.log("Usuarios para la Campaña", campaing);
+    };
 
     //HOOK para Capturar los Datos
     const [campaing, crearCampaing] = useState({
@@ -14,8 +58,13 @@ export default function AddCampaing(){
         foto: null,
         state: "",
         cluster:"",
+        users:[],
         pais:""
     })
+
+    useEffect(() => {
+        console.log("Actualización de la Campaña", campaing);
+    }, [campaing]);
 
     //OnChange
     const cambiaFormPost = e =>{
@@ -50,11 +99,9 @@ export default function AddCampaing(){
                 $(".previsualizarImg").attr("src", rutaFoto);
 
                 crearCampaing({
-                    'nombre': $("#nombre").val(), 
-                    'foto': foto,
-                    'state': $("#state").val(),
-                   // 'cluster': $("#cluster").val(),
-                    'pais': $("#pais").val()
+                    ...campaing, 
+                    foto,
+                    state: $("#state").val(),
                 })
             })        
         }
@@ -85,8 +132,6 @@ export default function AddCampaing(){
             $(".invalid-state").show();
             $(".invalid-state").html("El Pais de la Campaña no puede ir Vacio!");
         }
-
-        
 
         //Ejecutamos el servicio post
         const result = await postData(campaing);
@@ -126,6 +171,9 @@ export default function AddCampaing(){
                                         <i className="fas fa-signature"></i>
                                     </div>
                                     <input
+                                     onChange={(e) =>
+                                        crearCampaing({ ...campaing, nombre: e.target.value })
+                                      }
                                         id="nombre"
                                         type="text"
                                         className="form-control text-uppercase"
@@ -160,7 +208,11 @@ export default function AddCampaing(){
                                     <div className="input-group-append input-group-text">
                                         <i className="fas fa-user-check"></i>
                                     </div>
-                                    <select name="state" id="state">
+                                    <select 
+                                     onChange={(e) =>
+                                        crearCampaing({ ...campaing, state: e.target.value })
+                                    }
+                                    name="state" id="state">
                                         <option value="" selected hidden>Seleccionar estado</option>
                                         <option value="1">Habilitado</option>
                                         <option value="0">Inhabilitado</option>
@@ -199,6 +251,9 @@ export default function AddCampaing(){
                                         <i className="fas fa-signature"></i>
                                     </div>
                                     <input
+                                     onChange={(e) =>
+                                        crearCampaing({ ...campaing, pais: e.target.value })
+                                      }
                                         id="pais"
                                         type="text"
                                         className="form-control text-uppercase"

@@ -48,12 +48,12 @@ export default function App() {
                <Route exact path="/clusters/:id">{role ? <Clusters/> : <ClustersInicio/>} </Route>
                <Route exact path="/campañas/:id/:clustername">{role ? <Campaings/> : <CamaingsAuditor/>} </Route>
                <Route exact path="/campañasinicio/:id/:clustername"><CampaingsInicio/></Route>
-               <Route exact path="/campañasAuditor/:id/:clustername"><CamaingsAuditor/></Route>
+               <Route exact path="/campañasAuditor/:id/:clusterid/:clustername"><CamaingsAuditor/></Route>
                <Route exact path="/usuarios/:id">{role ? <Usuarios/> : <ClustersInicio/>} </Route>
                <Route exact path="/agents/:bd"> <Agents/></Route>
                <Route exact path="/keywords/:db"> <Keywords/> </Route>
                <Route exact path="/auditoria/:db"> <Auditoria/> </Route>
-               <Route exact path="/clusterKeywords/:bd"> <ClustersKeywords/> </Route>
+               <Route exact path="/clusterKeywords/:bd"> <ClustersKeywords/> </Route>   
                <Route exact path="/moduloKeywords/:bd"> <Modulos/> </Route>
                <Route exact path="/puntajes/:bd"> <Puntajes/> </Route>
                <Route exact path="/estadisticas/:bd"> <Estadisticas/> </Route>
