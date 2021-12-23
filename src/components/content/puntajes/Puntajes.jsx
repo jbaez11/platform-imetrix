@@ -182,47 +182,40 @@ export default function Puntajes() {
       fechaFinal[0] + "T00:00:00.000Z"
     );
     let data = getPuntajes.data;
+    //console.log("data", data);
 
     let recordScoreByKeywords = [];
-
+    //console.log("cabeceras[0]", cabeceras[0]);
     for (let i = 0; i < data.length; i++) {
       //console.log("data.length", data.length);
-      for (let key in data[i].recordingsSummary) {
-        if (key === name) {
-          for (let j = 0; j < data[i].recordingsSummary[key].length; j++) {
-            /* data[i].recordingsSummary[key][j].results.cabeceras[0] =
-              data[i].recordingsSummary[key][j].results.cabeceras[0] * 100;
-            data[i].recordingsSummary[key][j].results.cabeceras[1] =
-              data[i].recordingsSummary[key][j].results.cabeceras[1] * 100;
-            data[i].recordingsSummary[key][j].results.cabeceras[2] =
-              data[i].recordingsSummary[key][j].results.cabeceras[2] * 100;
-            data[i].recordingsSummary[key][j].results.cabeceras[3] =
-              data[i].recordingsSummary[key][j].results.cabeceras[3] * 100;
-            data[i].recordingsSummary[key][j].results.cabeceras[4] =
-              data[i].recordingsSummary[key][j].results.cabeceras[4] * 100;
-            data[i].recordingsSummary[key][j].results.totalScore =
-              data[i].recordingsSummary[key][j].results.totalScore * 100; */
-            data[i].recordingsSummary[key][j].results.despedida =
-              data[i].recordingsSummary[key][j].results.despedida * 100;
-            data[i].recordingsSummary[key][j].results.producto =
-              data[i].recordingsSummary[key][j].results.producto * 100;
-            data[i].recordingsSummary[key][j].results.saludo =
-              data[i].recordingsSummary[key][j].results.saludo * 100;
-            data[i].recordingsSummary[key][j].results.totalScore =
-              data[i].recordingsSummary[key][j].results.totalScore * 100;
-            data[i].recordingsSummary[key][j].results.venta =
-              data[i].recordingsSummary[key][j].results.venta * 100;
+      for (let agent in data[i].recordingsSummary) {
+        if (agent === name) {
+          for (
+            let keyfile = 0;
+            keyfile < data[i].recordingsSummary[agent].length;
+            keyfile++
+          ) {
+            //console.log("agent", agent);
+            for (let k = 0; k < cabeceras.length; k++) {
+              let modulo = cabeceras[k];
+              data[i].recordingsSummary[agent][keyfile].results[modulo] *= 100;
+
+              //data[i].recordingsSummary[agent].results.cabeceras[k]=data[i].recordingsSummary[agent].results.cabeceras[k]*100
+            }
+            data[i].recordingsSummary[agent][keyfile].results.totalScore *= 100;
+            /* data[i].recordingsSummary[agent][keyfile].results.totalScore *
+              100; */
           }
 
           recordScoreByKeywords = recordScoreByKeywords.concat(
-            data[i].recordingsSummary[key]
+            data[i].recordingsSummary[agent]
           );
         }
       }
     }
-    console.log("recordScoreByKeywords", recordScoreByKeywords);
     setGrabaciones(recordScoreByKeywords);
     setTableGrabaciones(recordScoreByKeywords);
+    console.log("grabaciones", grabaciones);
   };
 
   const tabla3 = async (keyfile) => {
@@ -232,6 +225,7 @@ export default function Puntajes() {
     function secondsToTime(seconds) {
       return new Date(seconds * 1000).toISOString().substr(11, 11);
     }
+
     console.log("keyfile", keyfile);
     let keywords = data[0].contents;
     let keywordsArray = [];
@@ -604,22 +598,22 @@ export default function Puntajes() {
                             <tr key={grabacion.keyfile}>
                               <td>{grabacion.keyfile}</td>
                               <td className="text-center">
-                                {grabacion.results.saludo.toFixed(1)}
+                                {grabacion.results.saludo.toFixed(1)} %
                               </td>
                               <td className="text-center">
-                                {grabacion.results.producto.toFixed(1)}
+                                {grabacion.results.producto.toFixed(1)} %
                               </td>
                               <td className="text-center">
-                                {grabacion.results.venta.toFixed(1)}
+                                {grabacion.results.venta.toFixed(1)} %
                               </td>
                               <td className="text-center">
-                                {grabacion.results.cierre.toFixed(1)}
+                                {grabacion.results.cierre.toFixed(1)} %
                               </td>
                               <td className="text-center">
-                                {grabacion.results.despedida.toFixed(1)}
+                                {grabacion.results.despedida.toFixed(1)} %
                               </td>
                               <td className="text-center">
-                                {grabacion.results.totalScore.toFixed(1)}
+                                {grabacion.results.totalScore.toFixed(1)} %
                               </td>
 
                               <td className="text-center">
