@@ -22,9 +22,27 @@ export default function Clusters() {
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
     const clust = await data.json();
-    //console.log("cluster",clust.data);
+    console.log("cluster", clust.data);
     clust.data.forEach((cluster) => {
-      cluster.nombre = cluster.nombre.toLowerCase();
+      console.log("cluster", cluster);
+
+      let descompenerUrl = cluster.nombre.split(" ");
+      let lowerUrl = descompenerUrl[0].toLowerCase();
+
+      if (descompenerUrl[1]) {
+        console.log("descompenerUrl", descompenerUrl);
+
+        let secondUrl = descompenerUrl[1];
+        let upperAndLowerUrl =
+          secondUrl[0].toUpperCase() + secondUrl.slice(1).toLowerCase();
+        let unirUrl = lowerUrl + upperAndLowerUrl;
+        console.log("unirUrl", unirUrl);
+        cluster.UrlCampaing = unirUrl;
+      } else {
+        cluster.UrlCampaing = lowerUrl;
+      }
+
+      //console.log("cluster url", cluster);
     });
     setClusters(clust.data);
   };
@@ -116,25 +134,20 @@ export default function Clusters() {
                                               return (
                                                 <>
                                                   <a
-                                                    href={`/campañasinicio/${cluster._id}/${cluster.nombre}`}
+                                                    href={`/campañasinicio/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
                                                     Ingresar
                                                   </a>
                                                 </>
                                               );
-                                            } else if (role === "Auditor") {
-                                              return (
-                                                <>
-                                                  <a
-                                                    href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`}
-                                                    className="btn btn-warning"
-                                                  >
-                                                    Ingresar
-                                                  </a>
-                                                </>
-                                              );
-                                            }
+                                            } /* else if(role === "Auditor"){
+                                                                        return (
+                                                                            <>
+                                                                            <a href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                           </>
+                                                                        )
+                                                                    } */
                                           })()}
                                         </div>
                                       </div>
@@ -174,22 +187,19 @@ export default function Clusters() {
                                           <br />
 
                                           {(() => {
-                                            if (role === "Administrador") {
+                                            /* if(role === "Administrador"){
+                                                                        return (
+                                                                            <>
+                                                                             <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                            </>
+                                                                        )
+                                                                    }else  */ if (
+                                              role === "Auditor"
+                                            ) {
                                               return (
                                                 <>
                                                   <a
-                                                    href={`/campañasinicio/${cluster._id}/${cluster.nombre}`}
-                                                    className="btn btn-warning"
-                                                  >
-                                                    Ingresar
-                                                  </a>
-                                                </>
-                                              );
-                                            } else if (role === "Auditor") {
-                                              return (
-                                                <>
-                                                  <a
-                                                    href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`}
+                                                    href={`/campañasAuditor/${nuevaURL[4]}/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
                                                     Ingresar

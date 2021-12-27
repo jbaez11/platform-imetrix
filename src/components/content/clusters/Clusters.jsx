@@ -135,7 +135,7 @@ return(
     );
 }
 
-//Petición Get para Campañas
+//Petición Get para los Clusters de los Administradores
 const getData = () =>{
 
     const valores = window.location.href;

@@ -100,7 +100,6 @@ export default function AddAgentes() {
                     className="form-control"
                     name="identification"
                     placeholder="Ingrese numero de documento"
-                    minLength="10"
                     maxLength="10"
                     pattern="[0-9]{10}"
                     required

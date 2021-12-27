@@ -543,6 +543,7 @@ export default function Puntajes() {
                           ))}
                         </tbody>
                       </table>
+
                       {/* </div> */}
 
                       {/**TAbla 2 */}
