@@ -55,7 +55,9 @@ export default function AddKeyWord() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`${rutaAPITableros}/igsSufiCO/getClusters`);
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+    const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getClusters`);
     const clust = await data.json();
     console.log("cluster", clust.data);
     setClusters(clust.data);

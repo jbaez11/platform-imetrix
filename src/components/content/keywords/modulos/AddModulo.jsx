@@ -55,7 +55,9 @@ export default function AddModulo() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`${rutaAPITableros}/igsSufiCO/getCategorias`);
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+    const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getCategorias`);
     const categoria = await data.json();
     console.log("Categorias", categoria.data);
     setCategorias(categoria.data);

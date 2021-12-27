@@ -56,7 +56,9 @@ export default function AddCluster() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`${rutaAPITableros}/igsSufiCO/getModulos`);
+    const valores = window.location.href;
+    let nuevaURL = valores.split("/");
+    const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getModulos`);
     const modulo = await data.json();
     console.log("Modulos", modulo.data);
     setModulos(modulo.data);
