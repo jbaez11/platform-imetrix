@@ -73,7 +73,7 @@ export default function CrearCuenta(){
                                         placeholder="Ingrese nombres y apellidos"
                                         minLength="2"
                                         maxLength="50"
-                                        pattern="(?=.*[A-Za-z]).{2,50}"
+                                        pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                                         required
                                     />
                                 </div>
@@ -175,7 +175,7 @@ export default function CrearCuenta(){
                                         placeholder="Ingrese el nombre de la Empresa"
                                         minLength="3"
                                         maxLength="20"
-                           
+                                        pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                                         required
                                     />
                                 </div>
@@ -196,7 +196,7 @@ export default function CrearCuenta(){
                                         placeholder="Ingrese el pais"
                                         minLength="2"
                                         maxLength="2"
-                                        pattern="(?=.*[A-Z]).{2,2}"
+                                        pattern="[A-Z]+[A-Z]"
                                         required
                                     />
                                 </div>

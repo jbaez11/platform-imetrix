@@ -1,5 +1,5 @@
-import React,{useState,useEffect} from 'react'
-import Swal from 'sweetalert2';
+import React,{useState} from 'react'
+//import Swal from 'sweetalert2';
 import $ from 'jquery';
 import {rutaAPI} from '../../../config/Config';
 
@@ -42,7 +42,7 @@ export default function EditUser(){
     }
 
 
-    const clusterChange = cluster =>{
+    /* const clusterChange = cluster =>{
         let nClusters = usuarios.clusters
         let index = nClusters.findIndex(c => c._id === cluster._id)
         if(index !== -1){
@@ -73,8 +73,8 @@ export default function EditUser(){
     }
 
     let checkedSelectedCluster = cluster =>{
-        return usuarios.clusters.some(c => c._id == cluster._id)
-    }
+        return usuarios.clusters.some(c => c._id === cluster._id)
+    } */
 
     //Hook para caputar los datos del formulario
     const [usuarios, editarUsuario] = useState({
@@ -127,7 +127,7 @@ export default function EditUser(){
         e.preventDefault();
 
         let data = $(this).attr("data").split(",");
-        //console.log(data);
+        console.log("Data para Editar", data);
         $("#editarNombre").val(data[1]);
         $("#editarUsuario").val(data[2]);
         $("#editarState").val(data[3]);
@@ -136,7 +136,7 @@ export default function EditUser(){
         $("#editarRole").val(data[6]);
 
         let user = await getUsers(data[0]);
-        console.log("Users", user)
+        console.log("Clusters del Usuario", user)
         let nClusters = []
         let nCampaings = []
         if(user.data instanceof Array){
@@ -243,7 +243,7 @@ export default function EditUser(){
                                     placeholder="Ingrese el Nombre"
                                     minLength="2"
                                     maxLength="50"
-                                    pattern="(?=.*[A-Za-z]).{2,50}"
+                                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                                 />
                             </div>
                         </div>
@@ -300,7 +300,7 @@ export default function EditUser(){
                                 </select>
                             </div>
                         </div>
-                        {/* <div className="form-group">
+                       {/*  <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarCluster">
                                 *Solo se permite el id del cluster a asociar
                             </label>
@@ -402,9 +402,6 @@ const putData = data =>{
 //Petición Get para Usuarios asociados al Administrador
 const getUsers = (userID) =>{
 
-    //const valores = window.location.href;
-    //let nuevaURL = valores.split("/");
-
     const url = `${rutaAPI}/getCluster/${userID}`;
     const token = localStorage.getItem("ACCESS_TOKEN");
 
@@ -426,7 +423,7 @@ const getUsers = (userID) =>{
 }
 
 //METODO DELETE
-const deleteData = data =>{
+/* const deleteData = data =>{
     const url = `${rutaAPI}/deleteUser/${data}`
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
@@ -446,4 +443,4 @@ const deleteData = data =>{
     }).catch(err=>{
         return err;
     });
-}
+} */

@@ -122,7 +122,7 @@ export default function AddUser(){
                     <div className="modal-body">
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="nombre">
-                                *Mínimo 2 Caracteres, máximo 50, Sin números
+                                *Mínimo 2 Caracteres, máximo 50, Sin números ni Caracteres Especiales
                             </label>
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">
@@ -136,7 +136,7 @@ export default function AddUser(){
                                     placeholder="Ingrese el Nombre"
                                     minLength="2"
                                     maxLength="50"
-                                    pattern="(?=.*[A-Za-z]).{2,50}"
+                                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                                     required
                                 />
                             </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import { rutaAPITableros } from "../../../../config/Config";
@@ -217,7 +217,7 @@ const putData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/editModulo/${data.id}`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  //const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "PUT",
     body: JSON.stringify(data),
@@ -243,7 +243,7 @@ const deleteData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/deleteModulo/${data}`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  //const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "DELETE",
     headers: {

@@ -86,7 +86,7 @@ export default function EditCampaing(){
         if(result.status === 200){
             $(".modal-footer").before(`<div class="alert alert-success">${result.mensaje}</div>`)
             $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href="/campañas/"+nuevaURL[4]},2000);
+            setTimeout(()=>{window.location.href=`/campañas/${nuevaURL[4]}/${nuevaURL[5]}`},2000);
         }
     
     }
@@ -201,7 +201,7 @@ export default function EditCampaing(){
                                     placeholder="Ingrese el nombre de la Campaña"
                                     minLength="2"
                                     maxLength="30"
-                                    pattern="([A-Za-z]).{2,30}"
+                                    pattern="^[A-Z]+\s?[A-Z]+$"
                                     required
                                 />
                             </div>

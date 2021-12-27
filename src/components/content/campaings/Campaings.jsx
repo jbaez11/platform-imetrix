@@ -15,15 +15,22 @@ export default function Camaings(){
     const dataCampaings = async() =>{
 
         const getCampaings = await getData();
+        //console.log("Campañas", getCampaings)
 
         const dataTable = [];
 
         getCampaings.data.forEach((campaing, index) =>{
+
+            let userNames = [];
+            campaing.users.forEach((user) =>{
+                userNames.push(user.nombres);
+            })
             dataTable[index] = [(index + 1),
                                 campaing.nombre,
                                 campaing.foto,
                                 (campaing.state === 1) ? campaing.state='Habilitado':campaing.state='Inhabilitado',
                                 campaing.cluster.nombre,
+                                userNames,
                                 campaing.pais,
                                 campaing.createdAt,
                                 [campaing._id,
@@ -31,6 +38,7 @@ export default function Camaings(){
                                 campaing.foto,
                                 (campaing.state === 1) ? campaing.state='Habilitado':campaing.state='Inhabilitado',
                                 campaing.cluster.nombre,
+                                userNames,
                                 campaing.pais,
                                 campaing.createdAt]];
         })
@@ -58,9 +66,10 @@ export default function Camaings(){
                     }},
                     {title: "Estado"},
                     {title: "Cluster"},
+                    {title: "Usuarios"},
                     {title: "Pais"},
                     {title: "Fecha de Creación"},
-                    {title: "Acciones",
+                    {title: "Editar",
                     render: function(data){
                         return `
                         

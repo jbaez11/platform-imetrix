@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import $ from "jquery";
 import { rutaAPITableros } from "../../../../config/Config";
 
@@ -145,7 +145,7 @@ const postData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/addModulo`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  //const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "POST",
     body: JSON.stringify(data),

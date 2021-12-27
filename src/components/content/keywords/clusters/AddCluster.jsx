@@ -165,7 +165,7 @@ const postData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/addCluster`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  //const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "POST",
     body: JSON.stringify(data),

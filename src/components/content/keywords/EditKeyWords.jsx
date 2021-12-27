@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import $ from "jquery";
 import Swal from "sweetalert2";
 import { rutaAPITableros } from "../../../config/Config";
@@ -160,7 +160,7 @@ export default function EditKeyWord() {
                     placeholder="Ingrese la KeyWord/Frase"
                     minLength="2"
                     maxLength="50"
-                    pattern="(?=.*[A-Za-z]).{2,50}"
+                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                     required
                   />
                 </div>
@@ -176,7 +176,7 @@ export default function EditKeyWord() {
                   <select name="cluster" id="editarCluster">
                     {clusters.map((cluster, index) => (
                       <>
-                        <option value={cluster._id}>{cluster.name}</option>
+                        <option key={index} value={cluster._id}>{cluster.name}</option>
                       </>
                     ))}
                   </select>
@@ -211,7 +211,7 @@ const putData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/editKeyword/${data.id}`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  //const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "PUT",
     body: JSON.stringify(data),
@@ -237,7 +237,7 @@ const deleteData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/deleteKeyWord/${data}`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  //const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "DELETE",
     headers: {

@@ -94,7 +94,7 @@ return(
                                                                     if(role === "Administrador"){
                                                                         return (
                                                                             <>
-                                                                             <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                             <a style={{marginTop:"10px"}} href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
                                                                             </>
                                                                         )
                                                                     }/* else if(role === "Auditor"){
@@ -133,7 +133,7 @@ return(
                                                                     }else  */if(role === "Auditor"){
                                                                         return (
                                                                             <>
-                                                                            <a href={`/campañasAuditor/${nuevaURL[4]}/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
+                                                                            <a style={{marginTop:"10px"}} href={`/campañasAuditor/${nuevaURL[4]}/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
                                                                            </>
                                                                         )
                                                                     }

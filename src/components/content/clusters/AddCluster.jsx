@@ -30,7 +30,7 @@ export default function AddCluster() {
     const user = await data.json();
     //console.log("Admin Users", user.data)
     setUsers(user.data);
-    console.log("Users", user.data);
+    //console.log("Users", user.data);
   };
 
   /* Users on Change */
@@ -105,7 +105,7 @@ export default function AddCluster() {
   const submitPost = async (e) => {
     $(".alert").remove();
     e.preventDefault();
-    /*  const {nombre, foto, state} = cluster;
+     const {nombre, foto, state} = cluster;
         if(nombre === ""){
             $(".invalid-nombre").show();
             $(".invalid-nombre").html("El nombre del Cluster no puede ir Vacio!");
@@ -119,7 +119,7 @@ export default function AddCluster() {
         if(state === ""){
             $(".invalid-state").show();
             $(".invalid-state").html("El estado del Cluster no puede ir Vacio!");
-        } */
+        }
 
     //Ejecutamos el servicio post
     const result = await postData(cluster);
@@ -166,7 +166,7 @@ export default function AddCluster() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="nombre">
-                  *Min. 2 Caracteres | Max. 20 | Sin caracteres especiales.
+                  *Min. 2 Caracteres | Max. 20 | Sin caracteres especiales, en Mayusculas y solo un espacio
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -178,12 +178,12 @@ export default function AddCluster() {
                     }
                     id="nombre"
                     type="text"
-                    className="form-control text-uppercase"
+                    className="form-control"
                     name="nombre"
                     placeholder="Ingrese el nombre del Cluster"
                     minLength="2"
                     maxLength="30"
-                    pattern="([A-Za-z]).{2,30}"
+                    pattern="^[A-Za-z]+\s?[A-Za-z]+$"
                     required
                   />
                 </div>

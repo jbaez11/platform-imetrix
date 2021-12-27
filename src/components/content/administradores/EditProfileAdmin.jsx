@@ -103,7 +103,7 @@ export default function EditProfileAdmin(){
                                         placeholder="Ingrese nombres y apellidos"
                                         minLength="2"
                                         maxLength="50"
-                                        pattern="(?=.*[A-Za-z]).{2,50}"
+                                        pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                                         required
                                     />
                                 </div>
@@ -204,7 +204,7 @@ export default function EditProfileAdmin(){
                                         placeholder="Ingrese el nombre de la Empresa"
                                         minLength="3"
                                         maxLength="20"
-                                        pattern="[a-zA-Z]"
+                                        pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                                         readOnly="readOnly"
                                         required
                                     />
@@ -212,7 +212,7 @@ export default function EditProfileAdmin(){
                             </div>
                             <div className="form-group">
                                 <label className="small text-secondary" htmlFor="editarPais">
-                                   | PAIS
+                                | *Solo con el siguiente formato -- | CO-US-MX
                                 </label>
                                 <div className="input-group mb-3">
                                     <div className="input-group-append input-group-text">
@@ -226,7 +226,7 @@ export default function EditProfileAdmin(){
                                         placeholder="Ingrese el pais"
                                         minLength="2"
                                         maxLength="2"
-                                        pattern="[A-Z]"
+                                        pattern="[A-Z]+[A-Z]"
                                         readOnly="readOnly"
                                         required
                                     />

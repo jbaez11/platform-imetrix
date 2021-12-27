@@ -317,7 +317,7 @@ export default function Estadisticas() {
         console.log("package", keywordPackage);
         keywordsArray.push(keywordPackage);
       }
-      if (keywords[key].results.length == 0) {
+      if (keywords[key].results.length === 0) {
         let keywordPackage = {
           id: id + key,
           name: key,

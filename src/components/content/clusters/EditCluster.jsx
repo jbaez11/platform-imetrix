@@ -81,7 +81,7 @@ export default function EditCluster(){
                         'nombre': $("#editNombre").val(), 
                         'foto': foto,
                         'state': $("#editState").val(),
-                        'users': $("#editUsers").val(),
+                        /* 'users': $("#editUsers").val(), */
                         'id': $("#editId").val()
                     })
                 })        
@@ -92,7 +92,7 @@ export default function EditCluster(){
                 'nombre': $("#editNombre").val(), 
                 'foto': null,
                 'state': $("#editState").val(),
-                'users': $("#editUsers").val(),
+                /* 'users': $("#editUsers").val(), */ 
                 'id': $("#editId").val()
             })
         }   
@@ -125,18 +125,17 @@ export default function EditCluster(){
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCluster/${data[2]}`);
         $("#editState").val(data[3]);
-        $("#editUsers").val(data[4]);
+        /* $("#editUsers").val(data[4]); */
         $("#editId").val(data[0]);
 
         let user = await getUsers();
-        console.log("Users", user)
+        console.log("Usuarios del Cluster", user)
         let nUsers = []
 
         if(user.data instanceof Array){
-            /* console.log("Entro al InstaceOf") */
-            const userClusters = user.data.map(u => u._id)
-            /* console.log("UserClusters",userClusters) */
-            nUsers = users.filter(c => userClusters.includes(c._id))
+            const clusterUsers = user.data.map(u => u._id)
+            /* console.log("UserClusters",clusterUsers) */
+            nUsers = users.filter(c => clusterUsers.includes(c._id))
             console.log("nUsers", nUsers)
         }
 
@@ -145,14 +144,14 @@ export default function EditCluster(){
             'nombre': data[1], 
             'foto': null,
             'state': data[3],
-            'users': nUsers,
+            /* 'users': nUsers, */ 
             'id': data[0]
                 
         })
         
     })
 
-    //Capturar los datos para borrar la campaña
+ /*    //Capturar los datos para borrar la campaña
     $(document).on("click", ".borrarInput", function(e){
         e.preventDefault();
         let data = $(this).attr("data").split(",")[0];
@@ -204,7 +203,7 @@ export default function EditCluster(){
           })
     
 
-    })
+    }) */
 
     return(
 
@@ -234,7 +233,7 @@ export default function EditCluster(){
                                     placeholder="Ingrese el nombre del Cluster"
                                     minLength="2"
                                     maxLength="30"
-                                    pattern="([A-Za-z]).{2,30}"
+                                    pattern="^[A-Z]+\s?[A-Z]+$"
                                     required
                                 />
                             </div>
@@ -267,7 +266,7 @@ export default function EditCluster(){
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
                         </div>
-                        <div className="form-group">
+                        <div hidden className="form-group">
                                 <label className="small text-secondary" htmlFor="editUsers">
                                     | Seleccione el Usuario(s) que quiere agregar o quitar al cluster
                                 </label>
@@ -287,7 +286,7 @@ export default function EditCluster(){
                                             <label style={{marginLeft:"25px", marginTop:"1px"}} 
                                                 className="form-check-label">{user.nombres}
                                             </label>
-                                            </div>
+                                        </div>
                                     ))}
 
                                 </div>
@@ -314,7 +313,7 @@ const putData = data =>{
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
     formData.append("state", data.state);
-    formData.append("users", JSON.stringify(data.users.map(u => u._id)));
+    //formData.append("users", JSON.stringify(data.users.map(u => u._id)));
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
 
@@ -360,7 +359,7 @@ const getUsers = () =>{
 }
 
 //METODO DELETE
-const deleteData = data =>{
+/* const deleteData = data =>{
     const url = `${rutaAPI}/deleteCluster/${data}`
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
@@ -380,4 +379,4 @@ const deleteData = data =>{
     }).catch(err=>{
         return err;
     });
-}
+} */

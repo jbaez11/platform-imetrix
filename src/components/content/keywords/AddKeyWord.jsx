@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import $ from "jquery";
 import { rutaAPITableros } from "../../../config/Config";
 
@@ -77,7 +77,7 @@ export default function AddKeyWord() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="name">
-                  *Mínimo 2 Caracteres, máximo 50, Sin números
+                  *Mínimo 2 Caracteres, máximo 50, Sin números ni Caracteres especiales
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -91,7 +91,7 @@ export default function AddKeyWord() {
                     placeholder="Ingrese la KeyWord/Frase"
                     minLength="2"
                     maxLength="50"
-                    pattern="(?=.*[A-Za-z]).{2,50}"
+                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                     required
                   />
                 </div>
@@ -110,7 +110,7 @@ export default function AddKeyWord() {
                     </option>
                     {clusters.map((cluster, index) => (
                       <>
-                        <option value={cluster._id}>{cluster.name}</option>
+                        <option key={index} value={cluster._id}>{cluster.name}</option>
                       </>
                     ))}
                   </select>
@@ -145,7 +145,7 @@ const postData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/addKeyword`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  //const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "POST",
     body: JSON.stringify(data),
