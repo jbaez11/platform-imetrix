@@ -15,7 +15,7 @@ export default function Camaings(){
     const dataCampaings = async() =>{
 
         const getCampaings = await getData();
-        //console.log("Campañas", getCampaings)
+        console.log("Campañas", getCampaings)
 
         const dataTable = [];
 
