@@ -14,7 +14,6 @@ export default function EditCampaing(){
         nombre:"",
         foto: null,
         state: "",
-        cluster: "",
         pais:"",
         id:""
     })
@@ -53,7 +52,6 @@ export default function EditCampaing(){
                         'nombre': $("#editNombre").val(), 
                         'foto': foto,
                         'state': $("#editState").val(),
-                        // 'cluster': $("#editCluster").val(),
                         'pais':$("#editPais").val(),
                         'id': $("#editId").val()
                     })
@@ -65,7 +63,6 @@ export default function EditCampaing(){
                 'nombre': $("#editNombre").val(), 
                 'foto': null,
                 'state': $("#editState").val(),
-                // 'cluster': $("#editCluster").val(),
                 'pais':$("#editPais").val(),
                 'id': $("#editId").val()
             })
@@ -102,8 +99,7 @@ export default function EditCampaing(){
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCampaing/${data[2]}`);
         $("#editState").val(data[3]);
-        // $("#editCluster").val(data[4]);
-        $("#editPais").val(data[5]);
+        $("#editPais").val(data[6]);
         $("#editId").val(data[0]);
 
         editCampaing({
@@ -111,8 +107,7 @@ export default function EditCampaing(){
             'nombre': data[1], 
             'foto': null,
             'state': data[3],
-            // 'cluster': data[4],
-            'pais':data[5],
+            'pais':data[6],
             'id': data[0]
             
         })
@@ -234,28 +229,6 @@ export default function EditCampaing(){
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
                         </div>
-                        {/* <div hidden className="form-group">
-                            <label className="small text-secondary" htmlFor="editCluster">
-                                *Solo se permite el ID del cluster a asociar
-                            </label>
-                            <div className="input-group mb-3">
-                                <div className="input-group-append input-group-text">
-                                    <i className="fas fa-user-check"></i>
-                                </div>
-                                <input
-                                    id="editCluster"
-                                    type="text"
-                                    className="form-control"
-                                    name="cluster"
-                                    placeholder="Ingrese el ID cluster"
-                                    minLength="24"
-                                    maxLength="24"
-                                    pattern="(?=.*\d).{24,24}" 
-                                    required
-                                />
-                            </div>
-                            <div className="invalid-feedback invalid-state"></div>
-                        </div> */}
                           <div className="form-group">
                                 <label className="small text-secondary" htmlFor="editPais">
                                    | *Solo con el siguiente formato -- | CO-US-MX
