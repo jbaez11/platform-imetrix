@@ -160,7 +160,7 @@ export default function EditModulo() {
                     placeholder="Ingrese el nombre del modulo"
                     minLength="2"
                     maxLength="20"
-                    pattern="(?=.*[A-Za-z]).{2,20}"
+                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                     required
                   />
                 </div>
@@ -176,13 +176,13 @@ export default function EditModulo() {
                   <div className="input-group-append input-group-text">
                     <i className="fas fa-address-card"></i>
                   </div>
-                  <select name="categoria" id="editarCategoria">
+                  <select required name="categoria" id="editarCategoria">
                     <option value="" selected disabled>
                       Seleccionar Categoria
                     </option>
                     {categorias.map((categoria, index) => (
                       <>
-                        <option value={categoria._id}>{categoria.name}</option>
+                        <option key={index} value={categoria._id}>{categoria.name}</option>
                       </>
                     ))}
                   </select>

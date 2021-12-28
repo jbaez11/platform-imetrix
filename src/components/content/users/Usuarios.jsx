@@ -19,24 +19,17 @@ export default function Usuarios(){
         const dataTable = [];
 
         getAdministradores.data.forEach((admin, index) =>{
-            //console.log("Data",admin)
-            let clusterNames = [];
-            admin.clusters.forEach((cluster) =>{
-                clusterNames.push(cluster.nombre);
-            })
-            
+
             dataTable[index] = [(index + 1),
                                 admin.nombres,
                                 admin.correo,
                                 (admin.state === 1) ? admin.state='Habilitado':admin.state='Inhabilitado',
-                                clusterNames,
                                 admin.role,
                                 admin.createdAt,
                                 [admin._id,
                                     admin.nombres,
                                     admin.correo,
                                     (admin.state === 1) ? admin.state='Habilitado':admin.state='Inhabilitado',
-                                    clusterNames,
                                     admin.role,
                                     admin.createdAt]]
         })
@@ -49,7 +42,6 @@ export default function Usuarios(){
                     {title: "Nombres"},
                     {title: "Correo"},
                     {title: "Estado"},
-                    {title: "Clusters"},
                     {title: "Role"},
                     {title: "Fecha Creación"},
                     {title: "Acciones",

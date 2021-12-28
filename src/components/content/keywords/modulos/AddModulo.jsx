@@ -79,7 +79,7 @@ export default function AddModulo() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="name">
-                  *Mínimo 2 Caracteres, máximo 20, Sin números
+                  *Mínimo 2 Caracteres, máximo 20, Sin números ni Caracteres Especiales
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -93,7 +93,7 @@ export default function AddModulo() {
                     placeholder="Ingrese el nombre del modulo"
                     minLength="2"
                     maxLength="20"
-                    pattern="(?=.*[A-Za-z]).{2,20}"
+                    pattern="^[a-z]+( [a-z]+)*$"
                     required
                   />
                 </div>
@@ -106,13 +106,13 @@ export default function AddModulo() {
                   <div className="input-group-append input-group-text">
                     <i className="fas fa-address-card"></i>
                   </div>
-                  <select name="categoria" id="categoria">
-                    <option value="" selected disabled>
+                  <select required name="categoria" id="categoria">
+                    <option  value="" selected disabled>
                       Seleccionar Categoria
                     </option>
                     {categorias.map((categoria, index) => (
                       <>
-                        <option value={categoria._id}>{categoria.name}</option>
+                        <option key={index} value={categoria._id}>{categoria.name}</option>
                       </>
                     ))}
                   </select>

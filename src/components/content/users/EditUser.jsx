@@ -42,7 +42,7 @@ export default function EditUser(){
     }
 
 
-    /* const clusterChange = cluster =>{
+    const clusterChange = cluster =>{
         let nClusters = usuarios.clusters
         let index = nClusters.findIndex(c => c._id === cluster._id)
         if(index !== -1){
@@ -74,7 +74,7 @@ export default function EditUser(){
 
     let checkedSelectedCluster = cluster =>{
         return usuarios.clusters.some(c => c._id === cluster._id)
-    } */
+    }
 
     //Hook para caputar los datos del formulario
     const [usuarios, editarUsuario] = useState({
@@ -141,7 +141,7 @@ export default function EditUser(){
         let nCampaings = []
         if(user.data instanceof Array){
             const userClusters = user.data.map(u => u._id)
-            //console.log("CLUSTERS", userClusters)
+            console.log("CLUSTERS", userClusters)
             nClusters = clusters.filter(c => userClusters.includes(c._id))
             console.log("nClusters", nClusters)
         }
@@ -300,7 +300,7 @@ export default function EditUser(){
                                 </select>
                             </div>
                         </div>
-                       {/*  <div className="form-group">
+                        <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarCluster">
                                 *Solo se permite el id del cluster a asociar
                             </label>
@@ -345,7 +345,7 @@ export default function EditUser(){
                                          </div> 
                                     </div>}
                             </>
-                        ))} */}
+                        ))}
                                     
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarRole">

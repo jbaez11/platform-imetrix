@@ -176,13 +176,13 @@ export default function EditCluster() {
                   <div className="input-group-append input-group-text">
                     <i className="fas fa-address-card"></i>
                   </div>
-                  <select name="modulo" id="editarModulo">
+                  <select required name="modulo" id="editarModulo">
                     <option value="" selected disabled>
                       Seleccionar Modulo
                     </option>
                     {modulos.map((modulo, index) => (
                       <>
-                        <option value={modulo._id}>{modulo.name}</option>
+                        <option key={index} value={modulo._id}>{modulo.name}</option>
                       </>
                     ))}
                   </select>
@@ -193,8 +193,7 @@ export default function EditCluster() {
                   className="small text-secondary"
                   htmlFor="editarPorcentaje"
                 >
-                  *Ejemplo: 0.1/0.6/0.02 No puede superar un porcentaje mayor al
-                  100% -- X 1.2
+                *Sin letras o caracteres especiales,  No puede superar un porcentaje mayor al 100% 
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -206,6 +205,7 @@ export default function EditCluster() {
                     className="form-control"
                     name="porcentaje"
                     placeholder="Ingrese el porcentaje del cluster"
+                    pattern="[0-9]+"
                     required
                   />
                 </div>

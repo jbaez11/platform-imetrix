@@ -22,7 +22,7 @@ export default function Clusters() {
         index + 1,
         clusters.name,
         clusters.modulo,
-        clusters.porcentaje,
+        clusters.porcentaje + "%",
         [clusters._id, clusters.name, clusters.modulo, clusters.porcentaje],
       ];
     });

@@ -125,7 +125,7 @@ export default function EditCluster(){
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCluster/${data[2]}`);
         $("#editState").val(data[3]);
-        /* $("#editUsers").val(data[4]); */
+        $("#editUsers").val(data[4]); 
         $("#editId").val(data[0]);
 
         let user = await getUsers();
@@ -134,7 +134,7 @@ export default function EditCluster(){
 
         if(user.data instanceof Array){
             const clusterUsers = user.data.map(u => u._id)
-            /* console.log("UserClusters",clusterUsers) */
+            console.log("UserClusters",clusterUsers)
             nUsers = users.filter(c => clusterUsers.includes(c._id))
             console.log("nUsers", nUsers)
         }
@@ -144,7 +144,7 @@ export default function EditCluster(){
             'nombre': data[1], 
             'foto': null,
             'state': data[3],
-            /* 'users': nUsers, */ 
+            'users': nUsers, 
             'id': data[0]
                 
         })
@@ -266,7 +266,7 @@ export default function EditCluster(){
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
                         </div>
-                        <div hidden className="form-group">
+                        <div className="form-group">
                                 <label className="small text-secondary" htmlFor="editUsers">
                                     | Seleccione el Usuario(s) que quiere agregar o quitar al cluster
                                 </label>
