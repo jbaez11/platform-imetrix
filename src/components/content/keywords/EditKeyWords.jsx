@@ -160,7 +160,7 @@ export default function EditKeyWord() {
                     placeholder="Ingrese la KeyWord/Frase"
                     minLength="2"
                     maxLength="50"
-                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+                    pattern="^[a-z]+"
                     required
                   />
                 </div>

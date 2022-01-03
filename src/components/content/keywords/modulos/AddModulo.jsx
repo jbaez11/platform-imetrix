@@ -93,7 +93,7 @@ export default function AddModulo() {
                     placeholder="Ingrese el nombre del modulo"
                     minLength="2"
                     maxLength="20"
-                    pattern="^[a-z]+( [a-z]+)*$"
+                    pattern="^[a-z]+"
                     required
                   />
                 </div>

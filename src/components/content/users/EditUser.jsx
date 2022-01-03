@@ -6,12 +6,12 @@ import {rutaAPI} from '../../../config/Config';
 export default function EditUser(){
 
     const currentUserId = localStorage.getItem("ID");
-    const valores = window.location.href;
-    let nuevaURL = valores.split("/");
+    /* const valores = window.location.href;
+    let nuevaURL = valores.split("/"); */
 
-    const [clusters , setClusters] = React.useState([]);
+/*     const [clusters , setClusters] = React.useState([]); */
 
-    React.useEffect(() => {
+/*     React.useEffect(() => {
         //console.log('useEffect');
         obtenerDatos();
     }, [])
@@ -39,10 +39,10 @@ export default function EditUser(){
         const campaing =  await data.json()
         //console.log("cluster",clust.data);
         setClusters(campaing.data)
-    }
+    } */
 
 
-    const clusterChange = cluster =>{
+/*     const clusterChange = cluster =>{
         let nClusters = usuarios.clusters
         let index = nClusters.findIndex(c => c._id === cluster._id)
         if(index !== -1){
@@ -74,7 +74,7 @@ export default function EditUser(){
 
     let checkedSelectedCluster = cluster =>{
         return usuarios.clusters.some(c => c._id === cluster._id)
-    }
+    } */
 
     //Hook para caputar los datos del formulario
     const [usuarios, editarUsuario] = useState({
@@ -82,8 +82,8 @@ export default function EditUser(){
         user:"",
         password:"",
         state:"",
-        clusters:[],
-        campaings:[],
+        /* clusters:[],
+        campaings:[], */
         role:"",
         id:""
     });
@@ -131,11 +131,11 @@ export default function EditUser(){
         $("#editarNombre").val(data[1]);
         $("#editarUsuario").val(data[2]);
         $("#editarState").val(data[3]);
-        $("#editarCluster").val(data[4]);
-        $('#editCampaings').val(data[5])
+        /* $("#editarCluster").val(data[4]);
+        $('#editCampaings').val(data[5]); */
         $("#editarRole").val(data[6]);
 
-        let user = await getUsers(data[0]);
+        /* let user = await getUsers(data[0]);
         console.log("Clusters del Usuario", user)
         let nClusters = []
         let nCampaings = []
@@ -148,15 +148,15 @@ export default function EditUser(){
         if(user.data instanceof Array){
             const userCampaings = user.data.map(u => u._id)
             nCampaings = clusters.filter(c => userCampaings.includes(c._id))
-        }
+        } */
 
         editarUsuario({
             'nombres':  $("#editarNombre").val(),
             'user':  $("#editarUsuario").val(),
             'password':  $("#editarPassword").val(),
             'state':  $("#editarState").val(),
-            'clusters': nClusters,
-            'campaings': nCampaings,
+            /* 'clusters': nClusters,
+            'campaings': nCampaings, */
             'role':  $("#editarRole").val(),
             'id': data[0]
         })
@@ -229,7 +229,7 @@ export default function EditUser(){
                     <div className="modal-body">
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarNombre">
-                                *Mínimo 2 Caracteres, máximo 50, Sin números
+                            *Mínimo 2 Caracteres, máximo 50, Sin números ni Caracteres Especiales
                             </label>
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">
@@ -238,12 +238,12 @@ export default function EditUser(){
                                 <input
                                     id="editarNombre"
                                     type="text"
-                                    className="form-control text-lowercase"
+                                    className="form-control"
                                     name="nombres"
-                                    placeholder="Ingrese el Nombre"
+                                    placeholder="Ingrese los Nombres y Apellidos"
                                     minLength="2"
                                     maxLength="50"
-                                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+                                    pattern="[a-zA-Z]+"
                                 />
                             </div>
                         </div>
@@ -293,14 +293,14 @@ export default function EditUser(){
                                 <div className="input-group-append input-group-text">
                                     <i className="fas fa-key"></i>
                                 </div>
-                                <select name="state" id="editarState">
+                                <select required name="state" id="editarState">
                                         <option value="" selected disabled hidden>Seleccionar estado</option>
                                         <option value="1">Habilitado</option>
                                         <option value="0">Inhabilitado</option>
                                 </select>
                             </div>
                         </div>
-                        <div className="form-group">
+                        {/* <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarCluster">
                                 *Solo se permite el id del cluster a asociar
                             </label>
@@ -345,7 +345,7 @@ export default function EditUser(){
                                          </div> 
                                     </div>}
                             </>
-                        ))}
+                        ))} */}
                                     
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarRole">
@@ -355,7 +355,7 @@ export default function EditUser(){
                                 <div className="input-group-append input-group-text">
                                     <i className="fas fa-user"></i>
                                 </div>
-                                <select name="role" id="editarRole">
+                                <select required name="role" id="editarRole">
                                         <option value="" selected disabled hidden>Seleccionar rol</option>
                                         <option hidden value="Administrador">Administrador</option>
                                         <option value="Auditor">Auditor</option>
@@ -400,7 +400,7 @@ const putData = data =>{
 }
 
 //Petición Get para Usuarios asociados al Administrador
-const getUsers = (userID) =>{
+/* const getUsers = (userID) =>{
 
     const url = `${rutaAPI}/getCluster/${userID}`;
     const token = localStorage.getItem("ACCESS_TOKEN");
@@ -420,7 +420,7 @@ const getUsers = (userID) =>{
         return err;
     })
 
-}
+} */
 
 //METODO DELETE
 /* const deleteData = data =>{

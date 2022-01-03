@@ -133,10 +133,10 @@ export default function AddUser(){
                                     type="text"
                                     className="form-control"
                                     name="nombres"
-                                    placeholder="Ingrese el Nombre"
+                                    placeholder="Ingrese los Nombres y Apellidos"
                                     minLength="2"
                                     maxLength="50"
-                                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+                                    pattern="[a-zA-Z]+"
                                     required
                                 />
                             </div>
@@ -189,7 +189,7 @@ export default function AddUser(){
                                 <div className="input-group-append input-group-text">
                                     <i className="fas fa-user-check"></i>
                                 </div>
-                                <select name="state" id="state">
+                                <select required name="state" id="state">
                                         <option value="" selected disabled hidden>Seleccionar estado</option>
                                         <option value="1">Habilitado</option>
                                         <option value="0">Inhabilitado</option>
@@ -250,7 +250,7 @@ export default function AddUser(){
                                 <div className="input-group-append input-group-text">
                                     <i className="fas fa-user-tag"></i>
                                 </div>
-                                <select name="role" id="role">
+                                <select required name="role" id="role">
                                         <option value="" selected disabled hidden>Seleccionar rol</option>
                                         <option hidden value="Administrador">Administrador</option>
                                         <option value="Auditor">Auditor</option>
