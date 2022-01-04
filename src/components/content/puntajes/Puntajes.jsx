@@ -215,18 +215,8 @@ export default function Puntajes() {
       }
     }
 
-    /* 
-    {
-      keyfile:"sufi",
-      results.saludo:10,
-      results.produto: 22,23,45
-      results.porcentaje:50
-    }
-
-      ["keyfile","10","22","23","45","50"]
-     */
-
-    /*  setGrabaciones(["keyfile", "10", "22", "23", "45", "50", "7", "8", "9"]);
+    /*  
+    
     setTableGrabaciones([
       "keyfile",
       "10",
@@ -633,7 +623,6 @@ export default function Puntajes() {
                               <td>
                                 {grabacion.results.totalScore.toFixed(1)} %
                               </td>
-
                               <td className="text-center">
                                 <button
                                   className="btn btn-success btn-sm rounded-pill"
