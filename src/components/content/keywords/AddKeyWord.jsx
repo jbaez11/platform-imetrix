@@ -79,7 +79,7 @@ export default function AddKeyWord() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="name">
-                  *Mínimo 2 Caracteres, máximo 50, Sin números ni Caracteres especiales
+                  *Mínimo 2 Caracteres, máximo 150, Sin números ni Caracteres especiales
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -92,8 +92,8 @@ export default function AddKeyWord() {
                     name="name"
                     placeholder="Ingrese la KeyWord/Frase"
                     minLength="2"
-                    maxLength="50"
-                    pattern="^[a-z]+"
+                    maxLength="150"
+                    pattern="^[a-zA-ZÀ-ÿ?\s]+"
                     required
                   />
                 </div>
@@ -106,7 +106,7 @@ export default function AddKeyWord() {
                   <div className="input-group-append input-group-text">
                     <i className="fas fa-address-card"></i>
                   </div>
-                  <select name="cluster" id="cluster">
+                  <select required name="cluster" id="cluster">
                     <option value="" selected disabled>
                       Seleccionar Cluster
                     </option>

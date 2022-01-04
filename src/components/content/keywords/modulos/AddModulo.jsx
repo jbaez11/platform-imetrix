@@ -79,7 +79,7 @@ export default function AddModulo() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="name">
-                  *Mínimo 2 Caracteres, máximo 20, Sin números ni Caracteres Especiales
+                  *Mínimo 2 Caracteres, máximo 20, Sin números ni Caracteres Especiales y en Minusculas
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -93,7 +93,7 @@ export default function AddModulo() {
                     placeholder="Ingrese el nombre del modulo"
                     minLength="2"
                     maxLength="20"
-                    pattern="^[a-z]+"
+                    pattern="^[a-zÀ-ÿ]+"
                     required
                   />
                 </div>

@@ -57,7 +57,7 @@ export default function EditCluster() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`${rutaAPITableros}/igsSufiCO/getModulos`);
+    const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getModulos`);
     const modulo = await data.json();
     console.log("Modulos", modulo.data);
     setModulos(modulo.data);
@@ -68,7 +68,7 @@ export default function EditCluster() {
     e.preventDefault();
 
     let data = $(this).attr("data").split(",");
-    //console.log(data);
+    console.log("Datos que se van a editar",data);
     $("#editarNombre").val(data[1]);
     $("#editarModulo").val(data[2]);
     $("#editarPorcentaje").val(data[3]);
@@ -149,7 +149,10 @@ export default function EditCluster() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="editarNombre">
-                  *Mínimo 2 Caracteres, máximo 20, Sin números
+                  *Mínimo 2 Caracteres, máximo 50, Sin números ni caracteres especiales
+                </label>
+                <label className="small text-secondary" htmlFor="name">
+                  *LOS CLUSTERS NO PUEDEN SER REPETIDOS*
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -162,8 +165,8 @@ export default function EditCluster() {
                     name="name"
                     placeholder="Ingrese el nombre del cluster"
                     minLength="2"
-                    maxLength="20"
-                    pattern="^[a-z]+"
+                    maxLength="50"
+                    pattern="^[a-zÀ-ÿ?\s]+"
                     required
                   />
                 </div>
@@ -205,7 +208,7 @@ export default function EditCluster() {
                     className="form-control"
                     name="porcentaje"
                     placeholder="Ingrese el porcentaje del cluster"
-                    pattern="[0-9]+"
+                    pattern="[0-9]*\.?[0-9]*"
                     required
                   />
                 </div>
@@ -236,7 +239,7 @@ export default function EditCluster() {
 
 /* PETICION PUT PARA CLUSTERS */
 const putData = (data) => {
-  console.log("DATA", data)
+  //console.log("DATA", data)
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/editCluster/${data.id}`;

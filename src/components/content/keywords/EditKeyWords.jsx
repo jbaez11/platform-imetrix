@@ -56,7 +56,7 @@ export default function EditKeyWord() {
   }, []);
 
   const obtenerDatos = async () => {
-    const data = await fetch(`${rutaAPITableros}/igsSufiCO/getClusters`);
+    const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getClusters`);
     const clust = await data.json();
     console.log("cluster", clust.data);
     setClusters(clust.data);
@@ -146,7 +146,7 @@ export default function EditKeyWord() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="editarNombre">
-                  *Mínimo 2 Caracteres, máximo 50, Sin números
+                  *Mínimo 2 Caracteres, máximo 150, Sin números ni Caracteres especiales
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -159,8 +159,8 @@ export default function EditKeyWord() {
                     name="name"
                     placeholder="Ingrese la KeyWord/Frase"
                     minLength="2"
-                    maxLength="50"
-                    pattern="^[a-z]+"
+                    maxLength="150"
+                    pattern="^[a-zA-ZÀ-ÿ?\s]+"
                     required
                   />
                 </div>
