@@ -1,4 +1,0 @@
-- task: VSBuild@1
-  ScriptType: "Inline Script"
-  InlineScript: |
-    yarn install --production --network-timeout=30000
