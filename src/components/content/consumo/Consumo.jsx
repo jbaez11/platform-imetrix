@@ -8,10 +8,9 @@ import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import SidebarAdminCampaing from "../../sidebar/SidebarAdminCampaing";
 import { Bar } from "react-chartjs-2";
-import { rutaAPITableros } from '../../../config/Config';
+import { rutaAPITableros } from "../../../config/Config";
 
 export default function Consumo() {
-
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focus, setFocus] = useState(START_DATE);
@@ -21,93 +20,92 @@ export default function Consumo() {
 
   const [showCalendar, setShowCalendar] = useState(true);
 
-  const [totalMinutos,setTotalminutos] = useState(0)
-  const [totalGrabaciones,setTotalGrabaciones] = useState(0)
-  const [totalGrabacionesLeidas,setTotalGrabacionesLeidas] = useState(0)
-  const [labelsMinutosLeidos, setLabelsMinutosLeidos] = useState(0)
-  const [dataMinutosLeidos, setDataMinutosLeidos] = useState(0)
-  const [dataMinutosNoLeidos, setDataMinutosNoLeidos] = useState(0)
-  const [dataGrabacionesLeidos, setDataGrabacionesLeidos] = useState(0)
-  const [dataGrabacionesNoLeidos, setDataGrabacionesNoLeidos] = useState(0)
+  const [totalMinutos, setTotalminutos] = useState(0);
+  const [totalGrabaciones, setTotalGrabaciones] = useState(0);
+  const [totalGrabacionesLeidas, setTotalGrabacionesLeidas] = useState(0);
+  const [labelsMinutosLeidos, setLabelsMinutosLeidos] = useState(0);
+  const [dataMinutosLeidos, setDataMinutosLeidos] = useState(0);
+  const [dataMinutosNoLeidos, setDataMinutosNoLeidos] = useState(0);
+  const [dataGrabacionesLeidos, setDataGrabacionesLeidos] = useState(0);
+  const [dataGrabacionesNoLeidos, setDataGrabacionesNoLeidos] = useState(0);
 
-  function sumaTotalMinutos(minutos){
-	
-	let suma = 0
-	minutos.forEach(minuto => {
-		suma += minuto.totalMinutes
-	});
+  function sumaTotalMinutos(minutos) {
+    let suma = 0;
+    minutos.forEach((minuto) => {
+      suma += minuto.totalMinutes;
+    });
 
-	setTotalminutos(suma);
-	
+    setTotalminutos(suma);
   }
 
-  function sumaTotalGrabaciones(grabaciones){
-	let suma = 0
-	grabaciones.forEach(grabacion => {
-		suma += grabacion.totalFiles
-	});
+  function sumaTotalGrabaciones(grabaciones) {
+    let suma = 0;
+    grabaciones.forEach((grabacion) => {
+      suma += grabacion.totalFiles;
+    });
 
-	setTotalGrabaciones(suma);
+    setTotalGrabaciones(suma);
   }
 
-  function sumaGrabacionesLeidas(grabaciones){
-	let suma = 0
-	grabaciones.forEach(grabacion => {
-		suma += grabacion.processedFiles
-	});
+  function sumaGrabacionesLeidas(grabaciones) {
+    let suma = 0;
+    grabaciones.forEach((grabacion) => {
+      suma += grabacion.processedFiles;
+    });
 
-	setTotalGrabacionesLeidas(suma);
+    setTotalGrabacionesLeidas(suma);
   }
-  
-  function graficaMinutos(minutos){
-	  console.log("minutos",minutos);
-	  
-	  /*
+
+  function graficaMinutos(minutos) {
+    console.log("minutos", minutos);
+
+    /*
 	  	labels = dias
 		data = minutos leidos
-	  */ 
-	  let labels = []; 
-	  let dataLeida = [];
-	  let dataNoLeida = [];
-	  let dataGrabaciones = [];
-	  let dataGrabacionesNo = [];
-	  minutos.forEach(minuto=>{
-		 labels.push(minuto.dayString);
-		 dataLeida.push(minuto.totalMinutes);
-		 dataNoLeida.push(minuto.unprocessedMinutes);
-		 dataGrabaciones.push(minuto.processedFiles);
-		 dataGrabacionesNo.push(minuto.unprocessedFiles);
-	  })
+	  */
+    let labels = [];
+    let dataLeida = [];
+    let dataNoLeida = [];
+    let dataGrabaciones = [];
+    let dataGrabacionesNo = [];
+    minutos.forEach((minuto) => {
+      labels.push(minuto.dayString);
+      dataLeida.push(minuto.totalMinutes);
+      dataNoLeida.push(minuto.unprocessedMinutes);
+      dataGrabaciones.push(minuto.processedFiles);
+      dataGrabacionesNo.push(minuto.unprocessedFiles);
+    });
 
-	  setLabelsMinutosLeidos(labels)
-	  setDataMinutosLeidos(dataLeida);
-	  setDataMinutosNoLeidos(dataNoLeida);
-	  setDataGrabacionesLeidos(dataGrabaciones);
-	  setDataGrabacionesNoLeidos(dataGrabacionesNo);
-
+    setLabelsMinutosLeidos(labels);
+    setDataMinutosLeidos(dataLeida);
+    setDataMinutosNoLeidos(dataNoLeida);
+    setDataGrabacionesLeidos(dataGrabaciones);
+    setDataGrabacionesNoLeidos(dataGrabacionesNo);
   }
 
-  const dataConsumo = async(ini,fin)=>{
-	  if(!ini || !fin){
-		  return;
-	  }
-	  
-	  let fechaInicialOriginal = new Date(ini).toISOString();
-	  let fechaInicial = fechaInicialOriginal.split('T');
-	  let fechaFinalOriginal = new Date(fin).toISOString();
-	  let fechaFinal = fechaFinalOriginal.split('T')
-	const getConsumo = await getData(fechaInicial[0]+"T00:00:00.000Z",fechaFinal[0]+"T00:00:00.000Z");
-	let consumos = getConsumo.data;
-	
-	sumaTotalMinutos(consumos);
-	sumaTotalGrabaciones(consumos);
-	sumaGrabacionesLeidas(consumos);
-	graficaMinutos(consumos);
-  }
+  const dataConsumo = async (ini, fin) => {
+    if (!ini || !fin) {
+      return;
+    }
+
+    let fechaInicialOriginal = new Date(ini).toISOString();
+    let fechaInicial = fechaInicialOriginal.split("T");
+    let fechaFinalOriginal = new Date(fin).toISOString();
+    let fechaFinal = fechaFinalOriginal.split("T");
+    const getConsumo = await getData(
+      fechaInicial[0] + "T00:00:00.000Z",
+      fechaFinal[0] + "T00:00:00.000Z"
+    );
+    let consumos = getConsumo.data;
+
+    sumaTotalMinutos(consumos);
+    sumaTotalGrabaciones(consumos);
+    sumaGrabacionesLeidas(consumos);
+    graficaMinutos(consumos);
+  };
 
   //dataConsumo();
 
-  
   return (
     <div className="sidebar-mini">
       <div className="wrapper">
@@ -135,46 +133,42 @@ export default function Consumo() {
                     type="button"
                     onClick={() => {
                       setShowCalendar(!showCalendar);
-					            dataConsumo(startDate,endDate);
+                      dataConsumo(startDate, endDate);
                     }}
-					
                   >
-                      {showCalendar ? "seleccionar nueva fecha" : "ir"}
+                    {showCalendar ? "seleccionar nueva fecha" : "ir"}
                   </button>
 
                   {showCalendar ? (
-                    <div >
-                      <p style={{"display":"inline"}}>
+                    <div>
+                      <p style={{ display: "inline" }}>
                         {" "}
                         {startDate
                           ? format(startDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Inicial"}
                         -
                       </p>
-                      <p style={{"display":"inline"}}>
+                      <p style={{ display: "inline" }}>
                         {" "}
                         {endDate
                           ? format(endDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Final"}
-                        
                       </p>
                     </div>
                   ) : (
-                    <div style={{ height: "450px", width: "300px" }} >
-                      
-                      <p style={{"display":"inline"}}>
+                    <div style={{ height: "450px", width: "300px" }}>
+                      <p style={{ display: "inline" }}>
                         {" "}
                         {startDate
                           ? format(startDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Inicial"}
                         -
                       </p>
-                      <p style={{"display":"inline"}}>
+                      <p style={{ display: "inline" }}>
                         {" "}
                         {endDate
                           ? format(endDate, "dd MMM yyyy", { locale: enGB })
                           : "Seleccione Fecha Final"}
-                        
                       </p>
                       <DateRangePickerCalendar
                         startDate={startDate}
@@ -193,13 +187,12 @@ export default function Consumo() {
                 </div>
               </div>
             </div>
-            
           </div>
           <div className="content">
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
-                  <div className="card card-primary card-outline">
+                  <div className="card card-warning card-outline">
                     <div className="card-header"></div>
                     <div className="card-body">
                       {/* inicio */}
@@ -216,7 +209,9 @@ export default function Consumo() {
                                 TOTAL MINUTOS <br />
                               </h5>
                               <h1 style={{ textAlign: "center" }}>
-                                <span style={{ color: "#4C4C4C" }}>{totalMinutos.toFixed(0)}</span>
+                                <span style={{ color: "#4C4C4C" }}>
+                                  {totalMinutos.toFixed(0)}
+                                </span>
                               </h1>
                             </div>
                           </div>
@@ -227,7 +222,9 @@ export default function Consumo() {
                               TOTAL GRABACIONES <br />
                             </h5>
                             <h1 style={{ textAlign: "center" }}>
-                              <span style={{ color: "#4C4C4C" }}>{totalGrabaciones}</span>
+                              <span style={{ color: "#4C4C4C" }}>
+                                {totalGrabaciones}
+                              </span>
                             </h1>
                           </div>
                           <div className="col-sm">
@@ -237,7 +234,9 @@ export default function Consumo() {
                               GRABACIONES LEIDAS <br />
                             </h5>
                             <h1 style={{ textAlign: "center" }}>
-                              <span style={{ color: "#4C4C4C" }}>{totalGrabacionesLeidas}</span>
+                              <span style={{ color: "#4C4C4C" }}>
+                                {totalGrabacionesLeidas}
+                              </span>
                             </h1>
                           </div>
                         </div>
@@ -247,11 +246,11 @@ export default function Consumo() {
 
                         <Bar
                           data={{
-                            labels: labelsMinutosLeidos,//["1", "2", "3", "4"],
+                            labels: labelsMinutosLeidos, //["1", "2", "3", "4"],
                             datasets: [
                               {
                                 label: "Minutos leidos",
-                                data: dataMinutosLeidos,//[100, 200, 500, 200],
+                                data: dataMinutosLeidos, //[100, 200, 500, 200],
                                 backgroundColor: "#FFCD7F",
                               },
                               {
@@ -272,12 +271,12 @@ export default function Consumo() {
                             datasets: [
                               {
                                 label: "Grabaciones leidos",
-                                data: dataGrabacionesLeidos,//[100, 200, 300, 200],
+                                data: dataGrabacionesLeidos, //[100, 200, 300, 200],
                                 backgroundColor: "#FFCD7F",
                               },
                               {
                                 label: "Grabaciones no leidos",
-                                data: dataGrabacionesNoLeidos,//[23, 45, 5, 20],
+                                data: dataGrabacionesNoLeidos, //[23, 45, 5, 20],
                                 backgroundColor: "#ff4f9a",
                               },
                             ],
@@ -298,26 +297,28 @@ export default function Consumo() {
   );
 }
 
-const getData = (fechaIni,fechaFinal)=>{
-	const valores = window.location.href;
-    let nuevaURL = valores.split("/");
-	//console.log("nuevaURL",nuevaURL);
-	const url = `${rutaAPITableros}/${nuevaURL[4]}/consumo?eventDate=${fechaIni}&eventDate=${fechaFinal}`;
-	const token = localStorage.getItem("ACCESS_TOKEN");
-	const params = {
-		method : "GET",
-		headers : {
-			"Authorization": token,
-			"Content-Type" : "application/json"
-		}
+const getData = (fechaIni, fechaFinal) => {
+  const valores = window.location.href;
+  let nuevaURL = valores.split("/");
+  //console.log("nuevaURL",nuevaURL);
+  const url = `${rutaAPITableros}/${nuevaURL[4]}/consumo?eventDate=${fechaIni}&eventDate=${fechaFinal}`;
+  const token = localStorage.getItem("ACCESS_TOKEN");
+  const params = {
+    method: "GET",
+    headers: {
+      Authorization: token,
+      "Content-Type": "application/json",
+    },
+  };
 
-	}
-
-	return fetch(url,params).then(response =>{
-		 return response.json();
-	}).then(result => {
-		return result
-	}).catch(err => {
-		return err;
-	})
-}
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
+};

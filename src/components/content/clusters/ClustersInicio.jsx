@@ -89,11 +89,8 @@ export default function Clusters() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
-                  <div className="card card-warning">
-                    <div
-                      className="card-header"
-                      style={{ backgroundColor: "orange" }}
-                    ></div>
+                  <div className="card card-warning card-outline">
+                    <div className="card-header"></div>
                     <div className="card-body">
                       <div className="container">
                         <div className="row">

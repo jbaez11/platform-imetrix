@@ -108,7 +108,7 @@ export default function Keywords() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
-                  <div className="card card-primary card-outline">
+                  <div className="card card-warning card-outline">
                     <div className="card-header">
                       <h5 className="m-0">
                         <button

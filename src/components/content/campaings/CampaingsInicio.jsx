@@ -61,11 +61,8 @@ export default function CamaingsInicio() {
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
-                  <div className="card card-warning">
-                    <div
-                      className="card-header"
-                      style={{ backgroundColor: "orange" }}
-                    ></div>
+                  <div className="card card-warning card-outline">
+                    <div className="card-header"></div>
                     <div className="card-body">
                       <div className="container">
                         <div className="row">
@@ -76,9 +73,10 @@ export default function CamaingsInicio() {
                                 className="card text-center"
                               >
                                 <div className="card-body">
-                                  <h5 className=" text-center">
+                                  <h5 className="text-center">
                                     {campaing.nombre}
                                   </h5>
+
                                   <img
                                     className="card-img-top"
                                     height="100"
