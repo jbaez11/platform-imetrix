@@ -215,7 +215,8 @@ export default function Puntajes() {
       }
     }
 
-    /*  setGrabaciones(["keyfile", "10", "22", "23", "45", "50", "7", "8", "9"]);
+    /*  
+    
     setTableGrabaciones([
       "keyfile",
       "10",
