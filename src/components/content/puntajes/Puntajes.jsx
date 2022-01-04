@@ -633,7 +633,6 @@ export default function Puntajes() {
                               <td>
                                 {grabacion.results.totalScore.toFixed(1)} %
                               </td>
-
                               <td className="text-center">
                                 <button
                                   className="btn btn-success btn-sm rounded-pill"
