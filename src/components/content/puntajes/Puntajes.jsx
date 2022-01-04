@@ -161,6 +161,7 @@ export default function Puntajes() {
     const cabecerasData = await getDataModulos();
     //console.log("cabeceras", cabecerasData.data);
     let cabeceras = cabecerasData.data;
+    console.log("cabeceras object", cabeceras);
     let cabecerasArray = [];
 
     cabeceras.forEach((cabecera) => {
@@ -213,6 +214,31 @@ export default function Puntajes() {
         }
       }
     }
+
+    /* 
+    {
+      keyfile:"sufi",
+      results.saludo:10,
+      results.produto: 22,23,45
+      results.porcentaje:50
+    }
+
+      ["keyfile","10","22","23","45","50"]
+     */
+
+    /*  setGrabaciones(["keyfile", "10", "22", "23", "45", "50", "7", "8", "9"]);
+    setTableGrabaciones([
+      "keyfile",
+      "10",
+      "22",
+      "23",
+      "45",
+      "50",
+      "7",
+      "8",
+      "9",
+    ]); */
+    //console.log("grabdhjfkf", grabaciones);
     setGrabaciones(recordScoreByKeywords);
     setTableGrabaciones(recordScoreByKeywords);
     console.log("grabaciones", recordScoreByKeywords);
@@ -221,18 +247,18 @@ export default function Puntajes() {
   const tabla3 = async (keyfile) => {
     const getKeywords = await getKeywordsData(keyfile);
     let data = getKeywords.data;
-    console.log("data", data);
+    //console.log("data", data);
     function secondsToTime(seconds) {
       return new Date(seconds * 1000).toISOString().substr(11, 11);
     }
 
-    console.log("keyfile", keyfile);
+    //console.log("keyfile", keyfile);
     let keywords = data[0].contents;
     let keywordsArray = [];
     let id = 0;
     for (let key in keywords) {
       for (let i = 0; i < keywords[key].results.length; i++) {
-        console.log("mostrar", keywords[key].results[i]);
+        //console.log("mostrar", keywords[key].results[i]);
         id++;
         let keywordPackage = {
           id: id + key,
@@ -250,7 +276,7 @@ export default function Puntajes() {
         keywordPackage["from"] = keywords[key].results[i]["from"];
         keywordPackage["to"] = keywords[key].results[i]["to"];
         keywordPackage["confidence"] = keywords[key].results[i]["confidence"];
-        console.log("package", keywordPackage);
+        //console.log("package", keywordPackage);
         keywordsArray.push(keywordPackage);
       }
       if (keywords[key].results.length == 0) {
@@ -264,12 +290,12 @@ export default function Puntajes() {
         keywordPackage["from"] = "-";
         keywordPackage["to"] = "-";
         keywordPackage["confidence"] = "-";
-        console.log("keywordsPackage", keywordPackage);
+        //console.log("keywordsPackage", keywordPackage);
         keywordsArray.push(keywordPackage);
       }
       //id++;
     }
-    console.log("keywordsArray", keywordsArray);
+    //console.log("keywordsArray", keywordsArray);
     let keywordsFound = [];
     let keywordsNotFound = [];
     for (let i = 0; i < keywordsArray.length; i++) {
@@ -280,7 +306,7 @@ export default function Puntajes() {
       }
     }
     keywordsArray = keywordsFound.concat(keywordsNotFound);
-    console.log("keywordArray", keywordsArray);
+    //console.log("keywordArray", keywordsArray);
     setKeywords(keywordsArray);
   };
 
@@ -567,6 +593,7 @@ export default function Puntajes() {
                       <br />
 
                       {/* <div className="table-responsive"> */}
+
                       <table
                         className="table  table-borderless table-hover"
                         hidden={activeTabla2 ? false : true}
@@ -595,25 +622,15 @@ export default function Puntajes() {
                           </tr>
                         </thead>
                         <tbody style={{ fontSize: "small" }}>
-                          {grabaciones.map((grabacion) => (
-                            <tr key={grabacion.keyfile}>
+                          {grabaciones.map((grabacion, index) => (
+                            <tr /* key={grabacion} */>
                               <td>{grabacion.keyfile}</td>
-                              <td className="text-center">
-                                {grabacion.results.saludo.toFixed(1)} %
-                              </td>
-                              <td className="text-center">
-                                {grabacion.results.producto.toFixed(1)} %
-                              </td>
-                              <td className="text-center">
-                                {grabacion.results.venta.toFixed(1)} %
-                              </td>
-                              <td className="text-center">
-                                {grabacion.results.cierre.toFixed(1)} %
-                              </td>
-                              <td className="text-center">
-                                {grabacion.results.despedida.toFixed(1)} %
-                              </td>
-                              <td className="text-center">
+                              {cabecerasMostrar.map((c) => (
+                                <td className="text-center">
+                                  {grabacion.results[c].toFixed(1)} %
+                                </td>
+                              ))}
+                              <td>
                                 {grabacion.results.totalScore.toFixed(1)} %
                               </td>
 
@@ -749,7 +766,7 @@ const getDataModulos = () => {
 const getKeywordsData = (keyfile) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
-  console.log("nuevaURL", nuevaURL);
+  //console.log("nuevaURL", nuevaURL);
   const url = `${rutaAPITableros}/${nuevaURL[4]}/keywords?keyfile=${keyfile}`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
