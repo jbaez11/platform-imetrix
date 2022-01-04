@@ -215,7 +215,7 @@ export default function Puntajes() {
     }
     setGrabaciones(recordScoreByKeywords);
     setTableGrabaciones(recordScoreByKeywords);
-    console.log("grabaciones", grabaciones);
+    console.log("grabaciones", recordScoreByKeywords);
   };
 
   const tabla3 = async (keyfile) => {
