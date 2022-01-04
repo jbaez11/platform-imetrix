@@ -14,7 +14,7 @@ export default function AddAgentes() {
     gender: "",
   });
 
-  //Onchange
+  /* Onchange */
   const cambiaFormPost = (e) => {
     crearAgente({
       ...agentes,
