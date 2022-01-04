@@ -7,7 +7,7 @@ export default function AddAgentes() {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
 
-  //Hook para caputar los datos del formulario
+  /* Hook para caputar los datos del formulario */
   const [agentes, crearAgente] = useState({
     name: "",
     identification: "",
