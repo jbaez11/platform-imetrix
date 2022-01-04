@@ -80,7 +80,10 @@ export default function AddCluster() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="name">
-                  *Mínimo 2 Caracteres, máximo 20, Sin números ni caracteres especiales
+                  *Mínimo 2 Caracteres, máximo 50, Sin números ni caracteres especiales
+                </label>
+                <label className="small text-secondary" htmlFor="name">
+                  *LOS CLUSTERS NO PUEDEN SER REPETIDOS*
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -93,8 +96,8 @@ export default function AddCluster() {
                     name="name"
                     placeholder="Ingrese el nombre del cluster"
                     minLength="2"
-                    maxLength="20"
-                    pattern="^[a-z]+"
+                    maxLength="50"
+                    pattern="^[a-zÀ-ÿ?\s]+"
                     required
                   />
                 </div>
@@ -133,7 +136,7 @@ export default function AddCluster() {
                     className="form-control"
                     name="porcentaje"
                     placeholder="Ingrese el porcentaje del cluster"
-                    pattern="[0-9]+"
+                    pattern="[0-9]*\.?[0-9]*"
                     required
                   />
                 </div>
