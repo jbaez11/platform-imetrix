@@ -75,8 +75,8 @@ export default function EditCluster() {
 
     editarCluster({
       name: $("#editarNombre").val(),
-      cluster: $("#editarCluster").val(),
       porcentaje: $("#editarPorcentaje").val(),
+      modulo: $("#editarModulo").val(),
       id: data[0],
     });
   });
@@ -163,7 +163,7 @@ export default function EditCluster() {
                     placeholder="Ingrese el nombre del cluster"
                     minLength="2"
                     maxLength="20"
-                    pattern="(?=.*[A-Za-z]).{2,20}"
+                    pattern="^[a-z]+"
                     required
                   />
                 </div>
@@ -236,6 +236,7 @@ export default function EditCluster() {
 
 /* PETICION PUT PARA CLUSTERS */
 const putData = (data) => {
+  console.log("DATA", data)
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/editCluster/${data.id}`;

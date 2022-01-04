@@ -160,7 +160,7 @@ export default function EditModulo() {
                     placeholder="Ingrese el nombre del modulo"
                     minLength="2"
                     maxLength="20"
-                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+                    pattern="^[a-z]+"
                     required
                   />
                 </div>

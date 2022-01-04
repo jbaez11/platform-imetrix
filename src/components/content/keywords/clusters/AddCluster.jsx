@@ -80,7 +80,7 @@ export default function AddCluster() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="name">
-                  *Mínimo 2 Caracteres, máximo 20, Sin números
+                  *Mínimo 2 Caracteres, máximo 20, Sin números ni caracteres especiales
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -94,7 +94,7 @@ export default function AddCluster() {
                     placeholder="Ingrese el nombre del cluster"
                     minLength="2"
                     maxLength="20"
-                    pattern="(?=.*[A-Za-z]).{2,20}"
+                    pattern="^[a-z]+"
                     required
                   />
                 </div>
