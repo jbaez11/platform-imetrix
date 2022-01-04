@@ -7,14 +7,14 @@ export default function AddAgentes() {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
 
-  //Hook para caputar los datos del formulario
+  /* Hook para caputar los datos del formulario */
   const [agentes, crearAgente] = useState({
     name: "",
     identification: "",
     gender: "",
   });
 
-  //Onchange
+  /* Onchange */
   const cambiaFormPost = (e) => {
     crearAgente({
       ...agentes,
@@ -22,13 +22,13 @@ export default function AddAgentes() {
     });
   };
 
-  //OnSubmit
+  /* OnSubmit */
   const submitPost = async (e) => {
     $(".alert").remove();
 
     e.preventDefault();
 
-    //Ejecutamos el servicio post
+    /* Ejecutamos el servicio post */
     const resul = await postData(agentes);
 
     if (resul.status === 400) {
