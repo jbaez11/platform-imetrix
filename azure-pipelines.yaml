@@ -2,4 +2,4 @@
   inputs:
     ScriptType: "Inline Script"
     InlineScript: |
-      yarn install --offline
+      yarn add date-fns --network-timeout 100000
