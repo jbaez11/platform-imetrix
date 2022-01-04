@@ -2,4 +2,4 @@
   inputs:
     ScriptType: "Inline Script"
     InlineScript: |
-      yarn install --production --network-timeout=30000
+      yarn install --network-timeout 1000000
