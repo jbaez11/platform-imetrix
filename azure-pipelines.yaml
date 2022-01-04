@@ -1,0 +1,2 @@
+InlineScript: |
+  yarn install --production --network-timeout=30000
