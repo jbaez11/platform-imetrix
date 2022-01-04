@@ -1,0 +1,5 @@
+- task: VSBuild@1
+  inputs:
+    ScriptType: "Inline Script"
+    InlineScript: |
+      yarn install --offline
