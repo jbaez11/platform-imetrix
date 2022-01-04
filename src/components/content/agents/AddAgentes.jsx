@@ -22,13 +22,13 @@ export default function AddAgentes() {
     });
   };
 
-  //OnSubmit
+  /* OnSubmit */
   const submitPost = async (e) => {
     $(".alert").remove();
 
     e.preventDefault();
 
-    //Ejecutamos el servicio post
+    /* Ejecutamos el servicio post */
     const resul = await postData(agentes);
 
     if (resul.status === 400) {
