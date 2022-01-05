@@ -25,6 +25,26 @@ export default function Auditoria() {
   const [activeTabla1, setActiveTabla1] = useState(false);
   const [activeTabla2, setActiveTabla2] = useState(false);
   const [activeTabla3, setActiveTabla3] = useState(false);
+  //ordenar tablas
+  const [orderTabla1, setOrderTabla1] = useState("ASC");
+  const sorting = (col) => {
+    if (orderTabla1 === "ASC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("DSC");
+    }
+    if (orderTabla1 === "DSC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("ASC");
+    }
+  };
   //    utilizadas en la primera tabla
   const [agentes, setAgentes] = useState([]);
   const [tableAgentes, setTableAgentes] = useState([]);
@@ -95,7 +115,7 @@ export default function Auditoria() {
         suma += grabaciones[i].recordingsSummary[key].length;
       }
     }
-    console.log("suma", suma);
+    /*  console.log("suma", suma); */
     setSumTotalGrabaciones(suma);
   }
 
@@ -165,8 +185,8 @@ export default function Auditoria() {
       fechaFinal[0] + "T00:00:00.000Z"
     );
     let data = getAuditoria.data;
-    console.log("auditoria", data);
-    console.log("name", name);
+    /* console.log("auditoria", data);
+    console.log("name", name); */
 
     // let name = agenteSeleccionado;
     // console.log("agenteSeleccionado",agenteSeleccionado);
@@ -182,23 +202,23 @@ export default function Auditoria() {
     }
     setGrabaciones(recordsByCategory);
     setTableGrabaciones(recordsByCategory);
-    console.log("recordsByCategory", recordsByCategory);
+    /* console.log("recordsByCategory", recordsByCategory); */
   };
 
   const tabla3 = async (keyfile) => {
     const getKeywords = await getKeywordsData(keyfile);
     let data = getKeywords.data;
-    console.log("data", data);
+    /* console.log("data", data); */
     function secondsToTime(seconds) {
       return new Date(seconds * 1000).toISOString().substr(11, 11);
     }
-    console.log("keyfile", keyfile);
+    /* console.log("keyfile", keyfile); */
     let keywords = data[0].contents;
     let keywordsArray = [];
     let id = 0;
     for (let key in keywords) {
       for (let i = 0; i < keywords[key].results.length; i++) {
-        console.log("mostrar", keywords[key].results[i]);
+        /*  console.log("mostrar", keywords[key].results[i]); */
         id++;
         let keywordPackage = {
           id: id + key,
@@ -230,12 +250,12 @@ export default function Auditoria() {
         keywordPackage["from"] = "-";
         keywordPackage["to"] = "-";
         keywordPackage["confidence"] = "-";
-        console.log("keywordsPackage", keywordPackage);
+        /*  console.log("keywordsPackage", keywordPackage); */
         keywordsArray.push(keywordPackage);
       }
       //id++;
     }
-    console.log("keywordsArray", keywordsArray);
+    /* console.log("keywordsArray", keywordsArray); */
     let keywordsFound = [];
     let keywordsNotFound = [];
     for (let i = 0; i < keywordsArray.length; i++) {
@@ -246,7 +266,7 @@ export default function Auditoria() {
       }
     }
     keywordsArray = keywordsFound.concat(keywordsNotFound);
-    console.log("keywordArray", keywordsArray);
+    /* console.log("keywordArray", keywordsArray); */
     setKeywords(keywordsArray);
   };
 
@@ -264,7 +284,7 @@ export default function Auditoria() {
       fechaFinal[0] + "T00:00:00.000Z"
     );
     let auditoria = getAuditoria.data;
-    console.log("auditoria", auditoria);
+    /* console.log("auditoria", auditoria); */
 
     totalGrabaciones(auditoria);
     afectadasNoPermitidas(auditoria);
@@ -456,22 +476,48 @@ export default function Auditoria() {
                           }}
                         >
                           <tr>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sorting("name")}
+                              className="text-center"
+                              scope="col"
+                            >
                               NOMBRE
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sorting("name")}
+                              className="text-center"
+                              scope="col"
+                            >
                               GRABACIONES
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sorting("positivesOfRequired")}
+                              className="text-center"
+                              scope="col"
+                            >
                               INFALTABLE
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sorting("negativesOfRequired")}
+                              className="text-center"
+                              scope="col"
+                            >
                               INFALTABLE NO HALLADA
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sorting("positivesOfNotAllowed")}
+                              className="text-center"
+                              scope="col"
+                            >
                               NO PERMITIDA
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() =>
+                                sorting("positivesOfRecommendation")
+                              }
+                              className="text-center"
+                              scope="col"
+                            >
                               RECOMENDACION
                             </th>
                             <th className="text-center" scope="col">
@@ -677,7 +723,7 @@ const getData = (fechaIni, fechaFinal) => {
 const getKeywordsData = (keyfile) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
-  console.log("nuevaURL", nuevaURL);
+  /* console.log("nuevaURL", nuevaURL); */
   const url = `${rutaAPITableros}/${nuevaURL[4]}/keywords?keyfile=${keyfile}`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {

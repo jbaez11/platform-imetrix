@@ -11,6 +11,78 @@ import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
 import "react-nice-dates/build/style.css";
 
 export default function Puntajes() {
+  const objectToCsv = (data) => {
+    const csvRows = [];
+    const headers = Object.keys(data[0]);
+    csvRows.push(headers.join(","));
+
+    //console.log('headers',csvRows)
+
+    for (const row of data) {
+      const values = headers.map((header) => {
+        const scaped = ("" + row[header]).replace(/"/g, '\\"');
+        return `"${scaped}"`;
+      });
+      csvRows.push(values.join(","));
+    }
+
+    return csvRows.join("\n");
+  };
+  const download = (data) => {
+    const dataF = "\ufeff" + data;
+    const hora =
+      new Date().getHours() +
+      ":" +
+      new Date().getMinutes() +
+      ":" +
+      new Date().getSeconds();
+    const blob = new Blob([dataF], {
+      type: ' type: "text/csv;charset=UTF-8"',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "puntaje_por_keywords_" + hora + ".csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+  const getReport = async (ini, fin) => {
+    if (!ini || !fin) {
+      return;
+    }
+
+    let fechaInicialOriginal = new Date(ini).toISOString();
+    let fechaInicial = fechaInicialOriginal.split("T");
+    let fechaFinalOriginal = new Date(fin).toISOString();
+    let fechaFinal = fechaFinalOriginal.split("T");
+    const getPuntajes = await getData(
+      fechaInicial[0] + "T00:00:00.000Z",
+      fechaFinal[0] + "T00:00:00.000Z"
+    );
+    let puntajes = getPuntajes.data;
+    const data = [];
+
+    for (let i = 0; i < puntajes.length; i++) {
+      let dataR = puntajes[i].recordingsSummary;
+      for (const [key, value] of Object.entries(dataR)) {
+        value.forEach((element) => {
+          let dataSeparada = {
+            Agente: key,
+            Grabación: element.keyfile,
+            "Porcentaje de la llamada":
+              (element.results.totalScore * 100).toFixed(1) + "%",
+          };
+
+          data.push(dataSeparada);
+        });
+      }
+    }
+
+    const csvData = objectToCsv(data);
+    download(csvData);
+  };
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focus, setFocus] = useState(START_DATE);
@@ -215,20 +287,6 @@ export default function Puntajes() {
       }
     }
 
-    /*  
-    
-    setTableGrabaciones([
-      "keyfile",
-      "10",
-      "22",
-      "23",
-      "45",
-      "50",
-      "7",
-      "8",
-      "9",
-    ]); */
-    //console.log("grabdhjfkf", grabaciones);
     setGrabaciones(recordScoreByKeywords);
     setTableGrabaciones(recordScoreByKeywords);
     console.log("grabaciones", recordScoreByKeywords);
@@ -368,6 +426,12 @@ export default function Puntajes() {
                               >
                                 <i class="far fa-calendar-alt"></i>
                                 {showCalendar ? " seleccionar fecha" : " Ir "}
+                              </button>
+                              <button
+                                className="btn btn-success ml-4"
+                                onClick={() => getReport(startDate, endDate)}
+                              >
+                                Descargar
                               </button>
 
                               {showCalendar ? (

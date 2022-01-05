@@ -11,6 +11,59 @@ import "datatables.net-responsive";
 import { rutaAPITableros } from "../../../config/Config";
 
 export default function Agents() {
+  const objectToCsv = (data) => {
+    const csvRows = [];
+    const headers = Object.keys(data[0]);
+    csvRows.push(headers.join(","));
+
+    //console.log('headers',csvRows)
+
+    for (const row of data) {
+      const values = headers.map((header) => {
+        const scaped = ("" + row[header]).replace(/"/g, '\\"');
+        return `"${scaped}"`;
+      });
+      csvRows.push(values.join(","));
+    }
+
+    return csvRows.join("\n");
+  };
+  const download = (data) => {
+    const dataF = "\ufeff" + data;
+    const hora =
+      new Date().getHours() +
+      ":" +
+      new Date().getMinutes() +
+      ":" +
+      new Date().getSeconds();
+    const blob = new Blob([dataF], {
+      type: ' type: "text/csv;charset=UTF-8"',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "agentes_" + hora + ".csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+  const getReport = async () => {
+    // console.log('this.agents', this.agents);
+    const getAgentes = await getData();
+    console.log("getAgentes", getAgentes);
+    const data = getAgentes.data.map((row) => ({
+      nombre: row.name,
+      identificacion: row.identification,
+      genero: row.gender,
+      creacion: row.createdAt,
+    }));
+    console.log("data", data);
+    //const csvData =
+    const csvData = objectToCsv(data);
+    download(csvData);
+  };
+
   const dataAgentes = async () => {
     // crear el dataset para datatables
     const getAgentes = await getData();
@@ -118,8 +171,7 @@ export default function Agents() {
                         </button>
                         <button
                           className="btn btn-success ml-4"
-                          data-toggle="modal"
-                          data-target="#"
+                          onClick={() => getReport()}
                         >
                           Descargar
                         </button>
