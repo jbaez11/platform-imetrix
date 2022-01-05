@@ -103,7 +103,7 @@ export default function EditProfileAdmin(){
                                         placeholder="Ingrese nombres y apellidos"
                                         minLength="2"
                                         maxLength="50"
-                                        pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+                                        pattern="^[a-zA-ZÀ-ÿ?\s]+"
                                         required
                                     />
                                 </div>
@@ -142,9 +142,9 @@ export default function EditProfileAdmin(){
                                         className="form-control"
                                         name="telefono"
                                         placeholder="Ingrese el Numero Celular"
-                                        pattern="[0-9]{10}"
-                                        minLength="10"
-                                        maxLength="10"
+                                        minLength="8"
+                                        maxLength="15"
+                                        pattern="[0-9]{8,15}"
                                         required
                                     />
                                 </div>
@@ -163,9 +163,9 @@ export default function EditProfileAdmin(){
                                         className="form-control"
                                         name="cedula"
                                         placeholder="Ingrese numero de cedula o NIT"
-                                        minLength="10"
-                                        maxLength="10"
-                                        pattern="[0-9]{10}"
+                                        minLength="7"
+                                        maxLength="15"
+                                        pattern="[0-9]{7,15}"
                                         required 
                                     />
                                 </div>

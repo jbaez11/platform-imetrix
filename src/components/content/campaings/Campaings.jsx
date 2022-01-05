@@ -34,8 +34,8 @@ export default function Camaings() {
           ? (campaing.state = "Habilitado")
           : (campaing.state = "Inhabilitado"),
         campaing.cluster.nombre,
-        userNames,
         campaing.pais,
+        userNames,
         campaing.createdAt,
         [
           campaing._id,
@@ -43,9 +43,9 @@ export default function Camaings() {
           campaing.foto,
           campaing.state,
           campaing.cluster.nombre,
-          userNames,
           campaing.pais,
-          campaing.createdAt,
+          userNames,
+          campaing.createdAt
         ],
       ];
     });
@@ -78,8 +78,8 @@ export default function Camaings() {
           },
           { title: "Estado" },
           { title: "Cluster" },
-          { title: "Usuarios" },
           { title: "Pais" },
+          { title: "Usuarios" },
           { title: "Fecha de Creación" },
           {
             title: "Editar",
