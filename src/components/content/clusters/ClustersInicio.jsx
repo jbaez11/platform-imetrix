@@ -23,6 +23,7 @@ export default function Clusters() {
     const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
     const clust = await data.json();
     console.log("cluster", clust.data);
+
     clust.data.forEach((cluster) => {
       console.log("cluster", cluster);
 
@@ -63,8 +64,25 @@ export default function Clusters() {
     const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
     const clust = await data.json();
     console.log("User Clusters", clust.data);
+
     clust.data.forEach((cluster) => {
-      cluster.nombre = cluster.nombre.toLowerCase();
+      console.log("cluster", cluster);
+
+      let descompenerUrl = cluster.nombre.split(" ");
+      let lowerUrl = descompenerUrl[0].toLowerCase();
+
+      if (descompenerUrl[1]) {
+        console.log("descompenerUrl", descompenerUrl);
+
+        let secondUrl = descompenerUrl[1];
+        let upperAndLowerUrl =
+          secondUrl[0].toUpperCase() + secondUrl.slice(1).toLowerCase();
+        let unirUrl = lowerUrl + upperAndLowerUrl;
+        console.log("unirUrl", unirUrl);
+        cluster.UrlCampaing = unirUrl;
+      } else {
+        cluster.UrlCampaing = lowerUrl;
+      }
     });
     setUserClusters(clust.data);
   };
@@ -131,6 +149,7 @@ export default function Clusters() {
                                               return (
                                                 <>
                                                   <a
+                                                    style={{marginTop:"5px"}}
                                                     href={`/campañasinicio/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
@@ -138,13 +157,7 @@ export default function Clusters() {
                                                   </a>
                                                 </>
                                               );
-                                            } /* else if(role === "Auditor"){
-                                                                        return (
-                                                                            <>
-                                                                            <a href={`/campañasAuditor/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
-                                                                           </>
-                                                                        )
-                                                                    } */
+                                            }
                                           })()}
                                         </div>
                                       </div>
@@ -184,18 +197,13 @@ export default function Clusters() {
                                           <br />
 
                                           {(() => {
-                                            /* if(role === "Administrador"){
-                                                                        return (
-                                                                            <>
-                                                                             <a href={`/campañasinicio/${cluster._id}/${cluster.nombre}`} className="btn btn-warning">Ingresar</a>
-                                                                            </>
-                                                                        )
-                                                                    }else  */ if (
+                                             if (
                                               role === "Auditor"
                                             ) {
                                               return (
                                                 <>
                                                   <a
+                                                    style={{marginTop:"5px"}}
                                                     href={`/campañasAuditor/${nuevaURL[4]}/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
