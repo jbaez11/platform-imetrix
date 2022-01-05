@@ -28,6 +28,7 @@ export default function Consumo() {
 
     return csvRows.join("\n");
   };
+  /* prueba si */
   const download = (data) => {
     const dataF = "\ufeff" + data;
     const hora =
