@@ -78,22 +78,18 @@ export default function EditCluster(){
                     $(".previsualizarImg").attr("src", rutaFoto);
 
                     editCluster({
-                        'nombre': $("#editNombre").val(), 
-                        'foto': foto,
-                        'state': $("#editState").val(),
-                        /* 'users': $("#editUsers").val(), */
-                        'id': $("#editId").val()
+                        ...cluster,
+                        state: $("#editState").val(),
+                        foto
                     })
                 })        
             }
         }else{
 
             editCluster({
-                'nombre': $("#editNombre").val(), 
-                'foto': null,
-                'state': $("#editState").val(),
-                /* 'users': $("#editUsers").val(), */ 
-                'id': $("#editId").val()
+                ...cluster,
+                state: $("#editState").val(),
+                foto: null
             })
         }   
     }
@@ -260,8 +256,8 @@ export default function EditCluster(){
                                     <i className="fas fa-user-check"></i>
                                 </div>
                                 <select name="state" id="editState">
-                                        <option value="1">Habilitado</option>
-                                        <option value="0">Inhabilitado</option>
+                                        <option selected={cluster.state == "Habilitado"} value="1">Habilitado</option>
+                                        <option selected={cluster.state == "Inhabilitado"} value="0">Inhabilitado</option>
                                 </select>
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
@@ -280,7 +276,7 @@ export default function EditCluster(){
                                             className="form-check-input"
                                             type="checkbox" 
                                             value={user._id}
-                                            /* checked={cluster.users.some(c => c._id === user._id)} */
+                                            checked={cluster.users.some(c => c._id === user._id)}
                                             style={{marginLeft:"0.03cm", height:"20px", width:"20px"}}
                                             />
                                             <label style={{marginLeft:"25px", marginTop:"1px"}} 
@@ -313,7 +309,7 @@ const putData = data =>{
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
     formData.append("state", data.state);
-    //formData.append("users", JSON.stringify(data.users.map(u => u._id)));
+    formData.append("users", JSON.stringify(data.users.map(u => u._id)));
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
 

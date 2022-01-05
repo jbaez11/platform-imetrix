@@ -30,9 +30,7 @@ export default function Usuarios() {
           admin._id,
           admin.nombres,
           admin.correo,
-          admin.state === 1
-            ? (admin.state = "Habilitado")
-            : (admin.state = "Inhabilitado"),
+          admin.state,
           admin.role,
           admin.createdAt,
         ],

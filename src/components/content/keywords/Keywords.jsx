@@ -21,7 +21,7 @@ export default function Keywords() {
       dataSet[index] = [
         index + 1,
         keywords.name,
-        keywords.cluster,
+        keywords.cluster.name,
         [keywords._id, keywords.name, keywords.cluster],
       ];
     });
@@ -99,7 +99,7 @@ export default function Keywords() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  {/* <h1 className="m-0 text-dark">Keywords</h1> */}
+                  <h1 className="m-0 text-dark">Keywords</h1>
                 </div>
               </div>
             </div>

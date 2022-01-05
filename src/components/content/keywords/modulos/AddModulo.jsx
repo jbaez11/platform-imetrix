@@ -43,7 +43,7 @@ export default function AddModulo() {
       $('button[type="submit"]').remove();
       setTimeout(() => {
         window.location.href = `/moduloKeywords/` + nuevaURL[4];
-      }, 1000);
+      }, 2000);
     }
   };
 

@@ -11,6 +11,10 @@ import "datatables.net-responsive";
 import { rutaAPITableros } from "../../../../config/Config";
 
 export default function Modulos() {
+
+  const valores = window.location.href;
+  let nuevaURL = valores.split("/");
+
   const dataModulos = async () => {
     // crear el dataset para datatables
     const getModulos = await getData();
@@ -18,10 +22,12 @@ export default function Modulos() {
     const dataSet = [];
 
     getModulos.data.forEach((modulos, index) => {
+
+  
       dataSet[index] = [
         index + 1,
         modulos.name,
-        modulos.categoria,
+        modulos.categoria.name,
         [modulos._id, modulos.name, modulos.categoria],
       ];
     });
@@ -97,7 +103,7 @@ export default function Modulos() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  {/* <h1 className="m-0 text-dark">Modulos</h1> */}
+                  <h1 className="m-0 text-dark">Modulos</h1>
                 </div>
               </div>
             </div>

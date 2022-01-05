@@ -44,7 +44,7 @@ export default function AddCluster() {
       $('button[type="submit"]').remove();
       setTimeout(() => {
         window.location.href = `/clusterKeywords/` + nuevaURL[4];
-      }, 1000);
+      }, 2000);
     }
   };
 
