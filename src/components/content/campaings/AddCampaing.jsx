@@ -58,8 +58,8 @@ export default function AddCampaing(){
         foto: null,
         state: "",
         cluster:"",
-        users:[],
-        pais:""
+        pais:"",
+        users:[]
     })
 
     useEffect(() => {
@@ -165,7 +165,7 @@ export default function AddCampaing(){
                         <div className="modal-body">
                             <div className="form-group">
                                 <label className="small text-secondary" htmlFor="nombre">
-                                    *Min. 2 Caracteres | Max. 20 | Sin caracteres especiales.
+                                    *Min. 2 Caracteres | Max. 30 | Sin caracteres especiales.
                                 </label>
                                 <div className="input-group mb-3">
                                     <div className="input-group-append input-group-text">
@@ -177,12 +177,12 @@ export default function AddCampaing(){
                                       }
                                         id="nombre"
                                         type="text"
-                                        className="form-control text-uppercase"
+                                        className="form-control"
                                         name="nombre"
                                         placeholder="Ingrese el nombre de la Campaña"
                                         minLength="2"
                                         maxLength="30"
-                                        pattern="^[A-Z]+\s?[A-Z]+$"
+                                        pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
                                         required
                                     />
                                 </div>
@@ -250,9 +250,33 @@ export default function AddCampaing(){
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
                         </div>
-                <div className="form-group">
+                            <div className="form-group">
+                                <label className="small text-secondary" htmlFor="pais">
+                                   | *Solo con el siguiente formato -- | CO-US-MX
+                                </label>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-append input-group-text">
+                                        <i className="fas fa-signature"></i>
+                                    </div>
+                                    <input
+                                     onChange={(e) =>
+                                        crearCampaing({ ...campaing, pais: e.target.value })
+                                      }
+                                        id="pais"
+                                        type="text"
+                                        className="form-control text-uppercase"
+                                        name="pais"
+                                        placeholder="Ingrese el pais"
+                                        minLength="2"
+                                        maxLength="2"
+                                        pattern="[A-Z]+[A-Z]"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group">
                     <label className="small text-secondary" htmlFor="users">
-                    | Seleccione el Usuario(s) que quiere agregar al cluster
+                    | Seleccione el Usuario(s) que quiere agregar a la Campaña
                     </label>
                     <div className="input-group mb-3">
                     <div className="input-group-append input-group-text">
@@ -283,30 +307,6 @@ export default function AddCampaing(){
                     </div>
                     <div className="invalid-feedback invalid-state"></div>
               </div>
-                            <div className="form-group">
-                                <label className="small text-secondary" htmlFor="pais">
-                                   | *Solo con el siguiente formato -- | CO-US-MX
-                                </label>
-                                <div className="input-group mb-3">
-                                    <div className="input-group-append input-group-text">
-                                        <i className="fas fa-signature"></i>
-                                    </div>
-                                    <input
-                                     onChange={(e) =>
-                                        crearCampaing({ ...campaing, pais: e.target.value })
-                                      }
-                                        id="pais"
-                                        type="text"
-                                        className="form-control text-uppercase"
-                                        name="pais"
-                                        placeholder="Ingrese el pais"
-                                        minLength="2"
-                                        maxLength="2"
-                                        pattern="[A-Z]+[A-Z]"
-                                        required
-                                    />
-                                </div>
-                            </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
                             <div><button type="submit" className="btn btn-primary">Crear</button></div>
@@ -331,8 +331,9 @@ const postData = data =>{
     formData.append("foto", data.foto);
     formData.append("state", data.state);
     formData.append("cluster", data.cluster);
-    formData.append("users", JSON.stringify(data.users.map((u) => u._id)));
     formData.append("pais", data.pais);
+    formData.append("users", JSON.stringify(data.users.map((u) => u._id)));
+    
     
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {

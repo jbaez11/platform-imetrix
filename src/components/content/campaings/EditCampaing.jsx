@@ -44,8 +44,8 @@ export default function EditCampaing(){
         nombre:"",
         foto: null,
         state: "",
-        users:[],
         pais:"",
+        users:[],
         id:""
     })
 
@@ -126,8 +126,8 @@ export default function EditCampaing(){
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCampaing/${data[2]}`);
         $("#editState").val(data[3]);
-        $("#editUsers").val(data[5]); 
-        $("#editPais").val(data[6]);
+        $("#editUsers").val(data[6]); 
+        $("#editPais").val(data[5]);
         $("#editId").val(data[0]);
 
         let user = await getUsers();
@@ -146,8 +146,8 @@ export default function EditCampaing(){
             'nombre': data[1], 
             'foto': null,
             'state': data[3],
+            'pais':data[5],
             'users': nUsers, 
-            'pais':data[6],
             'id': data[0]
             
         })
@@ -236,7 +236,8 @@ export default function EditCampaing(){
                                     placeholder="Ingrese el nombre de la Campaña"
                                     minLength="2"
                                     maxLength="30"
-                                    pattern="^[A-Z]+\s?[A-Z]+$"
+                                    pattern="^[a-zA-Z]+( [a-zA-Z]+)*$"
+                                    readOnly="readOnly"
                                     required
                                 />
                             </div>
@@ -269,7 +270,29 @@ export default function EditCampaing(){
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
                         </div>
-                        <div className="form-group">
+                          <div className="form-group">
+                                <label className="small text-secondary" htmlFor="editPais">
+                                   | *Solo con el siguiente formato -- | CO-US-MX
+                                </label>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-append input-group-text">
+                                        <i className="fas fa-signature"></i>
+                                    </div>
+                                    <input
+                                        id="editPais"
+                                        type="text"
+                                        className="form-control text-uppercase"
+                                        name="pais"
+                                        placeholder="Ingrese el pais"
+                                        minLength="2"
+                                        maxLength="2"
+                                        readOnly="readOnly"
+                                        pattern="(?=.*[A-Z]).{2,2}"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="form-group">
                                 <label className="small text-secondary" htmlFor="editUsers">
                                     | Seleccione el Usuario(s) que quiere agregar o quitar a la campaña
                                 </label>
@@ -295,28 +318,6 @@ export default function EditCampaing(){
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
                         </div>
-                          <div className="form-group">
-                                <label className="small text-secondary" htmlFor="editPais">
-                                   | *Solo con el siguiente formato -- | CO-US-MX
-                                </label>
-                                <div className="input-group mb-3">
-                                    <div className="input-group-append input-group-text">
-                                        <i className="fas fa-signature"></i>
-                                    </div>
-                                    <input
-                                        id="editPais"
-                                        type="text"
-                                        className="form-control text-uppercase"
-                                        name="pais"
-                                        placeholder="Ingrese el pais"
-                                        minLength="2"
-                                        maxLength="2"
-                                        readOnly="readOnly"
-                                        pattern="(?=.*[A-Z]).{2,2}"
-                                        required
-                                    />
-                                </div>
-                            </div>
                     </div>
                     <div className="modal-footer d-flex justify-content-between">
                         <div><button type="submit" className="btn btn-primary">Editar</button></div>
@@ -340,9 +341,9 @@ const putData = data =>{
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
     formData.append("state", data.state);
+    /* formData.append("cluster", data.cluster); */
+    /* formData.append("pais", data.pais); */
     formData.append("users", JSON.stringify(data.users.map(u => u._id)));
-    formData.append("cluster", data.cluster);
-    formData.append("pais", data.pais);
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {
 

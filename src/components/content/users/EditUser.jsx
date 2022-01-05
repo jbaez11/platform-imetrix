@@ -243,7 +243,7 @@ export default function EditUser(){
                                     placeholder="Ingrese los Nombres y Apellidos"
                                     minLength="2"
                                     maxLength="50"
-                                    pattern="[a-zA-Z]+"
+                                    pattern="^[a-zA-ZÀ-ÿ?\s]+"
                                 />
                             </div>
                         </div>

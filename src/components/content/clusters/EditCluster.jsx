@@ -215,7 +215,7 @@ export default function EditCluster(){
                         <input type="hidden" id="editId"/>
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editNombre">
-                                *Min. 2 Caracteres | Max. 20 | Sin caracteres especiales.
+                                *Min. 2 Caracteres | Max. 30 | Sin caracteres especiales | Solo un espacio
                             </label>
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">

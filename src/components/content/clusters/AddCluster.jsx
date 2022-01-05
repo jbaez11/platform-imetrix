@@ -166,7 +166,7 @@ export default function AddCluster() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="nombre">
-                  *Min. 2 Caracteres | Max. 20 | Sin caracteres especiales, en Mayusculas y solo un espacio
+                *Min. 2 Caracteres | Max. 30 | Sin caracteres especiales | Solo un espacio
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
