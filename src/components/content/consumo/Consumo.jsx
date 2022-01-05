@@ -11,6 +11,77 @@ import { Bar } from "react-chartjs-2";
 import { rutaAPITableros } from "../../../config/Config";
 
 export default function Consumo() {
+  const objectToCsv = (data) => {
+    const csvRows = [];
+    const headers = Object.keys(data[0]);
+    csvRows.push(headers.join(","));
+
+    //console.log('headers',csvRows)
+
+    for (const row of data) {
+      const values = headers.map((header) => {
+        const scaped = ("" + row[header]).replace(/"/g, '\\"');
+        return `"${scaped}"`;
+      });
+      csvRows.push(values.join(","));
+    }
+
+    return csvRows.join("\n");
+  };
+  /* prueba si */
+  const download = (data) => {
+    const dataF = "\ufeff" + data;
+    const hora =
+      new Date().getHours() +
+      ":" +
+      new Date().getMinutes() +
+      ":" +
+      new Date().getSeconds();
+    const blob = new Blob([dataF], {
+      type: ' type: "text/csv;charset=UTF-8"',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.setAttribute("hidden", "");
+    a.setAttribute("href", url);
+    a.setAttribute("download", "consumo_minutos_" + hora + ".csv");
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+  const getReport = async (ini, fin) => {
+    if (!ini || !fin) {
+      return;
+    }
+
+    let fechaInicialOriginal = new Date(ini).toISOString();
+    let fechaInicial = fechaInicialOriginal.split("T");
+    let fechaFinalOriginal = new Date(fin).toISOString();
+    let fechaFinal = fechaFinalOriginal.split("T");
+    const getConsumo = await getData(
+      fechaInicial[0] + "T00:00:00.000Z",
+      fechaFinal[0] + "T00:00:00.000Z"
+    );
+    let consumos = getConsumo.data;
+    // console.log('this.agents', this.agents);
+
+    const data = consumos.map((row) => ({
+      "Año y mes": row.yearMonthString,
+      Dia: row.dayString,
+      "Total audios": row.totalFiles,
+      "Total minutos": row.totalMinutes,
+      "Audios procesados": row.processedFiles,
+      "Minutos procesados": row.processedMinutes,
+      "Audios no procesados": row.unprocessedFiles,
+      "Minutos no procesados": row.unprocessedMinutes,
+      "Nombre de audios no procesados": row.nameunprocessedMinutes,
+      Notas: row.notes,
+    }));
+    console.log("data getReport", data);
+    //const csvData =
+    const csvData = objectToCsv(data);
+    download(csvData);
+  };
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focus, setFocus] = useState(START_DATE);
@@ -183,7 +254,12 @@ export default function Consumo() {
                   )}
                 </div>
                 <div className="col-2">
-                  <button className="btn btn-success">Descargar</button>
+                  <button
+                    className="btn btn-success"
+                    onClick={() => getReport(startDate, endDate)}
+                  >
+                    Descargar
+                  </button>
                 </div>
               </div>
             </div>

@@ -25,6 +25,117 @@ export default function Auditoria() {
   const [activeTabla1, setActiveTabla1] = useState(false);
   const [activeTabla2, setActiveTabla2] = useState(false);
   const [activeTabla3, setActiveTabla3] = useState(false);
+  //ordenar tablas
+  const [orderTabla1, setOrderTabla1] = useState("ASC");
+  const [orderTabla2, setOrderTabla2] = useState("ASC");
+  const [orderTabla3, setOrderTabla3] = useState("ASC");
+  const sorting = (col) => {
+    if (orderTabla1 === "ASC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("DSC");
+    }
+    if (orderTabla1 === "DSC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("ASC");
+    }
+  };
+
+  const sortingNum = (col) => {
+    //console.log("col", col);
+    if (orderTabla1 === "ASC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a.results[col] > b.results[col] ? 1 : -1
+      );
+
+      //console.log("sorted", sorted);
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("DSC");
+    }
+    if (orderTabla1 === "DSC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a.results[col] < b.results[col] ? 1 : -1
+      );
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("ASC");
+    }
+  };
+
+  //organizar tabla 2
+  const sorting2 = (col) => {
+    if (orderTabla2 === "ASC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("DSC");
+    }
+    if (orderTabla2 === "DSC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("ASC");
+    }
+  };
+
+  const sortingNum2 = (col) => {
+    //console.log("col", col);
+    if (orderTabla2 === "ASC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a.results[col] > b.results[col] ? 1 : -1
+      );
+
+      //console.log("sorted", sorted);
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("DSC");
+    }
+    if (orderTabla2 === "DSC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a.results[col] < b.results[col] ? 1 : -1
+      );
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("ASC");
+    }
+  };
+  //organizar tabla 3
+  const sorting3 = (col) => {
+    // console.log("col", col);
+    if (orderTabla3 === "ASC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      // console.log("sorted", sorted);
+      setKeywords(sorted);
+
+      setOrderTabla3("DSC");
+    }
+    if (orderTabla3 === "DSC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      // console.log("sorted", sorted);
+      setKeywords(sorted);
+
+      setOrderTabla3("ASC");
+    }
+  };
+
   //    utilizadas en la primera tabla
   const [agentes, setAgentes] = useState([]);
   const [tableAgentes, setTableAgentes] = useState([]);
@@ -88,14 +199,14 @@ export default function Auditoria() {
   };
 
   function totalGrabaciones(grabaciones) {
-    console.log(grabaciones);
+    // console.log(grabaciones);
     let suma = 0;
     for (let i = 0; i < grabaciones.length; i++) {
       for (let key in grabaciones[i].recordingsSummary) {
         suma += grabaciones[i].recordingsSummary[key].length;
       }
     }
-    console.log("suma", suma);
+    /*  console.log("suma", suma); */
     setSumTotalGrabaciones(suma);
   }
 
@@ -165,8 +276,8 @@ export default function Auditoria() {
       fechaFinal[0] + "T00:00:00.000Z"
     );
     let data = getAuditoria.data;
-    console.log("auditoria", data);
-    console.log("name", name);
+    /* console.log("auditoria", data);
+    console.log("name", name); */
 
     // let name = agenteSeleccionado;
     // console.log("agenteSeleccionado",agenteSeleccionado);
@@ -182,23 +293,23 @@ export default function Auditoria() {
     }
     setGrabaciones(recordsByCategory);
     setTableGrabaciones(recordsByCategory);
-    console.log("recordsByCategory", recordsByCategory);
+    /* console.log("recordsByCategory", recordsByCategory); */
   };
 
   const tabla3 = async (keyfile) => {
     const getKeywords = await getKeywordsData(keyfile);
     let data = getKeywords.data;
-    console.log("data", data);
+    /* console.log("data", data); */
     function secondsToTime(seconds) {
       return new Date(seconds * 1000).toISOString().substr(11, 11);
     }
-    console.log("keyfile", keyfile);
+    /* console.log("keyfile", keyfile); */
     let keywords = data[0].contents;
     let keywordsArray = [];
     let id = 0;
     for (let key in keywords) {
       for (let i = 0; i < keywords[key].results.length; i++) {
-        console.log("mostrar", keywords[key].results[i]);
+        /*  console.log("mostrar", keywords[key].results[i]); */
         id++;
         let keywordPackage = {
           id: id + key,
@@ -216,7 +327,7 @@ export default function Auditoria() {
         keywordPackage["from"] = keywords[key].results[i]["from"];
         keywordPackage["to"] = keywords[key].results[i]["to"];
         keywordPackage["confidence"] = keywords[key].results[i]["confidence"];
-        console.log("package", keywordPackage);
+        // console.log("package", keywordPackage);
         keywordsArray.push(keywordPackage);
       }
       if (keywords[key].results.length == 0) {
@@ -230,12 +341,12 @@ export default function Auditoria() {
         keywordPackage["from"] = "-";
         keywordPackage["to"] = "-";
         keywordPackage["confidence"] = "-";
-        console.log("keywordsPackage", keywordPackage);
+        /*  console.log("keywordsPackage", keywordPackage); */
         keywordsArray.push(keywordPackage);
       }
       //id++;
     }
-    console.log("keywordsArray", keywordsArray);
+    /* console.log("keywordsArray", keywordsArray); */
     let keywordsFound = [];
     let keywordsNotFound = [];
     for (let i = 0; i < keywordsArray.length; i++) {
@@ -246,7 +357,7 @@ export default function Auditoria() {
       }
     }
     keywordsArray = keywordsFound.concat(keywordsNotFound);
-    console.log("keywordArray", keywordsArray);
+    /* console.log("keywordArray", keywordsArray); */
     setKeywords(keywordsArray);
   };
 
@@ -264,7 +375,7 @@ export default function Auditoria() {
       fechaFinal[0] + "T00:00:00.000Z"
     );
     let auditoria = getAuditoria.data;
-    console.log("auditoria", auditoria);
+    /* console.log("auditoria", auditoria); */
 
     totalGrabaciones(auditoria);
     afectadasNoPermitidas(auditoria);
@@ -456,23 +567,75 @@ export default function Auditoria() {
                           }}
                         >
                           <tr>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sorting("name")}
+                              className="text-center"
+                              scope="col"
+                            >
                               NOMBRE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sortingNum("recordings")}
+                              className="text-center"
+                              scope="col"
+                            >
                               GRABACIONES
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sortingNum("positivesOfRequired")}
+                              className="text-center"
+                              scope="col"
+                            >
                               INFALTABLE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() => sortingNum("negativesOfRequired")}
+                              className="text-center"
+                              scope="col"
+                            >
                               INFALTABLE NO HALLADA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() =>
+                                sortingNum("positivesOfNotAllowed")
+                              }
+                              className="text-center"
+                              scope="col"
+                            >
                               NO PERMITIDA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              onClick={() =>
+                                sortingNum("positivesOfRecommendation")
+                              }
+                              className="text-center"
+                              scope="col"
+                            >
                               RECOMENDACION
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
                             <th className="text-center" scope="col">
                               ACCION
@@ -547,11 +710,53 @@ export default function Auditoria() {
                           }}
                         >
                           <tr>
-                            <th>NOMBRE GRABACIÓN</th>
-                            <th>INFALTABLE</th>
-                            <th>INFALTABLE NO HALLADA</th>
-                            <th>NO PERMITIDA</th>
-                            <th>RECOMENDACION</th>
+                            <th onClick={() => sorting2("keyfile")}>
+                              NOMBRE GRABACIÓN
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th
+                              onClick={() => sortingNum2("positivesOfRequired")}
+                            >
+                              INFALTABLE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th
+                              onClick={() => sortingNum2("negativesOfRequired")}
+                            >
+                              INFALTABLE NO HALLADA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th
+                              onClick={() =>
+                                sortingNum2("positivesOfNotAllowed")
+                              }
+                            >
+                              NO PERMITIDA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th
+                              onClick={() =>
+                                sortingNum2("positivesOfRecommendation")
+                              }
+                            >
+                              RECOMENDACION
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
                             <th>ACCION</th>
                           </tr>
                         </thead>
@@ -613,16 +818,46 @@ export default function Auditoria() {
                           }}
                         >
                           <tr>
-                            <th>KEYWORD</th>
-                            <th>CATEGORIA</th>
-                            <th>MODULO</th>
-                            <th>DESDE</th>
-                            <th>HASTA</th>
+                            <th onClick={() => sorting3("name")}>
+                              KEYWORD
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("category")}>
+                              CATEGORIA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("module")}>
+                              MODULO
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("from")}>
+                              DESDE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("to")}>
+                              HASTA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
                           </tr>
                         </thead>
                         <tbody style={{ fontSize: "small" }}>
                           {keywords.map((keyword) => (
-                            <tr key={keyword.name}>
+                            <tr key={keyword.id}>
                               <td>{keyword.name}</td>
                               <td>{keyword.category}</td>
                               <td>{keyword.module}</td>
@@ -652,7 +887,7 @@ export default function Auditoria() {
 const getData = (fechaIni, fechaFinal) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
-  console.log("nuevaURL", nuevaURL);
+  // console.log("nuevaURL", nuevaURL);
   const url = `${rutaAPITableros}/${nuevaURL[4]}/auditkeywords?eventDate=${fechaIni}&eventDate=${fechaFinal}`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
@@ -677,7 +912,7 @@ const getData = (fechaIni, fechaFinal) => {
 const getKeywordsData = (keyfile) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
-  console.log("nuevaURL", nuevaURL);
+  /* console.log("nuevaURL", nuevaURL); */
   const url = `${rutaAPITableros}/${nuevaURL[4]}/keywords?keyfile=${keyfile}`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {

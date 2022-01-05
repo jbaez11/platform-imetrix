@@ -80,7 +80,8 @@ export default function AddCluster() {
             <div className="modal-body">
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="name">
-                  *Mínimo 2 Caracteres, máximo 50, Sin números ni caracteres especiales
+                  *Mínimo 2 Caracteres, máximo 50, Sin números ni caracteres
+                  especiales
                 </label>
                 <label className="small text-secondary" htmlFor="name">
                   *LOS CLUSTERS NO PUEDEN SER REPETIDOS*
@@ -116,7 +117,9 @@ export default function AddCluster() {
                     </option>
                     {modulos.map((modulo, index) => (
                       <>
-                        <option key={index} value={modulo._id}>{modulo.name}</option>
+                        <option key={index} value={modulo._id}>
+                          {modulo.name}
+                        </option>
                       </>
                     ))}
                   </select>
@@ -124,7 +127,8 @@ export default function AddCluster() {
               </div>
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="porcentaje">
-                  *Sin letras o caracteres especiales,  No puede superar un porcentaje mayor al 100% 
+                  *Sin letras o caracteres especiales, No puede superar un
+                  porcentaje mayor al 100%
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
