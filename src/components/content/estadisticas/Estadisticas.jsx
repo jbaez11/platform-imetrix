@@ -49,6 +49,157 @@ export default function Estadisticas() {
   //  end  utilizadas en la cuarta tabla
   const [keywords, setKeywords] = useState([]);
 
+  //ordenar tablas
+  const [orderTabla1, setOrderTabla1] = useState("ASC");
+  const [orderTabla2, setOrderTabla2] = useState("ASC");
+  const [orderTabla3, setOrderTabla3] = useState("ASC");
+  const [orderTabla4, setOrderTabla4] = useState("ASC");
+  const [orderTabla5, setOrderTabla5] = useState("ASC");
+
+  const sorting = (col) => {
+    if (orderTabla1 === "ASC") {
+      const sorted = [...modulosAndClusters].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setModulosAndClusters(sorted);
+      setTableModulosAndClusters(sorted);
+      setOrderTabla1("DSC");
+    }
+    if (orderTabla1 === "DSC") {
+      const sorted = [...modulosAndClusters].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setModulosAndClusters(sorted);
+      setTableModulosAndClusters(sorted);
+      setOrderTabla1("ASC");
+    }
+  };
+
+  const sortingNum = (col) => {
+    //console.log("col", col);
+    if (orderTabla1 === "ASC") {
+      const sorted = [...modulosAndClusters].sort((a, b) =>
+        a[col] > b[col] ? 1 : -1
+      );
+
+      //console.log("sorted", sorted);
+      setTableModulosAndClusters(sorted);
+      setModulosAndClusters(sorted);
+      setOrderTabla1("DSC");
+    }
+    if (orderTabla1 === "DSC") {
+      const sorted = [...modulosAndClusters].sort((a, b) =>
+        a[col] < b[col] ? 1 : -1
+      );
+      setTableModulosAndClusters(sorted);
+      setModulosAndClusters(sorted);
+      setOrderTabla1("ASC");
+    }
+  };
+  const sorting5 = (col) => {
+    if (orderTabla5 === "ASC") {
+      const sorted = [...encontradas].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      console.log("sorted", sorted);
+      setEncontradas(sorted);
+
+      setOrderTabla5("DSC");
+    }
+    if (orderTabla5 === "DSC") {
+      const sorted = [...encontradas].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setEncontradas(sorted);
+
+      setOrderTabla5("ASC");
+    }
+  };
+
+  const sortingNum5 = (col) => {
+    //console.log("col", col);
+    if (orderTabla5 === "ASC") {
+      const sorted = [...encontradas].sort((a, b) =>
+        a[col] > b[col] ? 1 : -1
+      );
+
+      //console.log("sorted", sorted);
+
+      setEncontradas(sorted);
+      setOrderTabla5("DSC");
+    }
+    if (orderTabla5 === "DSC") {
+      const sorted = [...encontradas].sort((a, b) =>
+        a[col] < b[col] ? 1 : -1
+      );
+
+      setEncontradas(sorted);
+      setOrderTabla5("ASC");
+    }
+  };
+  const sorting2 = (col) => {
+    if (orderTabla2 === "ASC") {
+      const sorted = [...noencontradas].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setNoencontradas(sorted);
+      setTableNoencontradas(sorted);
+      setOrderTabla2("DSC");
+    }
+    if (orderTabla2 === "DSC") {
+      const sorted = [...noencontradas].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setNoencontradas(sorted);
+      setTableNoencontradas(sorted);
+      setOrderTabla2("ASC");
+    }
+  };
+
+  const sorting3 = (col) => {
+    if (orderTabla3 === "ASC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setGrabaciones(sorted);
+      setTableGrabaciones(sorted);
+      setOrderTabla3("DSC");
+    }
+    if (orderTabla3 === "DSC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setGrabaciones(sorted);
+      setTableGrabaciones(sorted);
+      setOrderTabla3("ASC");
+    }
+  };
+  //organizar tabla 4
+  const sorting4 = (col) => {
+    // console.log("col", col);
+    if (orderTabla4 === "ASC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      // console.log("sorted", sorted);
+      setKeywords(sorted);
+
+      setOrderTabla4("DSC");
+    }
+    if (orderTabla4 === "DSC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      // console.log("sorted", sorted);
+      setKeywords(sorted);
+
+      setOrderTabla4("ASC");
+    }
+  };
+
   const handleChange = (e) => {
     setBusqueda(e.target.value);
     filtrar(e.target.value);
@@ -286,17 +437,17 @@ export default function Estadisticas() {
   const tabla5 = async (keyfile) => {
     const getKeywords = await getKeywordsData(keyfile);
     let data = getKeywords.data;
-    console.log("data", data);
+    // console.log("data", data);
     function secondsToTime(seconds) {
       return new Date(seconds * 1000).toISOString().substr(11, 11);
     }
-    console.log("keyfile", keyfile);
+    //console.log("keyfile", keyfile);
     let keywords = data[0].contents;
     let keywordsArray = [];
     let id = 0;
     for (let key in keywords) {
       for (let i = 0; i < keywords[key].results.length; i++) {
-        console.log("mostrar", keywords[key].results[i]);
+        // console.log("mostrar", keywords[key].results[i]);
         id++;
         let keywordPackage = {
           id: id + key,
@@ -314,7 +465,7 @@ export default function Estadisticas() {
         keywordPackage["from"] = keywords[key].results[i]["from"];
         keywordPackage["to"] = keywords[key].results[i]["to"];
         keywordPackage["confidence"] = keywords[key].results[i]["confidence"];
-        console.log("package", keywordPackage);
+        // console.log("package", keywordPackage);
         keywordsArray.push(keywordPackage);
       }
       if (keywords[key].results.length === 0) {
@@ -328,12 +479,12 @@ export default function Estadisticas() {
         keywordPackage["from"] = "-";
         keywordPackage["to"] = "-";
         keywordPackage["confidence"] = "-";
-        console.log("keywordsPackage", keywordPackage);
+        //console.log("keywordsPackage", keywordPackage);
         keywordsArray.push(keywordPackage);
       }
       //id++;
     }
-    console.log("keywordsArray", keywordsArray);
+    //console.log("keywordsArray", keywordsArray);
     let keywordsFound = [];
     let keywordsNotFound = [];
     for (let i = 0; i < keywordsArray.length; i++) {
@@ -344,7 +495,7 @@ export default function Estadisticas() {
       }
     }
     keywordsArray = keywordsFound.concat(keywordsNotFound);
-    console.log("keywordArray", keywordsArray);
+    //console.log("keywordArray", keywordsArray);
     setKeywords(keywordsArray);
   };
 
@@ -532,17 +683,49 @@ export default function Estadisticas() {
                           }}
                         >
                           <tr>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sorting("modulo")}
+                            >
                               MODULOS
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sorting("cluster")}
+                            >
                               CLUSTER
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sortingNum("positive")}
+                            >
                               ENCONTRADAS
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sortingNum("negative")}
+                            >
                               NO ENCONTRADAS
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
 
                             <th className="text-center" scope="col">
@@ -647,8 +830,20 @@ export default function Estadisticas() {
                           }}
                         >
                           <tr>
-                            <th>KEYWORDS</th>
-                            <th>PORCENTAJE</th>
+                            <th onClick={() => sorting5("keyword")}>
+                              KEYWORDS
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sortingNum5("porcentaje")}>
+                              PORCENTAJE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
                           </tr>
                         </thead>
                         <tbody style={{ fontSize: "small" }}>
@@ -696,7 +891,13 @@ export default function Estadisticas() {
                           }}
                         >
                           <tr>
-                            <th>AGENTE</th>
+                            <th onClick={() => sorting2("agent")}>
+                              AGENTE{" "}
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
                             <th>ACCIONES</th>
                           </tr>
                         </thead>
@@ -760,7 +961,13 @@ export default function Estadisticas() {
                           }}
                         >
                           <tr>
-                            <th>GRABACIONES</th>
+                            <th onClick={() => sorting3("records")}>
+                              GRABACIONES{" "}
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
                             <th>ACCIONES</th>
                           </tr>
                         </thead>
@@ -816,16 +1023,46 @@ export default function Estadisticas() {
                           }}
                         >
                           <tr>
-                            <th>KEYWORD</th>
-                            <th>CATEGORIA</th>
-                            <th>MODULO</th>
-                            <th>DESDE</th>
-                            <th>HASTA</th>
+                            <th onClick={() => sorting4("name")}>
+                              KEYWORD{" "}
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting4("category")}>
+                              CATEGORIA{" "}
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting4("module")}>
+                              MODULO{" "}
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting4("from")}>
+                              DESDE{" "}
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting4("to")}>
+                              HASTA{" "}
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
                           </tr>
                         </thead>
                         <tbody style={{ fontSize: "small" }}>
                           {keywords.map((keyword) => (
-                            <tr key={keyword.name}>
+                            <tr key={keyword.id}>
                               <td>{keyword.name}</td>
                               <td>{keyword.category}</td>
                               <td>{keyword.module}</td>
@@ -879,7 +1116,7 @@ const getData = (fechaIni, fechaFinal) => {
 const getKeywordsData = (keyfile) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
-  console.log("nuevaURL", nuevaURL);
+  //console.log("nuevaURL", nuevaURL);
   const url = `${rutaAPITableros}/${nuevaURL[4]}/keywords?keyfile=${keyfile}`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {

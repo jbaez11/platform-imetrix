@@ -112,6 +112,118 @@ export default function Puntajes() {
   //    utilizadas en la TERCERA tabla
   const [keywords, setKeywords] = useState([]);
   const [tableKeywords, setTableKeywords] = useState([]);
+  //ordenar tablas
+  const [orderTabla1, setOrderTabla1] = useState("ASC");
+  const [orderTabla2, setOrderTabla2] = useState("ASC");
+  const [orderTabla3, setOrderTabla3] = useState("ASC");
+
+  const sorting = (col) => {
+    if (orderTabla1 === "ASC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("DSC");
+    }
+    if (orderTabla1 === "DSC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("ASC");
+    }
+  };
+
+  const sortingNum = (col) => {
+    //console.log("col", col);
+    if (orderTabla1 === "ASC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a.results[col] > b.results[col] ? 1 : -1
+      );
+
+      //console.log("sorted", sorted);
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("DSC");
+    }
+    if (orderTabla1 === "DSC") {
+      const sorted = [...agentes].sort((a, b) =>
+        a.results[col] < b.results[col] ? 1 : -1
+      );
+      setTableAgentes(sorted);
+      setAgentes(sorted);
+      setOrderTabla1("ASC");
+    }
+  };
+
+  //organizar tabla 2
+  const sorting2 = (col) => {
+    if (orderTabla2 === "ASC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("DSC");
+    }
+    if (orderTabla2 === "DSC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      //console.log("sorted", sorted);
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("ASC");
+    }
+  };
+
+  const sortingNum2 = (col) => {
+    // console.log("col", col);
+    if (orderTabla2 === "ASC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a.results[col] > b.results[col] ? 1 : -1
+      );
+
+      // console.log("sorted", sorted);
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("DSC");
+    }
+    if (orderTabla2 === "DSC") {
+      const sorted = [...grabaciones].sort((a, b) =>
+        a.results[col] < b.results[col] ? 1 : -1
+      );
+      setTableGrabaciones(sorted);
+      setGrabaciones(sorted);
+      setOrderTabla2("ASC");
+    }
+  };
+  //organizar tabla 3
+  const sorting3 = (col) => {
+    // console.log("col", col);
+    if (orderTabla3 === "ASC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a[col].toLowerCase() > b[col].toLowerCase() ? 1 : -1
+      );
+      // console.log("sorted", sorted);
+      setKeywords(sorted);
+
+      setOrderTabla3("DSC");
+    }
+    if (orderTabla3 === "DSC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a[col].toLowerCase() < b[col].toLowerCase() ? 1 : -1
+      );
+      // console.log("sorted", sorted);
+      setKeywords(sorted);
+
+      setOrderTabla3("ASC");
+    }
+  };
 
   //  end  utilizadas en la TERCERA tabla
   const handleChange = (e) => {
@@ -233,19 +345,29 @@ export default function Puntajes() {
     const cabecerasData = await getDataModulos();
     //console.log("cabeceras", cabecerasData.data);
     let cabeceras = cabecerasData.data;
-    console.log("cabeceras object", cabeceras);
+    //console.log("cabeceras object", cabeceras);
     let cabecerasArray = [];
 
     cabeceras.forEach((cabecera) => {
       cabecerasArray.push(cabecera.name);
     });
-    setCabecerasMostrar(cabecerasArray);
-    //console.log("cabecerasArray", );
-    tabla2(ini, fin, cabecerasArray, name);
+    let cabecerasArray2 = [];
+    cabecerasArray.forEach((element) => {
+      console.log("element", element.toString());
+      if (element.toString() !== "recomendacion") {
+        if (element.toString() !== "nopermitida") {
+          console.log("elemen2t", element);
+          cabecerasArray2.push(element);
+        }
+      }
+    });
+    setCabecerasMostrar(cabecerasArray2);
+    console.log("cabecerasArray2", cabecerasArray2);
+    tabla2(ini, fin, cabecerasArray2, name);
   };
 
   const tabla2 = async (ini, fin, cabeceras, name) => {
-    console.log("cabeceras", cabeceras);
+    //console.log("cabeceras", cabeceras);
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
     let fechaFinalOriginal = new Date(fin).toISOString();
@@ -289,7 +411,7 @@ export default function Puntajes() {
 
     setGrabaciones(recordScoreByKeywords);
     setTableGrabaciones(recordScoreByKeywords);
-    console.log("grabaciones", recordScoreByKeywords);
+    //console.log("grabaciones", recordScoreByKeywords);
   };
 
   const tabla3 = async (keyfile) => {
@@ -575,14 +697,38 @@ export default function Puntajes() {
                           }}
                         >
                           <tr>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sorting("name")}
+                            >
                               NOMBRE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sortingNum("nrecordings")}
+                            >
                               GRABACIONES
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sortingNum("totalScore")}
+                            >
                               PUNTAJE PROMEDIO
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
                             <th className="text-center" scope="col">
                               ACCION
@@ -660,15 +806,40 @@ export default function Puntajes() {
                           }}
                         >
                           <tr>
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sorting2("keyfile")}
+                            >
                               NOMBRE GRABACION
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
                             {cabecerasMostrar.map((cabecera) => (
-                              <th className="text-uppercase">{cabecera}</th>
+                              <th
+                                className="text-uppercase"
+                                onClick={() => sortingNum2(cabecera)}
+                              >
+                                {cabecera}
+                                <i
+                                  className="fas fa-arrows-alt-v ml-1"
+                                  style={{ color: "black" }}
+                                ></i>
+                              </th>
                             ))}
 
-                            <th className="text-center" scope="col">
+                            <th
+                              className="text-center"
+                              scope="col"
+                              onClick={() => sortingNum2("totalScore")}
+                            >
                               PUNTAJE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
                             </th>
                             <th className="text-center" scope="col">
                               ACCION
@@ -735,16 +906,46 @@ export default function Puntajes() {
                           }}
                         >
                           <tr>
-                            <th>KEYWORD</th>
-                            <th>CATEGORIA</th>
-                            <th>MODULO</th>
-                            <th>DESDE</th>
-                            <th>HASTA</th>
+                            <th onClick={() => sorting3("name")}>
+                              KEYWORD
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("category")}>
+                              CATEGORIA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("module")}>
+                              MODULO
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("from")}>
+                              DESDE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("to")}>
+                              HASTA
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
                           </tr>
                         </thead>
                         <tbody style={{ fontSize: "small" }}>
                           {keywords.map((keyword) => (
-                            <tr key={keyword.name}>
+                            <tr key={keyword.id}>
                               <td>{keyword.name}</td>
                               <td>{keyword.category}</td>
                               <td>{keyword.module}</td>
