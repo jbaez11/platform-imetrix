@@ -6,14 +6,45 @@ import {rutaAPI} from '../../../config/Config';
 
 export default function EditCampaing(){
 
+    const currentUserId = localStorage.getItem("ID");
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
+
+    const [users, setUsers] = React.useState([]);
+
+    React.useEffect(() => {
+        obtenerUsuarios();
+    }, [])
+
+    const obtenerUsuarios = async () =>{
+        const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
+        const user = await data.json()
+        /* console.log("Admin Users", user.data) */
+        setUsers(user.data);
+    }
+
+    /* Users on Change */
+    const userChange = user => {
+        let nUsers = campaing.users
+        let index = nUsers.findIndex(c => c._id === user._id)
+        if(index !== -1){
+            nUsers.splice(index, 1)
+        }else{
+            nUsers.push(user)
+        }
+        editCampaing({
+            ...campaing,
+            users: nUsers
+        })
+        console.log("Usuarios para la Campaña", campaing)
+    }
     
     //HOOK para Capturar los Datos de la campaña a editar
     const [campaing, editCampaing] = useState({
         nombre:"",
         foto: null,
         state: "",
+        users:[],
         pais:"",
         id:""
     })
@@ -49,22 +80,18 @@ export default function EditCampaing(){
                     $(".previsualizarImg").attr("src", rutaFoto);
 
                     editCampaing({
-                        'nombre': $("#editNombre").val(), 
-                        'foto': foto,
-                        'state': $("#editState").val(),
-                        'pais':$("#editPais").val(),
-                        'id': $("#editId").val()
+                        ...campaing,
+                        foto,
+                        state: $("#editState").val()
                     })
                 })        
             }
         }else{
 
             editCampaing({
-                'nombre': $("#editNombre").val(), 
-                'foto': null,
-                'state': $("#editState").val(),
-                'pais':$("#editPais").val(),
-                'id': $("#editId").val()
+                ...campaing,
+                foto: null,
+                state: $("#editState").val()
             })
         }   
     }
@@ -89,24 +116,37 @@ export default function EditCampaing(){
     }
 
     //Capturar datos para editar
-    $(document).on("click", ".editarInputs", function(e){
+    $(document).on("click", ".editarInputs", async function(e){
 
         e.preventDefault();
 
         let data = $(this).attr("data").split(",");
-        /* console.log("Datos para Editar",data); */
+        console.log("Datos para Editar",data);
         
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCampaing/${data[2]}`);
         $("#editState").val(data[3]);
+        $("#editUsers").val(data[5]); 
         $("#editPais").val(data[6]);
         $("#editId").val(data[0]);
+
+        let user = await getUsers();
+        console.log("Usuarios de la campaña", user)
+        let nUsers = []
+
+        if(user.data instanceof Array){
+            const campaingUsers = user.data.map(u => u._id)
+            console.log("UserCampaings",campaingUsers)
+            nUsers = users.filter(c => campaingUsers.includes(c._id))
+            console.log("nUsers", nUsers)
+        }
 
         editCampaing({
 
             'nombre': data[1], 
             'foto': null,
             'state': data[3],
+            'users': nUsers, 
             'pais':data[6],
             'id': data[0]
             
@@ -223,11 +263,37 @@ export default function EditCampaing(){
                                     <i className="fas fa-user-check"></i>
                                 </div>
                                 <select name="state" id="editState">
-                                        <option value="1">Habilitado</option>
-                                        <option value="0">Inhabilitado</option>
+                                        <option selected={campaing.state == "Habilitado"} value="1">Habilitado</option>
+                                        <option selected={campaing.state == "Inhabilitado"} value="0">Inhabilitado</option>
                                 </select>
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
+                        </div>
+                        <div className="form-group">
+                                <label className="small text-secondary" htmlFor="editUsers">
+                                    | Seleccione el Usuario(s) que quiere agregar o quitar a la campaña
+                                </label>
+                                <div className="input-group mb-3">
+                                    <div className="input-group-append input-group-text">
+                                        <i className="fas fa-user-check"></i>
+                                    </div>
+                                    {users.map((user, index) =>(
+                                        <div style={{marginLeft:"5px"}} key={`user-${index}`}>
+                                            <input onChange={ () => userChange(user)}
+                                            className="form-check-input"
+                                            type="checkbox" 
+                                            value={user._id}
+                                            checked={campaing.users.some(c => c._id === user._id)}
+                                            style={{marginLeft:"0.03cm", height:"20px", width:"20px"}}
+                                            />
+                                            <label style={{marginLeft:"25px", marginTop:"1px"}} 
+                                                className="form-check-label">{user.nombres}
+                                            </label>
+                                        </div>
+                                    ))}
+
+                                </div>
+                                <div className="invalid-feedback invalid-state"></div>
                         </div>
                           <div className="form-group">
                                 <label className="small text-secondary" htmlFor="editPais">
@@ -274,6 +340,7 @@ const putData = data =>{
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
     formData.append("state", data.state);
+    formData.append("users", JSON.stringify(data.users.map(u => u._id)));
     formData.append("cluster", data.cluster);
     formData.append("pais", data.pais);
     const token =  localStorage.getItem("ACCESS_TOKEN");
@@ -293,6 +360,29 @@ const putData = data =>{
     }).catch(err=>{
         return err;
     });
+}
+
+const getUsers = () =>{
+
+    const currentUserId = localStorage.getItem("ID");
+    const url = `${rutaAPI}/getUser/${currentUserId}`;
+    const token = localStorage.getItem("ACCESS_TOKEN");
+
+    const params = {
+        method: "GET",
+        headers: {
+            "Authorization": token,
+            "Content-Type": "application/json"
+        }
+    } 
+    return fetch(url, params).then(response =>{
+        return response.json();
+    }).then(result => {
+        return result;
+    }).catch(err=>{
+        return err;
+    })
+
 }
 
 //METODO DELETE

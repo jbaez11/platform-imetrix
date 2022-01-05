@@ -13,15 +13,19 @@ import "datatables.net-responsive";
 export default function Camaings() {
   const dataCampaings = async () => {
     const getCampaings = await getData();
-    console.log("Campañas", getCampaings);
+    /* console.log("Campañas", getCampaings); */
 
     const dataTable = [];
 
     getCampaings.data.forEach((campaing, index) => {
+
+      /* console.log(campaing.users) */
+
       let userNames = [];
       campaing.users.forEach((user) => {
         userNames.push(user.nombres);
       });
+
       dataTable[index] = [
         index + 1,
         campaing.nombre,
@@ -37,9 +41,7 @@ export default function Camaings() {
           campaing._id,
           campaing.nombre,
           campaing.foto,
-          campaing.state === 1
-            ? (campaing.state = "Habilitado")
-            : (campaing.state = "Inhabilitado"),
+          campaing.state,
           campaing.cluster.nombre,
           userNames,
           campaing.pais,

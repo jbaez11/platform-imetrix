@@ -5,6 +5,7 @@ import './App.css';
 
 /* Componente Incio */
 import Start from './components/start/Start';
+import Index from './components/content/index/Index';
 /* Componentes Dinamicos */
 import Usuarios from './components/content/users/Usuarios';
 import Campaings from './components/content/campaings/Campaings';
@@ -24,9 +25,9 @@ import PageNotFound from './components/content/pageNotFound/PageNotFound';
 import PerfilAdmin from './components/content/administradores/PerfilAdmin';
 import PerfilUser from './components/content/users/PerfilUser';
 
+
 export default function App() {
   
-
   const auth = getAccessToken();
  
   const role = validarRol();
@@ -37,11 +38,15 @@ export default function App() {
       <Start/>
     );
   }
+ 
+
+  /* console.log("path", location) */
   return (
     <div className="sidebar-mini">
       <div className="wrapper">
           <Router>
             <Switch>
+               <Route exact path="/"><Index/></Route>
                <Route exact path="/perfilAdmin/:id">{role ? <PerfilAdmin/> :<PerfilUser/>}</Route>
                <Route exact path="/perfilUser/:id"><PerfilUser/></Route>
                <Route exact path="/inicio/:id"><ClustersInicio/></Route>
@@ -89,11 +94,8 @@ const getAccessToken = ()=>{
     
     return false;
 
-  }else{
-
-    return true;
-
   }
+    return true;
 }
 
 //Funcion para validar la fecha de expiración del token

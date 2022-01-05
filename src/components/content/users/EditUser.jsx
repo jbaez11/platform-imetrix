@@ -294,9 +294,8 @@ export default function EditUser(){
                                     <i className="fas fa-key"></i>
                                 </div>
                                 <select required name="state" id="editarState">
-                                        <option value="" selected disabled hidden>Seleccionar estado</option>
-                                        <option value="1">Habilitado</option>
-                                        <option value="0">Inhabilitado</option>
+                                        <option selected={usuarios.state == "Habilitado"} value="1">Habilitado</option>
+                                        <option selected={usuarios.state == "Inhabilitado"} value="0">Inhabilitado</option>
                                 </select>
                             </div>
                         </div>
@@ -356,9 +355,9 @@ export default function EditUser(){
                                     <i className="fas fa-user"></i>
                                 </div>
                                 <select required name="role" id="editarRole">
-                                        <option value="" selected disabled hidden>Seleccionar rol</option>
-                                        <option hidden value="Administrador">Administrador</option>
-                                        <option value="Auditor">Auditor</option>
+                                        {/* <option value="" selected disabled hidden>Seleccionar rol</option>
+                                        <option hidden value="Administrador">Administrador</option> */}
+                                        <option selected={usuarios.role == "Auditor"} value="Auditor">Auditor</option>
                                 </select>
                             </div>
                         </div>

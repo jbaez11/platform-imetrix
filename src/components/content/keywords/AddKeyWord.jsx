@@ -43,7 +43,7 @@ export default function AddKeyWord() {
       $('button[type="submit"]').remove();
       setTimeout(() => {
         window.location.href = `/keywords/` + nuevaURL[4];
-      }, 3000);
+      }, 2000);
     }
   };
 

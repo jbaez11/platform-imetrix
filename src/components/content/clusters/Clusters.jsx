@@ -11,12 +11,16 @@ import "datatables.net-responsive";
 import $ from "jquery";
 
 export default function Clusters() {
+
   const dataClusters = async () => {
     const getClusters = await getData();
 
+    
     const dataTable = [];
 
     getClusters.data.forEach((cluster, index) => {
+
+      console.log("Data Clusters",cluster)
       let userNames = [];
       cluster.users.forEach((user) => {
         userNames.push(user.nombres);
@@ -35,9 +39,7 @@ export default function Clusters() {
           cluster._id,
           cluster.nombre,
           cluster.foto,
-          cluster.state === 1
-            ? (cluster.state = "Habilitado")
-            : (cluster.state = "Inhabilitado"),
+          cluster.state,
           userNames,
           cluster.createdAt,
         ],

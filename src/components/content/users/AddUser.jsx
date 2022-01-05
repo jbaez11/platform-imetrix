@@ -251,9 +251,8 @@ export default function AddUser(){
                                     <i className="fas fa-user-tag"></i>
                                 </div>
                                 <select required name="role" id="role">
-                                        <option value="" selected disabled hidden>Seleccionar rol</option>
-                                        <option hidden value="Administrador">Administrador</option>
-                                        <option value="Auditor">Auditor</option>
+                                        <option value="" selected disabled>Seleccionar rol</option>
+                                        <option key={usuarios.state} value="Auditor">Auditor</option>
                                 </select>
                             </div>
                         </div>
