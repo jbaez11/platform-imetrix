@@ -18,6 +18,8 @@ export default function Keywords() {
     const dataSet = [];
 
     getKeyWords.data.forEach((keywords, index) => {
+
+      
       dataSet[index] = [
         index + 1,
         keywords.name,
