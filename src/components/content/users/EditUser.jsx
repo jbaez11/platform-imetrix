@@ -6,75 +6,6 @@ import {rutaAPI} from '../../../config/Config';
 export default function EditUser(){
 
     const currentUserId = localStorage.getItem("ID");
-    /* const valores = window.location.href;
-    let nuevaURL = valores.split("/"); */
-
-/*     const [clusters , setClusters] = React.useState([]); */
-
-/*     React.useEffect(() => {
-        //console.log('useEffect');
-        obtenerDatos();
-    }, [])
-
-    React.useEffect(() => {
-        //console.log('useEffect');
-        obtenerDatosCampañas();
-    }, [])
-
-    const obtenerDatos = async ()=>{
-        const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
-        const clust =  await data.json()
-        for(let i in clust.data){
-            let c = clust.data[i]
-            let respuesta = await fetch(`${rutaAPI}/getCampaing/${c._id}`);
-            clust.data[i].campaings = (await respuesta.json()).data
-        }
-        //console.log("cluster",clust.data);
-        setClusters(clust.data)
-    }
-
-    const obtenerDatosCampañas = async ()=>{
-        
-        const data = await fetch(`${rutaAPI}/getCampaing/${nuevaURL[4]}`);
-        const campaing =  await data.json()
-        //console.log("cluster",clust.data);
-        setClusters(campaing.data)
-    } */
-
-
-/*     const clusterChange = cluster =>{
-        let nClusters = usuarios.clusters
-        let index = nClusters.findIndex(c => c._id === cluster._id)
-        if(index !== -1){
-            nClusters.splice(index, 1)
-        }else{
-            nClusters.push(cluster)
-        }
-        editarUsuario({
-            ...usuarios,
-            clusters: nClusters
-        })
-        console.log("Clusters",usuarios)
-    }
-
-    const campaingChange = campaing =>{
-        let nCampaings = usuarios.campaings
-        let index = nCampaings.findIndex(c => c._id === campaing._id)
-        if(index !== -1){
-            nCampaings.splice(index, 1)
-        }else{
-            nCampaings.push(campaing)
-        }
-        editarUsuario({
-            ...usuarios,
-            campaings: nCampaings
-        })
-        console.log("Campañas",usuarios)
-    }
-
-    let checkedSelectedCluster = cluster =>{
-        return usuarios.clusters.some(c => c._id === cluster._id)
-    } */
 
     //Hook para caputar los datos del formulario
     const [usuarios, editarUsuario] = useState({
@@ -82,8 +13,6 @@ export default function EditUser(){
         user:"",
         password:"",
         state:"",
-        /* clusters:[],
-        campaings:[], */
         role:"",
         id:""
     });
@@ -131,32 +60,13 @@ export default function EditUser(){
         $("#editarNombre").val(data[1]);
         $("#editarUsuario").val(data[2]);
         $("#editarState").val(data[3]);
-        /* $("#editarCluster").val(data[4]);
-        $('#editCampaings').val(data[5]); */
         $("#editarRole").val(data[6]);
-
-        /* let user = await getUsers(data[0]);
-        console.log("Clusters del Usuario", user)
-        let nClusters = []
-        let nCampaings = []
-        if(user.data instanceof Array){
-            const userClusters = user.data.map(u => u._id)
-            console.log("CLUSTERS", userClusters)
-            nClusters = clusters.filter(c => userClusters.includes(c._id))
-            console.log("nClusters", nClusters)
-        }
-        if(user.data instanceof Array){
-            const userCampaings = user.data.map(u => u._id)
-            nCampaings = clusters.filter(c => userCampaings.includes(c._id))
-        } */
 
         editarUsuario({
             'nombres':  $("#editarNombre").val(),
             'user':  $("#editarUsuario").val(),
             'password':  $("#editarPassword").val(),
             'state':  $("#editarState").val(),
-            /* 'clusters': nClusters,
-            'campaings': nCampaings, */
             'role':  $("#editarRole").val(),
             'id': data[0]
         })
@@ -298,54 +208,7 @@ export default function EditUser(){
                                         <option selected={usuarios.state == "Inhabilitado"} value="0">Inhabilitado</option>
                                 </select>
                             </div>
-                        </div>
-                        {/* <div className="form-group">
-                            <label className="small text-secondary" htmlFor="editarCluster">
-                                *Solo se permite el id del cluster a asociar
-                            </label>
-                            <div className="input-group mb-3">
-                                <div className="input-group-append input-group-text">
-                                    <i className="fas fa-key"></i>
-                                </div>
-                                  {clusters.map((cluster, index)=>(
-                                    <div style={{marginLeft:"5px"}} key={`cluster-${index}`}>
-                                        <input onChange={()=>clusterChange(cluster)} 
-                                        type="checkbox" 
-                                        value={cluster._id} 
-                                        className="form-check-input"
-                                        checked={usuarios.clusters.some(c => c._id === cluster._id)} 
-                                        style={{marginLeft:"0.03cm", height:"18px", width:"18px", marginTop:"5px"}}/>
-                                        <label style={{marginLeft:"25px"}} 
-                                        className="form-check-label">{cluster.nombre}</label>   
-                                    </div>
-                                    ))}
-                            </div>
-                        </div>
-                        {clusters.map((cluster, index) =>(
-                            <>
-                            {checkedSelectedCluster(cluster) && 
-                                    <div key={index}> 
-                                         <h5>{cluster.nombre}</h5>
-                                         <div className="form-group">
-                                         <label className="small text-secondary" htmlFor="editCampaings">
-                                         | Seleccione las campaña(s) al que el auditor tendra acceso
-                                         </label>
-                                         <div className="input-group mb-3">
-                                             <div className="input-group-append input-group-text">
-                                             <i className="fas fa-address-card"></i>
-                                         </div>
-                                         {cluster.hasOwnProperty("campaings") && cluster.campaings.map((campaing, index)=>(
-                                             <div style={{marginLeft:"5px"}} key={`campaing-${index}`}>
-                                                 <input onChange={()=>campaingChange(campaing)} className="form-check-input" type="checkbox" value={campaing._id} checked={usuarios.campaings.some(c => c._id === campaing._id)} style={{marginLeft:"0.03cm", height:"20px", width:"20px"}} />
-                                                 <label style={{marginLeft:"25px", marginTop:"1px"}} className="form-check-label">{campaing.nombre}</label>
-                                             </div>
-                                         ))}
-                                         </div>
-                                         </div> 
-                                    </div>}
-                            </>
-                        ))} */}
-                                    
+                        </div>        
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarRole">
                                 |Auditor
