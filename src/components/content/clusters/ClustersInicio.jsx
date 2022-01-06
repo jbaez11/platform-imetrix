@@ -28,17 +28,20 @@ export default function Clusters() {
       console.log("cluster", cluster);
 
       let descompenerUrl = cluster.nombre.split(" ");
-      let lowerURL = "";
-      let enviarUrl = "";
-      descompenerUrl.forEach((element) => {
-        // console.log("elem", element);
-        lowerURL = element[0].toUpperCase() + element.slice(1).toLowerCase();
-        enviarUrl = enviarUrl.concat(lowerURL);
-        //console.log("enviarUrl", enviarUrl);
-        cluster.UrlCampaing = enviarUrl;
-        console.log("campaing.Urltableros=enviarUrl", cluster.UrlCampaing);
-      });
+      let lowerUrl = descompenerUrl[0].toLowerCase();
 
+      if (descompenerUrl[1]) {
+        console.log("descompenerUrl", descompenerUrl);
+
+        let secondUrl = descompenerUrl[1];
+        let upperAndLowerUrl =
+          secondUrl[0].toUpperCase() + secondUrl.slice(1).toLowerCase();
+        let unirUrl = lowerUrl + upperAndLowerUrl;
+        console.log("unirUrl", unirUrl);
+        cluster.UrlCampaing = unirUrl;
+      } else {
+        cluster.UrlCampaing = lowerUrl;
+      }
       //console.log("cluster url", cluster);
     });
     setClusters(clust.data);
