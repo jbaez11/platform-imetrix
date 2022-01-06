@@ -22,22 +22,17 @@ export default function CamaingsInicio() {
     console.log("camp.data", camp.data);
     camp.data.forEach((campaing) => {
       let descompenerUrl = campaing.nombre.split(" ");
-      let nueva = descompenerUrl[0];
-      //console.log("nueva", nueva[0]);
-      let lowerUrl = nueva[0].toUpperCase() + nueva.slice(1).toLowerCase();
-
-      if (descompenerUrl[1]) {
-        console.log("descompenerUrl", descompenerUrl);
-
-        let secondUrl = descompenerUrl[1];
-        let upperAndLowerUrl =
-          secondUrl[0].toUpperCase() + secondUrl.slice(1).toLowerCase();
-        let unirUrl = lowerUrl + upperAndLowerUrl;
-        console.log("unirUrl", unirUrl);
-        campaing.Urltableros = unirUrl;
-      } else {
-        campaing.Urltableros = lowerUrl;
-      }
+      //console.log("descompenerUrl", descompenerUrl);
+      let lowerURL = "";
+      let enviarUrl = "";
+      descompenerUrl.forEach((element) => {
+        // console.log("elem", element);
+        lowerURL = element[0].toUpperCase() + element.slice(1).toLowerCase();
+        enviarUrl = enviarUrl.concat(lowerURL);
+        //console.log("enviarUrl", enviarUrl);
+        campaing.Urltableros = enviarUrl;
+        console.log("campaing.Urltableros=enviarUrl", campaing.Urltableros);
+      });
     });
     setCampaings(camp.data);
   };

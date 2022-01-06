@@ -28,20 +28,16 @@ export default function Clusters() {
       console.log("cluster", cluster);
 
       let descompenerUrl = cluster.nombre.split(" ");
-      let lowerUrl = descompenerUrl[0].toLowerCase();
-
-      if (descompenerUrl[1]) {
-        console.log("descompenerUrl", descompenerUrl);
-
-        let secondUrl = descompenerUrl[1];
-        let upperAndLowerUrl =
-          secondUrl[0].toUpperCase() + secondUrl.slice(1).toLowerCase();
-        let unirUrl = lowerUrl + upperAndLowerUrl;
-        console.log("unirUrl", unirUrl);
-        cluster.UrlCampaing = unirUrl;
-      } else {
-        cluster.UrlCampaing = lowerUrl;
-      }
+      let lowerURL = "";
+      let enviarUrl = "";
+      descompenerUrl.forEach((element) => {
+        // console.log("elem", element);
+        lowerURL = element[0].toUpperCase() + element.slice(1).toLowerCase();
+        enviarUrl = enviarUrl.concat(lowerURL);
+        //console.log("enviarUrl", enviarUrl);
+        cluster.UrlCampaing = enviarUrl;
+        console.log("campaing.Urltableros=enviarUrl", cluster.UrlCampaing);
+      });
 
       //console.log("cluster url", cluster);
     });
@@ -149,7 +145,7 @@ export default function Clusters() {
                                               return (
                                                 <>
                                                   <a
-                                                    style={{marginTop:"5px"}}
+                                                    style={{ marginTop: "5px" }}
                                                     href={`/campañasinicio/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
@@ -197,13 +193,11 @@ export default function Clusters() {
                                           <br />
 
                                           {(() => {
-                                             if (
-                                              role === "Auditor"
-                                            ) {
+                                            if (role === "Auditor") {
                                               return (
                                                 <>
                                                   <a
-                                                    style={{marginTop:"5px"}}
+                                                    style={{ marginTop: "5px" }}
                                                     href={`/campañasAuditor/${nuevaURL[4]}/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
