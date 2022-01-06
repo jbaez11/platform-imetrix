@@ -175,13 +175,13 @@ export default function Agents() {
                         >
                           Descargar
                         </button>
-                        <button
+                        {/* <button
                           className="btn btn-primary ml-4"
                           data-toggle="modal"
                           data-target="#"
                         >
                           Subir
-                        </button>
+                        </button> */}
                       </h5>
                     </div>
                     <div className="card-body">

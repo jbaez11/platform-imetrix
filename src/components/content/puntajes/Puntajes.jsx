@@ -10,7 +10,6 @@ import { enGB } from "date-fns/locale";
 import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
 import "react-nice-dates/build/style.css";
 
-//hh
 export default function Puntajes() {
   const objectToCsv = (data) => {
     const csvRows = [];

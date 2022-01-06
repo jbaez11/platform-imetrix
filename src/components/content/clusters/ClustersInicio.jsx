@@ -42,7 +42,6 @@ export default function Clusters() {
       } else {
         cluster.UrlCampaing = lowerUrl;
       }
-
       //console.log("cluster url", cluster);
     });
     setClusters(clust.data);
@@ -149,7 +148,7 @@ export default function Clusters() {
                                               return (
                                                 <>
                                                   <a
-                                                    style={{marginTop:"5px"}}
+                                                    style={{ marginTop: "5px" }}
                                                     href={`/campañasinicio/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
@@ -197,13 +196,11 @@ export default function Clusters() {
                                           <br />
 
                                           {(() => {
-                                             if (
-                                              role === "Auditor"
-                                            ) {
+                                            if (role === "Auditor") {
                                               return (
                                                 <>
                                                   <a
-                                                    style={{marginTop:"5px"}}
+                                                    style={{ marginTop: "5px" }}
                                                     href={`/campañasAuditor/${nuevaURL[4]}/${cluster._id}/${cluster.UrlCampaing}`}
                                                     className="btn btn-warning"
                                                   >
