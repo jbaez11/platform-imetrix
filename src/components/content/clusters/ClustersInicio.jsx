@@ -18,26 +18,26 @@ export default function Clusters() {
     obtenerDatos();
   }, []);
 
-  /* Obtiene los clusters del Administrador */
+  /* Bloque para solicitar los clusters del Administrador */
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
     const clust = await data.json();
-    console.log("cluster", clust.data);
+    /* console.log("cluster", clust.data); */
 
     clust.data.forEach((cluster) => {
-      console.log("cluster", cluster);
+      /* console.log("cluster", cluster); */
 
       let descompenerUrl = cluster.nombre.split(" ");
       let lowerUrl = descompenerUrl[0].toLowerCase();
 
       if (descompenerUrl[1]) {
-        console.log("descompenerUrl", descompenerUrl);
+        /* console.log("descompenerUrl", descompenerUrl); */
 
         let secondUrl = descompenerUrl[1];
         let upperAndLowerUrl =
           secondUrl[0].toUpperCase() + secondUrl.slice(1).toLowerCase();
         let unirUrl = lowerUrl + upperAndLowerUrl;
-        console.log("unirUrl", unirUrl);
+        /* console.log("unirUrl", unirUrl) */;
         cluster.UrlCampaing = unirUrl;
       } else {
         cluster.UrlCampaing = lowerUrl;
@@ -46,7 +46,6 @@ export default function Clusters() {
     });
     setClusters(clust.data);
   };
-  /* Bloque para solicitar los clusters del Administrador */
 
   /* ---------------------------------------------------------------------------- */
 
@@ -62,22 +61,22 @@ export default function Clusters() {
   const obtenerUserClusters = async () => {
     const data = await fetch(`${rutaAPI}/getCluster/${nuevaURL[4]}`);
     const clust = await data.json();
-    console.log("User Clusters", clust.data);
+    /* console.log("User Clusters", clust.data); */
 
     clust.data.forEach((cluster) => {
-      console.log("cluster", cluster);
+      /* console.log("cluster", cluster); */
 
       let descompenerUrl = cluster.nombre.split(" ");
       let lowerUrl = descompenerUrl[0].toLowerCase();
 
       if (descompenerUrl[1]) {
-        console.log("descompenerUrl", descompenerUrl);
+        /* console.log("descompenerUrl", descompenerUrl); */
 
         let secondUrl = descompenerUrl[1];
         let upperAndLowerUrl =
           secondUrl[0].toUpperCase() + secondUrl.slice(1).toLowerCase();
         let unirUrl = lowerUrl + upperAndLowerUrl;
-        console.log("unirUrl", unirUrl);
+        /* console.log("unirUrl", unirUrl); */
         cluster.UrlCampaing = unirUrl;
       } else {
         cluster.UrlCampaing = lowerUrl;
@@ -87,7 +86,10 @@ export default function Clusters() {
   };
   /* Bloque solicitar los clusters del Usuario */
 
+  /* ---------------------------------------------------------------------------- */
+
   return (
+
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -230,5 +232,6 @@ export default function Clusters() {
         <Footer />
       </div>
     </div>
+    
   );
 }

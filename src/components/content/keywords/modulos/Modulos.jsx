@@ -12,9 +12,6 @@ import { rutaAPITableros } from "../../../../config/Config";
 
 export default function Modulos() {
 
-  const valores = window.location.href;
-  let nuevaURL = valores.split("/");
-
   const dataModulos = async () => {
     // crear el dataset para datatables
     const getModulos = await getData();
@@ -23,12 +20,11 @@ export default function Modulos() {
 
     getModulos.data.forEach((modulos, index) => {
 
-  
       dataSet[index] = [
         index + 1,
         modulos.name,
         modulos.categoria.name,
-        [modulos._id, modulos.name, modulos.categoria],
+        [modulos._id, modulos.name, modulos.categoria.name],
       ];
     });
 

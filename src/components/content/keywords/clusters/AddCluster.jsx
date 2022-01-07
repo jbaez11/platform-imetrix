@@ -60,11 +60,12 @@ export default function AddCluster() {
     let nuevaURL = valores.split("/");
     const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getModulos`);
     const modulo = await data.json();
-    console.log("Modulos", modulo.data);
+    /* console.log("Modulos", modulo.data); */
     setModulos(modulo.data);
   };
 
   return (
+
     <div className="modal" id="addCluster">
       <div className="modal-dialog">
         <div className="modal-content">
@@ -166,6 +167,7 @@ export default function AddCluster() {
         </div>
       </div>
     </div>
+
   );
 }
 
@@ -182,7 +184,7 @@ const postData = (data) => {
       "Content-Type": "application/json",
     },
   };
-  console.log("Data a guardar de Cluster", data);
+  /* console.log("Data a guardar de Cluster", data); */
   return fetch(url, params)
     .then((response) => {
       return response.json();

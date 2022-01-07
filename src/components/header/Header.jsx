@@ -9,6 +9,8 @@ export default function Header(){
         localStorage.removeItem("CORREO");
         localStorage.removeItem("NAME");
         localStorage.removeItem("ROLE");
+        localStorage.removeItem("CONVERSATION");
+        localStorage.removeItem("CREATEDBY");
     }
 
     return(

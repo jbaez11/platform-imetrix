@@ -58,7 +58,7 @@ export default function EditKeyWord() {
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getClusters`);
     const clust = await data.json();
-    console.log("cluster", clust.data);
+    /* console.log("cluster", clust.data); */
     setClusters(clust.data);
   };
 
@@ -83,7 +83,7 @@ export default function EditKeyWord() {
     e.preventDefault();
 
     let data = $(this).attr("data").split(",")[0];
-    console.log(data);
+    /* console.log(data); */
 
     //Validamos si queremos eliminar el usuario
     Swal.fire({
@@ -175,9 +175,7 @@ export default function EditKeyWord() {
                   </div>
                   <select name="cluster" id="editarCluster">
                     {clusters.map((cluster, index) => (
-                      <>
                         <option key={index} value={cluster._id}>{cluster.name}</option>
-                      </>
                     ))}
                   </select>
                 </div>
@@ -219,7 +217,7 @@ const putData = (data) => {
       "Content-Type": "application/json",
     },
   };
-  console.log("Data a guardar de KeyWords", data);
+  /* console.log("Data a guardar de KeyWords", data); */
   return fetch(url, params)
     .then((response) => {
       return response.json();

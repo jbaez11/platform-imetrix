@@ -112,11 +112,11 @@ export default function AddModulo() {
                       Seleccionar Categoria
                     </option>
                     {categorias.map((categoria, index) => (
-                      <>
-                        <option key={index} value={categoria._id}>
-                          {categoria.name}
+                        <option 
+                          key={"add-category" + index} 
+                          value={categoria._id}>
+                            {categoria.name}
                         </option>
-                      </>
                     ))}
                   </select>
                 </div>

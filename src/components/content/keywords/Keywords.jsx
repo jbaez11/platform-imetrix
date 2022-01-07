@@ -52,7 +52,7 @@ export default function Keywords() {
     // console.log('this.agents', this.agents);
     const getKeyWords = await getData();
     let bdKeywords = getKeyWords.data;
-    console.log("bdKeywords", bdKeywords);
+    /* console.log("bdKeywords", bdKeywords); */
     const data = bdKeywords.map((row) => ({
       name: row.name,
       cluster: row.cluster.name,

@@ -19,7 +19,7 @@ export default function CamaingsInicio() {
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPI}/getCampaing/${nuevaURL[4]}`);
     const camp = await data.json();
-    console.log("camp.data", camp.data);
+    /* console.log("camp.data", camp.data); */
     camp.data.forEach((campaing) => {
       let descompenerUrl = campaing.nombre.split(" ");
       //console.log("descompenerUrl", descompenerUrl);
@@ -31,13 +31,14 @@ export default function CamaingsInicio() {
         enviarUrl = enviarUrl.concat(lowerURL);
         //console.log("enviarUrl", enviarUrl);
         campaing.Urltableros = enviarUrl;
-        console.log("campaing.Urltableros=enviarUrl", campaing.Urltableros);
+        /* console.log("campaing.Urltableros=enviarUrl", campaing.Urltableros); */
       });
     });
     setCampaings(camp.data);
   };
 
   return (
+
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -105,30 +106,7 @@ export default function CamaingsInicio() {
         <Footer />
       </div>
     </div>
+    
   );
 }
 
-//Petición Get para Campañas
-/* const getData = () =>{
-    
-    const valores = window.location.href;
-    let nuevaURL = valores.split("/");
-
-    const url = `${rutaAPI}/getCampaing/${nuevaURL[4]}`;
-
-    const params = {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json"
-        }
-    } 
-    
-    return fetch(url, params).then(response =>{
-        return response.json();
-    }).then(result => {
-        return result;
-    }).catch(err=>{
-        return err;
-    })
-
-} */

@@ -58,7 +58,7 @@ export default function EditModulo() {
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getCategorias`);
     const categoria = await data.json();
-    console.log("Categorias", categoria.data);
+    /* console.log("Categorias", categoria.data); */
     setCategorias(categoria.data);
   };
 
@@ -67,13 +67,13 @@ export default function EditModulo() {
     e.preventDefault();
 
     let data = $(this).attr("data").split(",");
-    //console.log(data);
+    console.log("Datos a editar de Modulo", data);
     $("#editarNombre").val(data[1]);
     $("#editarCategoria").val(data[2]);
 
     editarModulo({
       name: $("#editarNombre").val(),
-      cluster: $("#editarCategoria").val(),
+      categoria: data[2],
       id: data[0],
     });
   });
@@ -177,13 +177,12 @@ export default function EditModulo() {
                     <i className="fas fa-address-card"></i>
                   </div>
                   <select required name="categoria" id="editarCategoria">
-                    <option value="" selected disabled>
-                      Seleccionar Categoria
-                    </option>
                     {categorias.map((categoria, index) => (
-                      <>
-                        <option key={index} value={categoria._id}>{categoria.name}</option>
-                      </>
+                        <option 
+                          key={"edit-category" + index} 
+                          value={categoria._id}>
+                            {categoria.name}
+                        </option>
                     ))}
                   </select>
                 </div>

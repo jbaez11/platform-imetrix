@@ -28,7 +28,7 @@ export default function LoginAdmin() {
     $(".alert").remove();
     e.preventDefault();
     const result = await loginAdmin(administradores);
-
+    console.log(result)
     if (result.status !== 200) {
       $("button[type='submit']").before(
         `<div class="alert alert-danger">${result.mensaje} </div>`
@@ -37,11 +37,14 @@ export default function LoginAdmin() {
         window.location.reload();
       }, 2000);
     } else {
+
+      localStorage.setItem("CONVERSATION", result.data.conversacion);
       localStorage.setItem("ACCESS_TOKEN", result.token);
       localStorage.setItem("ID", result.data._id);
       localStorage.setItem("CORREO", result.data.correo);
       localStorage.setItem("NAME", result.data.nombres);
       localStorage.setItem("ROLE", result.data.role);
+      localStorage.setItem("CREATEDBY", result.data.createdBy);
 
       window.location.href = `/inicio/${result.data._id}`;
     }

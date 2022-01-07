@@ -118,6 +118,7 @@ export default function Camaings() {
   dataCampaings();
 
   return (
+
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -168,6 +169,7 @@ export default function Camaings() {
       {/*Ventana Modal Para Editar y/o borrar una Campaña */}
       <EditCampaing />
     </div>
+    
   );
 }
 

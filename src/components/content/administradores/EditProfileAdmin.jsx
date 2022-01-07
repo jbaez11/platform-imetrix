@@ -6,7 +6,6 @@ export default function EditProfileAdmin(){
 
     const currentUserId = localStorage.getItem("ID");
 
-
     //Hook para caputar los datos del formulario
     const [administrador, editarAdminProfile] = useState({
         nombres:"",
@@ -28,7 +27,6 @@ export default function EditProfileAdmin(){
         })
     }
 
-    
     //OnSubmit
     const submitPost = async e => {
 
@@ -36,7 +34,7 @@ export default function EditProfileAdmin(){
 
         e.preventDefault();
 
-        console.log(administrador);
+        /* console.log(administrador); */
 
         //Ejecutamos el servicio put
         const result = await putData(administrador);
@@ -57,7 +55,7 @@ export default function EditProfileAdmin(){
         e.preventDefault();
 
         let data = $(this).attr("data").split(",");
-        console.log(data);
+        /* console.log(data); */
         $("#editarNombres").val(data[1]);
         $("#editarCorreo").val(data[2]);
         $("#editarTelefono").val(data[3]);
@@ -78,6 +76,7 @@ export default function EditProfileAdmin(){
     })
 
     return(
+
          <div className="modal" id="editarProfileAdmin">
             <div className="modal-dialog">
                 <div className="modal-content">
@@ -241,6 +240,7 @@ export default function EditProfileAdmin(){
                 </div>
             </div>
         </div>
+
     );
 }
 

@@ -36,7 +36,7 @@ export default function EditCampaing(){
             ...campaing,
             users: nUsers
         })
-        console.log("Usuarios para la Campaña", campaing)
+        /* console.log("Usuarios para la Campaña", campaing) */
     }
     
     //HOOK para Capturar los Datos de la campaña a editar
@@ -121,7 +121,7 @@ export default function EditCampaing(){
         e.preventDefault();
 
         let data = $(this).attr("data").split(",");
-        console.log("Datos para Editar",data);
+        console.log("Datos para Editar de Campaña",data);
         
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCampaing/${data[2]}`);
@@ -130,15 +130,15 @@ export default function EditCampaing(){
         $("#editPais").val(data[5]);
         $("#editId").val(data[0]);
 
-        let user = await getUsers();
-        console.log("Usuarios de la campaña", user)
+        let user = await getUsers(data[0]);
+        /* console.log("Usuarios de la campaña", user)  */
         let nUsers = []
 
-        if(user.data instanceof Array){
-            const campaingUsers = user.data.map(u => u._id)
-            console.log("UserCampaings",campaingUsers)
+        if(user.data.users instanceof Array){
+            const campaingUsers = user.data.users.map(u => u._id)
+            /* console.log("UserCampaings",campaingUsers) */
             nUsers = users.filter(c => campaingUsers.includes(c._id))
-            console.log("nUsers", nUsers)
+            /* console.log("nUsers", nUsers) */
         }
 
         editCampaing({
@@ -210,7 +210,7 @@ export default function EditCampaing(){
 
     return(
 
-        <div className="modal" id="editCampaing">
+    <div className="modal" id="editCampaing">
         <div className="modal-dialog">
             <div className="modal-content">
                 <div className="modal-header">
@@ -264,8 +264,8 @@ export default function EditCampaing(){
                                     <i className="fas fa-user-check"></i>
                                 </div>
                                 <select name="state" id="editState">
-                                        <option selected={campaing.state == "Habilitado"} value="1">Habilitado</option>
-                                        <option selected={campaing.state == "Inhabilitado"} value="0">Inhabilitado</option>
+                                        <option selected={campaing.state === "Habilitado"} value="1">Habilitado</option>
+                                        <option selected={campaing.state === "Inhabilitado"} value="0">Inhabilitado</option>
                                 </select>
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
@@ -327,16 +327,19 @@ export default function EditCampaing(){
             </div>
         </div>
     </div>  
+
     );
 }
 
 
-//PETICION PUT PARA CAMPAÑAS
+/* PETICION PUT PARA CAMPAÑAS */
 const putData = data =>{
     const url = `${rutaAPI}/editCampaing/${data.id}`
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
     data.cluster = nuevaURL[4];
+    if(data.state === "Habilitado") data.state = 1
+    else if(data.state === "Inhabilitado") data.state = 0
     let formData = new FormData();
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
@@ -363,10 +366,10 @@ const putData = data =>{
     });
 }
 
-const getUsers = () =>{
+/* PETICION PARA PEDIR UNA SOLA CAMPAÑA */
+const getUsers = (id) =>{
 
-    const currentUserId = localStorage.getItem("ID");
-    const url = `${rutaAPI}/getUser/${currentUserId}`;
+    const url = `${rutaAPI}/getUserCampaing/${id}`;
     const token = localStorage.getItem("ACCESS_TOKEN");
 
     const params = {
@@ -386,7 +389,7 @@ const getUsers = () =>{
 
 }
 
-//METODO DELETE
+/* METODO DELETE */
 const deleteData = data =>{
     const url = `${rutaAPI}/deleteCampaing/${data}`
     const token =  localStorage.getItem("ACCESS_TOKEN");

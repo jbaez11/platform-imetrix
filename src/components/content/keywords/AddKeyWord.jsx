@@ -59,7 +59,7 @@ export default function AddKeyWord() {
     let nuevaURL = valores.split("/");
     const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getClusters`);
     const clust = await data.json();
-    console.log("cluster", clust.data);
+    /* console.log("cluster", clust.data); */
     setClusters(clust.data);
   };
 
@@ -111,9 +111,7 @@ export default function AddKeyWord() {
                       Seleccionar Cluster
                     </option>
                     {clusters.map((cluster, index) => (
-                      <>
-                        <option key={index} value={cluster._id}>{cluster.name}</option>
-                      </>
+                        <option key={"addKeyword-" + index} value={cluster._id}>{cluster.name}</option>
                     ))}
                   </select>
                 </div>
@@ -155,7 +153,7 @@ const postData = (data) => {
       "Content-Type": "application/json",
     },
   };
-  console.log("Data a guardar de KeyWords", data);
+  /* console.log("Data a guardar de KeyWords", data); */
   return fetch(url, params)
     .then((response) => {
       return response.json();

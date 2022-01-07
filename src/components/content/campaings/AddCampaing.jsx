@@ -33,7 +33,7 @@ export default function AddCampaing(){
         const user = await data.json();
         //console.log("Admin Users", user.data)
         setUsers(user.data);
-        console.log("Users", user.data);
+        /* console.log("Users", user.data); */
     };
     
     /* Users on Change */
@@ -49,7 +49,7 @@ export default function AddCampaing(){
           ...campaing,
           users: nUsers,
         });
-        console.log("Usuarios para la Campaña", campaing);
+        /* console.log("Usuarios para la Campaña", campaing); */
     };
 
     //HOOK para Capturar los Datos
@@ -62,9 +62,9 @@ export default function AddCampaing(){
         users:[]
     })
 
-    useEffect(() => {
+    /* useEffect(() => {
         console.log("Actualización de la Campaña", campaing);
-    }, [campaing]);
+    }, [campaing]); */
 
     //OnChange
     const cambiaFormPost = e =>{
@@ -202,33 +202,33 @@ export default function AddCampaing(){
                                 <img className="previsualizarImg img-fluid" alt=""/>
                             </div>
                             <div className="form-group">
-                        <label className="small text-secondary" htmlFor="state">
-                        Habilitado | Inhabilitado
-                        </label>
-                        <div className="input-group mb-3">
-                        <div className="input-group-append input-group-text">
-                            <i className="fas fa-user-check"></i>
-                        </div>
-                        <select
-                            onChange={(e) =>
-                                crearCampaing({ ...campaing, state: e.target.value })
-                            }
-                            name="state"
-                            id="state"
-                        >
-                            <option value="" selected disabled>
-                            Seleccionar estado
-                            </option>
-                            {states.map((state, key) => (
-                            <option value={state.value} key={key}>
-                                {state.nombre}
-                            </option>
-                            ))}
-                        </select>
-                        </div>
-                        <div className="invalid-feedback invalid-state"></div>
-                    </div>
-                    <div hidden className="form-group">
+                                <label className="small text-secondary" htmlFor="state">
+                                Habilitado | Inhabilitado
+                                </label>
+                                <div className="input-group mb-3">
+                                <div className="input-group-append input-group-text">
+                                    <i className="fas fa-user-check"></i>
+                                </div>
+                                <select
+                                    onChange={(e) =>
+                                        crearCampaing({ ...campaing, state: e.target.value })
+                                    }
+                                    name="state"
+                                    id="state"
+                                >
+                                    <option value="" selected disabled>
+                                    Seleccionar estado
+                                    </option>
+                                    {states.map((state, key) => (
+                                    <option value={state.value} key={key}>
+                                        {state.nombre}
+                                    </option>
+                                    ))}
+                                </select>
+                                </div>
+                                <div className="invalid-feedback invalid-state"></div>
+                            </div>
+                            <div hidden className="form-group">
                                 <label className="small text-secondary" htmlFor="cluster">
                                     *Solo se permite el ID del cluster a asociar
                                 </label>
@@ -249,7 +249,7 @@ export default function AddCampaing(){
                                     />
                                 </div>
                                 <div className="invalid-feedback invalid-state"></div>
-                        </div>
+                            </div>
                             <div className="form-group">
                                 <label className="small text-secondary" htmlFor="pais">
                                    | *Solo con el siguiente formato -- | CO-US-MX
@@ -275,38 +275,38 @@ export default function AddCampaing(){
                                 </div>
                             </div>
                             <div className="form-group">
-                    <label className="small text-secondary" htmlFor="users">
-                    | Seleccione el Usuario(s) que quiere agregar a la Campaña
-                    </label>
-                    <div className="input-group mb-3">
-                    <div className="input-group-append input-group-text">
-                        <i className="fas fa-user-check"></i>
-                    </div>
-                    {users.map((user, index) => (
-                        <div style={{ marginLeft: "5px" }} key={`user-${index}`}>
-                        <input
-                            onChange={() => userChange(user)}
-                            className="form-check-input"
-                            type="checkbox"
-                            value={user._id}
-                            checked={campaing.users.some((c) => c._id === user._id)}
-                            style={{
-                            marginLeft: "0.03cm",
-                            height: "20px",
-                            width: "20px",
-                            }}
-                        />
-                        <label
-                            style={{ marginLeft: "25px", marginTop: "1px" }}
-                            className="form-check-label"
-                        >
-                            {user.nombres}
-                        </label>
-                        </div>
-                    ))}
-                    </div>
-                    <div className="invalid-feedback invalid-state"></div>
-              </div>
+                                <label className="small text-secondary" htmlFor="users">
+                                | Seleccione el Usuario(s) que quiere agregar a la Campaña
+                                </label>
+                                <div className="input-group mb-3">
+                                <div className="input-group-append input-group-text">
+                                    <i className="fas fa-user-check"></i>
+                                </div>
+                                {users.map((user, index) => (
+                                    <div style={{ marginLeft: "5px" }} key={`user-${index}`}>
+                                    <input
+                                        onChange={() => userChange(user)}
+                                        className="form-check-input"
+                                        type="checkbox"
+                                        value={user._id}
+                                        checked={campaing.users.some((c) => c._id === user._id)}
+                                        style={{
+                                        marginLeft: "0.03cm",
+                                        height: "20px",
+                                        width: "20px",
+                                        }}
+                                    />
+                                    <label
+                                        style={{ marginLeft: "25px", marginTop: "1px" }}
+                                        className="form-check-label"
+                                    >
+                                        {user.nombres}
+                                    </label>
+                                    </div>
+                                ))}
+                                </div>
+                                <div className="invalid-feedback invalid-state"></div>
+                            </div>
                         </div>
                         <div className="modal-footer d-flex justify-content-between">
                             <div><button type="submit" className="btn btn-primary">Crear</button></div>
@@ -316,6 +316,7 @@ export default function AddCampaing(){
                 </div>
             </div>
         </div>
+        
     );
 }
 

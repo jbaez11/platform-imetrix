@@ -14,16 +14,11 @@ export default function PerfilAdmin(){
     const dataAdministrador = async() =>{
 
         const getAdministrador = await getData();
-        //console.log("getAdmin",getAdministradores)
+
         const dataTable = [];
 
         getAdministrador.data.forEach((admin, index) =>{
-            //console.log("Data",admin)
-            let clusterNames = [];
-            admin.clusters.forEach((cluster) =>{
-                clusterNames.push(cluster.nombre);
-            })
-            
+            /* console.log("DataAdministrador",admin) */
             dataTable[index] = [(index + 1),
                                 admin.nombres,
                                 admin.correo,
@@ -76,6 +71,7 @@ export default function PerfilAdmin(){
 
     dataAdministrador();
     return(
+
         <div className="sidebar-mini">
         <div className="wrapper">
             <Header/>
@@ -110,7 +106,8 @@ export default function PerfilAdmin(){
            <Footer/>
         </div>
         <EditProfileAdmin/>
-    </div>
+        </div>
+        
     );
 }
 

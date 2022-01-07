@@ -21,6 +21,7 @@ import Consumo from './components/content/consumo/Consumo';
 import Keywords from './components/content/keywords/Keywords';
 import Puntajes from './components/content/puntajes/Puntajes';
 import Estadisticas from './components/content/estadisticas/Estadisticas'
+import Conversacion from './components/content/conversacion/Conversacion';
 import PageNotFound from './components/content/pageNotFound/PageNotFound';
 import PerfilAdmin from './components/content/administradores/PerfilAdmin';
 import PerfilUser from './components/content/users/PerfilUser';
@@ -62,6 +63,7 @@ export default function App() {
                <Route exact path="/moduloKeywords/:bd"> <Modulos/> </Route>
                <Route exact path="/puntajes/:bd"> <Puntajes/> </Route>
                <Route exact path="/estadisticas/:bd"> <Estadisticas/> </Route>
+               <Route exact path="/conversacion/:bd"> <Conversacion/> </Route>
                <Route exact path="/consumo/:bd"> <Consumo/> </Route>
                <Route component={PageNotFound} />
             </Switch>

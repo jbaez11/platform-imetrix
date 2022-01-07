@@ -111,6 +111,7 @@ export default function Clusters() {
   dataClusters();
 
   return (
+
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -137,7 +138,6 @@ export default function Clusters() {
                           data-toggle="modal"
                           data-target="#addCluster"
                         >
-                          {" "}
                           Crear Nuevo Cluster
                         </button>
                       </h5>
@@ -162,6 +162,7 @@ export default function Clusters() {
       <AddCluster />
       <EditCluster />
     </div>
+    
   );
 }
 

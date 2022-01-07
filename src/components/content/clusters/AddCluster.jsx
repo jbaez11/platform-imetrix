@@ -46,7 +46,7 @@ export default function AddCluster() {
       ...cluster,
       users: nUsers,
     });
-    console.log("Usuarios para el Cluster", cluster);
+    /* console.log("Usuarios para el Cluster", cluster); */
   };
 
   //HOOK para Capturar los Datos del formulario
@@ -57,9 +57,9 @@ export default function AddCluster() {
     users: [],
   });
 
-  useEffect(() => {
+  /* useEffect(() => {
     console.log("Actualización de Cluster", cluster);
-  }, [cluster]);
+  }, [cluster]); */
 
   //OnChange
   const cambiaFormPost = (e) => {
@@ -147,6 +147,7 @@ export default function AddCluster() {
   });
 
   return (
+
     <div className="modal" id="addCluster">
       <div className="modal-dialog">
         <div className="modal-content">
@@ -284,20 +285,26 @@ export default function AddCluster() {
         </div>
       </div>
     </div>
+
   );
 }
 
 //PETICION POST PARA CLUSTERS
 const postData = (data) => {
+
   const currentUserId = localStorage.getItem("ID");
+
   data.createdBy = currentUserId;
   const url = `${rutaAPI}/addCluster`;
+
   let formData = new FormData();
+
   formData.append("nombre", data.nombre);
   formData.append("foto", data.foto);
   formData.append("state", data.state);
   formData.append("users", JSON.stringify(data.users.map((u) => u._id)));
   formData.append("createdBy", data.createdBy);
+  
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "POST",

@@ -10,7 +10,7 @@ export default function CamaingsAuditor() {
 
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
-  console.log("Valores", valores);
+  /* console.log("Valores", valores); */
 
   const [campaings, setCampaings] = React.useState([]);
 
@@ -34,14 +34,15 @@ export default function CamaingsAuditor() {
         enviarUrl = enviarUrl.concat(lowerURL);
         //console.log("enviarUrl", enviarUrl);
         campaing.Urltableros = enviarUrl;
-        console.log("campaing.Urltableros=enviarUrl", campaing.Urltableros);
+        /* console.log("campaing.Urltableros=enviarUrl", campaing.Urltableros); */
       });
     });
-    console.log("Campañas de Usuario", camp.data);
+    /* console.log("Campañas de Usuario", camp.data); */
     setCampaings(camp.data);
   };
 
   return (
+
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -109,5 +110,6 @@ export default function CamaingsAuditor() {
         <Footer />
       </div>
     </div>
+    
   );
 }

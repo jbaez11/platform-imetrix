@@ -34,9 +34,8 @@ export default function EditCluster(){
             ...cluster,
             users: nUsers
         })
-        console.log("Usuarios para el Cluster", cluster)
+        /* console.log("Usuarios para el Cluster", cluster) */
     }
-
 
     //HOOK para Capturar los Datos de la campaña a editar
     const [cluster, editCluster] = useState({
@@ -100,7 +99,7 @@ export default function EditCluster(){
         e.preventDefault();
 
         const result = await putData(cluster);
-        console.log(cluster)
+        /* console.log(cluster) */
 
         if(result.status === 400){
             $(".modal-footer").before(`<div class="alert alert-danger">${result.mensaje}</div>`)
@@ -117,22 +116,22 @@ export default function EditCluster(){
     $(document).on("click", ".editarInputs", async function(e){
         e.preventDefault();
         let data = $(this).attr("data").split(",");
-        console.log("Datos para Editar",data);
+        /* console.log("Datos para Editar",data); */
         $("#editNombre").val(data[1]);
         $(".previsualizarImg").attr("src", `${rutaAPI}/getImgCluster/${data[2]}`);
         $("#editState").val(data[3]);
         $("#editUsers").val(data[4]); 
         $("#editId").val(data[0]);
 
-        let user = await getUsers();
-        console.log("Usuarios del Cluster", user)
+        let user = await getUsers(data[0]);
+        /* console.log("Usuarios del Cluster", user) */
         let nUsers = []
 
-        if(user.data instanceof Array){
-            const clusterUsers = user.data.map(u => u._id)
-            console.log("UserClusters",clusterUsers)
+        if(user.data.users instanceof Array){
+            const clusterUsers = user.data.users.map(u => u._id)
+            /* console.log("UserClusters",clusterUsers) */
             nUsers = users.filter(c => clusterUsers.includes(c._id))
-            console.log("nUsers", nUsers)
+            /* console.log("nUsers", nUsers) */
         }
 
         editCluster({
@@ -256,8 +255,8 @@ export default function EditCluster(){
                                     <i className="fas fa-user-check"></i>
                                 </div>
                                 <select name="state" id="editState">
-                                        <option selected={cluster.state == "Habilitado"} value="1">Habilitado</option>
-                                        <option selected={cluster.state == "Inhabilitado"} value="0">Inhabilitado</option>
+                                        <option selected={cluster.state === "Habilitado"} value="1">Habilitado</option>
+                                        <option selected={cluster.state === "Inhabilitado"} value="0">Inhabilitado</option>
                                 </select>
                             </div>
                             <div className="invalid-feedback invalid-state"></div>
@@ -296,7 +295,8 @@ export default function EditCluster(){
                 </form>
             </div>
         </div>
-    </div>  
+    </div> 
+
     );
 }
 
@@ -304,7 +304,9 @@ export default function EditCluster(){
 //PETICION PUT PARA CLUSTERS
 const putData = data =>{
     const url = `${rutaAPI}/editCluster/${data.id}`
-    //console.log(url);
+    /* console.log("Nueva data de Cluster", data); */
+    if(data.state === "Habilitado") data.state = 1
+    else if(data.state === "Inhabilitado") data.state = 0
     let formData = new FormData();
     formData.append("nombre", data.nombre);
     formData.append("foto", data.foto);
@@ -329,12 +331,9 @@ const putData = data =>{
     });
 }
 
-const getUsers = () =>{
+const getUsers = (id) =>{
 
-    const valores = window.location.href;
-    let nuevaURL = valores.split("/");
-
-    const url = `${rutaAPI}/getUser/${nuevaURL[4]}`;
+    const url = `${rutaAPI}/getSingleCluster/${id}`;
     const token = localStorage.getItem("ACCESS_TOKEN");
 
     const params = {

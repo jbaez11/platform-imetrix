@@ -1,16 +1,31 @@
 import React from 'react'
 import Logo from './logo.png'
 import User from './user2-160x160.jpg'
+import { rutaAPI } from "../../config/Config";
 
 export default function SidebarAdminCampaing(){
 
     const userName = localStorage.getItem("NAME");
     const currentUserId = localStorage.getItem("ID");
+    let conversacion = localStorage.getItem("CONVERSATION");
     let role = localStorage.getItem("ROLE");
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
 
+    /* Solo ejecutamos esta funcion si el Rol del Usuario es Auditor */
+    if(role === "Auditor"){
 
+        const obtenerDataAdministrador = async() => {
+
+            let data = await getDataAdministrador();
+    
+            let verTablero = data.data[0].conversacion.toString()
+            conversacion = localStorage.setItem("CONVERSATION", verTablero)
+        }
+    
+        obtenerDataAdministrador();
+
+    }
     return(
         <aside  className="main-sidebar elevation-4" style={{ backgroundColor: '#FF9B00' }}>
             <a href={"/inicio/"+currentUserId} className="brand-link" style={{ backgroundColor: 'white' }}>
@@ -113,20 +128,36 @@ export default function SidebarAdminCampaing(){
                            
                     {(() => {
                             if (role === "Administrador") {
-                            return (
-                                <>
-                                     <li className="nav-item">
-                                <a href={"/consumo/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
-                                <i className="nav-icon far fa-chart-bar"></i>
-                                <p>
-                                Consumo
-                                </p>
-                                </a>
-                            </li> 
-                                </>
-                            )
-                        } 
-                        })()}                                
+                                return (
+                                    <>
+                                        <li className="nav-item">
+                                            <a href={"/consumo/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
+                                            <i className="nav-icon far fa-chart-bar"></i>
+                                                <p>
+                                                Consumo
+                                                </p>
+                                            </a>
+                                        </li> 
+                                    </>
+                                )
+                            }
+                    })()}  
+                    {(() => {
+                            if (conversacion === "false") {
+                                return (
+                                    <>
+                                        <li className="nav-item">
+                                            <a href={"/conversacion/"+nuevaURL[4]} className="nav-link" style={{ color: 'white' }}>
+                                            <i className="nav-icon far fa-chart-bar"></i>
+                                                <p>
+                                                Conversación
+                                                </p>
+                                            </a>
+                                        </li> 
+                                    </>
+                                )
+                            }
+                    })()}                                   
                     </ul>
                 </nav>
 
@@ -136,3 +167,29 @@ export default function SidebarAdminCampaing(){
 
     );
 }
+
+const getDataAdministrador = () => {
+
+    const createdBy = localStorage.getItem("CREATEDBY");
+  
+    const url = `${rutaAPI}/getAdmin/${createdBy}`;
+    const token = localStorage.getItem("ACCESS_TOKEN");
+  
+    const params = {
+      method: "GET",
+      headers: {
+        Authorization: token,
+        "Content-Type": "application/json",
+      },
+    };
+    return fetch(url, params)
+      .then((response) => {
+        return response.json();
+      })
+      .then((result) => {
+        return result;
+      })
+      .catch((err) => {
+        return err;
+      });
+  };

@@ -26,7 +26,6 @@ export default function EditUser(){
         })
     }
 
-    
     //OnSubmit
     const submitPost = async e => {
 
@@ -56,7 +55,7 @@ export default function EditUser(){
         e.preventDefault();
 
         let data = $(this).attr("data").split(",");
-        console.log("Data para Editar", data);
+        /* console.log("Data para Editar", data); */
         $("#editarNombre").val(data[1]);
         $("#editarUsuario").val(data[2]);
         $("#editarState").val(data[3]);
@@ -66,14 +65,14 @@ export default function EditUser(){
             'nombres':  $("#editarNombre").val(),
             'user':  $("#editarUsuario").val(),
             'password':  $("#editarPassword").val(),
-            'state':  $("#editarState").val(),
-            'role':  $("#editarRole").val(),
+            'state':  data[3],
+            'role':  data[4],
             'id': data[0]
         })
     })
 
-        //Capturamos los datos para borrar el usuario
-       /*  $(document).on("click", ".borrarInput", function(e){
+    //Capturamos los datos para borrar el usuario
+    /*  $(document).on("click", ".borrarInput", function(e){
             e.preventDefault();
     
             let data = $(this).attr("data").split(",")[0];
@@ -125,7 +124,6 @@ export default function EditUser(){
 
         }) */
     
-
     return(
 
         <div className="modal" id="editarAdmin">
@@ -199,13 +197,16 @@ export default function EditUser(){
                             <label className="small text-secondary" htmlFor="editarState">
                              Habilitado | Inhabilitado
                             </label>
+                            {usuarios.state}
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">
                                     <i className="fas fa-key"></i>
                                 </div>
+                               
                                 <select required name="state" id="editarState">
-                                        <option selected={usuarios.state == "Habilitado"} value="1">Habilitado</option>
-                                        <option selected={usuarios.state == "Inhabilitado"} value="0">Inhabilitado</option>
+                                        <option selected={usuarios.state === "Habilitado"} value="1">Habilitado</option>
+                                        <option selected={usuarios.state === "Inhabilitado"} value="0">Inhabilitado</option>
+                                        
                                 </select>
                             </div>
                         </div>        
@@ -220,7 +221,7 @@ export default function EditUser(){
                                 <select required name="role" id="editarRole">
                                         {/* <option value="" selected disabled hidden>Seleccionar rol</option>
                                         <option hidden value="Administrador">Administrador</option> */}
-                                        <option selected={usuarios.role == "Auditor"} value="Auditor">Auditor</option>
+                                        <option selected={usuarios.role === "Auditor"} value="Auditor">Auditor</option>
                                 </select>
                             </div>
                         </div>
@@ -234,11 +235,13 @@ export default function EditUser(){
                 </div>
             </div>
         </div>
+        
     );
 }
 
 //METODO PUT
 const putData = data =>{
+
     const url = `${rutaAPI}/editUser/${data.id}`
     const token =  localStorage.getItem("ACCESS_TOKEN");
     const params = {

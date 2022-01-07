@@ -59,7 +59,7 @@ export default function EditCluster() {
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getModulos`);
     const modulo = await data.json();
-    console.log("Modulos", modulo.data);
+    /* console.log("Modulos", modulo.data); */
     setModulos(modulo.data);
   };
 
@@ -68,7 +68,7 @@ export default function EditCluster() {
     e.preventDefault();
 
     let data = $(this).attr("data").split(",");
-    console.log("Datos que se van a editar",data);
+    /* console.log("Datos que se van a editar",data); */
     $("#editarNombre").val(data[1]);
     $("#editarModulo").val(data[2]);
     $("#editarPorcentaje").val(data[3]);
@@ -86,7 +86,7 @@ export default function EditCluster() {
     e.preventDefault();
 
     let data = $(this).attr("data").split(",")[0];
-    console.log(data);
+    /* console.log(data); */
 
     //Validamos si queremos eliminar el usuario
     Swal.fire({
@@ -134,6 +134,7 @@ export default function EditCluster() {
   });
 
   return (
+
     <div className="modal" id="editCluster">
       <div className="modal-dialog">
         <div className="modal-content">
@@ -234,6 +235,7 @@ export default function EditCluster() {
         </div>
       </div>
     </div>
+
   );
 }
 
@@ -251,7 +253,7 @@ const putData = (data) => {
       "Content-Type": "application/json",
     },
   };
-  console.log("Data nueva para actualizar el Cluster", data);
+  /* console.log("Data nueva para actualizar el Cluster", data); */
   return fetch(url, params)
     .then((response) => {
       return response.json();

@@ -301,7 +301,7 @@ export default function AddUser() {
                     <option value="" selected disabled>
                       Seleccionar rol
                     </option>
-                    <option key={usuarios.state} value="Auditor">
+                    <option value="Auditor">
                       Auditor
                     </option>
                   </select>

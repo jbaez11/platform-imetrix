@@ -92,6 +92,7 @@ export default function Clusters() {
   dataClusters();
 
   return (
+
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -141,6 +142,7 @@ export default function Clusters() {
         <EditCluster />
       </div>
     </div>
+    
   );
 }
 
