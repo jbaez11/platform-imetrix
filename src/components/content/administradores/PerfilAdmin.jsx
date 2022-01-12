@@ -118,7 +118,7 @@ const getData = () =>{
     let nuevaURL = valores.split("/");
 
     const url = `${rutaAPI}/getAdmin/${nuevaURL[4]}`;
-    const token = localStorage.getItem("ACCESS_TOKEN");
+    /* const token = localStorage.getItem("ACCESS_TOKEN"); */
 
     const params = {
         method: "GET",

@@ -46,7 +46,13 @@ export default function LoginAdmin() {
       localStorage.setItem("ROLE", result.data.role);
       localStorage.setItem("CREATEDBY", result.data.createdBy);
 
-      window.location.href = `/inicio/${result.data._id}`;
+      const role = localStorage.getItem("ROLE")
+      console.log(role);
+      if(role === "SuperAdministrador"){
+        window.location.href = `/adminsInicio`;
+      }else{
+        window.location.href = `/inicio/${result.data._id}`;
+      }      
     }
   };
 

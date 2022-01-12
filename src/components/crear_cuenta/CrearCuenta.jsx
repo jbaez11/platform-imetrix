@@ -175,7 +175,7 @@ export default function CrearCuenta(){
                                         placeholder="Ingrese el nombre de la Empresa"
                                         minLength="3"
                                         maxLength="20"
-                                        pattern="^[A-Z]+[a-z?\s]+*$"
+                                        pattern="^[A-Z]+[a-z?\s]+$"
                                         required
                                     />
                                 </div>

@@ -22,7 +22,7 @@ export default function Clusters() {
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPI}/getAdminClusters/${nuevaURL[4]}`);
     const clust = await data.json();
-    /* console.log("cluster", clust.data); */
+    console.log("cluster", clust.data);
 
     clust.data.forEach((cluster) => {
       /* console.log("cluster", cluster); */
@@ -114,11 +114,11 @@ export default function Clusters() {
                       <div className="container">
                         <div className="row">
                           {(() => {
-                            if (role === "Administrador") {
+                            if (role === "Administrador" || role === "SuperAdministrador") {
                               return (
                                 <>
                                   {clusters.map((cluster) => (
-                                    <div class="col-sm">
+                                    <div className="col-sm">
                                       <div
                                         style={{ width: "18rem" }}
                                         className="card text-center"
@@ -133,7 +133,7 @@ export default function Clusters() {
                                             {cluster.nombre}
                                           </h5>
                                           <img
-                                            class="card-img-top"
+                                            className="card-img-top"
                                             width="150"
                                             height="150"
                                             alt="img"
@@ -146,7 +146,7 @@ export default function Clusters() {
                                           <br />
 
                                           {(() => {
-                                            if (role === "Administrador") {
+                                            if (role === "Administrador" || role === "SuperAdministrador") {
                                               return (
                                                 <>
                                                   <a

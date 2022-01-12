@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import $ from "jquery";
-import Swal from "sweetalert2";
+
 import { rutaAPITableros } from "../../../config/Config";
 
 export default function EditAgente() {
@@ -167,7 +167,7 @@ const putData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   const url = `${rutaAPITableros}/${nuevaURL[4]}/editar-agents/${data.id}`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
+  /* const token = localStorage.getItem("ACCESS_TOKEN"); */
   const params = {
     method: "PUT",
     body: JSON.stringify(data),
@@ -175,7 +175,7 @@ const putData = (data) => {
       "Content-Type": "application/json",
     },
   };
-  console.log("Data a guardar de Agentes", data);
+  /* console.log("Data a guardar de Agentes", data); */
   return fetch(url, params)
     .then((response) => {
       return response.json();

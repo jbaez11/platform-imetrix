@@ -3,7 +3,6 @@ import { rutaAPI } from "../../../config/Config";
 import $ from "jquery";
 import notie from "notie";
 import "notie/dist/notie.css";
-import { useEffect } from "react";
 
 export default function AddCluster() {
   const currentUserId = localStorage.getItem("ID");

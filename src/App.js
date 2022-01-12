@@ -7,6 +7,7 @@ import './App.css';
 import Start from './components/start/Start';
 import Index from './components/content/index/Index';
 /* Componentes Dinamicos */
+import AdministradoresInicio from './components/content/administradores/AdministradoresInicio';
 import Usuarios from './components/content/users/Usuarios';
 import Campaings from './components/content/campaings/Campaings';
 import CampaingsInicio from './components/content/campaings/CampaingsInicio';
@@ -48,6 +49,7 @@ export default function App() {
           <Router>
             <Switch>
                <Route exact path="/"><Index/></Route>
+               <Route exact path="/adminsInicio"><AdministradoresInicio/></Route>
                <Route exact path="/perfilAdmin/:id">{role ? <PerfilAdmin/> :<PerfilUser/>}</Route>
                <Route exact path="/perfilUser/:id"><PerfilUser/></Route>
                <Route exact path="/inicio/:id"><ClustersInicio/></Route>

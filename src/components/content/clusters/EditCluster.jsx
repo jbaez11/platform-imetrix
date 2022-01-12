@@ -1,5 +1,4 @@
 import React,{useState} from 'react'
-import Swal from 'sweetalert2';
 import notie from'notie';
 import $ from 'jquery';
 import {rutaAPI} from '../../../config/Config';
@@ -229,6 +228,7 @@ export default function EditCluster(){
                                     minLength="2"
                                     maxLength="30"
                                     pattern="^[A-Z]+\s?[A-Z]+$"
+                                    readOnly="readOnly"
                                     required
                                 />
                             </div>
