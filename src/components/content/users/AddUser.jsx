@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import $ from "jquery";
 import { rutaAPI } from "../../../config/Config";
 // import Checkbox from 'react';
@@ -82,6 +82,8 @@ export default function AddUser() {
 
   //OnSubmit
   const submitPost = async (e) => {
+    let currentAdmin = localStorage.getItem("ADMIN");
+    let role = localStorage.getItem("ROLE");
     $(".alert").remove();
 
     e.preventDefault();
@@ -97,18 +99,29 @@ export default function AddUser() {
       );
     }
     if (resul.status === 200) {
-      $(".modal-footer").before(
-        `<div class="alert alert-success">${resul.mensaje}</div>`
-      );
-      $('button[type="submit"]').remove();
-      setTimeout(() => {
-        window.location.href = `/usuarios/${currentUserId}`;
-      }, 2000);
+      if(role === "Administrador"){
+        $(".modal-footer").before(
+          `<div class="alert alert-success">${resul.mensaje}</div>`
+        );
+        $('button[type="submit"]').remove();
+        setTimeout(() => {
+          window.location.href = `/usuarios/${currentUserId}`;
+        }, 2000);
+      }else if(role === "SuperAdministrador"){
+        $(".modal-footer").before(
+          `<div class="alert alert-success">${resul.mensaje}</div>`
+        );
+        $('button[type="submit"]').remove();
+        setTimeout(() => {
+          window.location.href = `/usuarios/${currentAdmin}`;
+        }, 2000);
+      }
+      
     }
   };
 
   return (
-    <div className="modal" id="addAdmin">
+    <div className="modal" id="addUser">
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
@@ -334,7 +347,13 @@ export default function AddUser() {
 //PETICION POST PARA USUARIOS
 const postData = (data) => {
   let currentUser = localStorage.getItem("ID");
-  data.createdBy = currentUser;
+  let currentAdmin = localStorage.getItem("ADMIN");
+  let role = localStorage.getItem("ROLE");
+  if(role === "Administrador"){
+      data.createdBy = currentUser;
+  }else if(role === "SuperAdministrador"){
+    data.createdBy = currentAdmin;
+  }
   const url = `${rutaAPI}/addUser`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {

@@ -111,7 +111,7 @@ export default function PerfilAdmin(){
     );
 }
 
-//Petición Get para Usuarios asociados al Administrador
+/* Obtenere la información del Administrador */
 const getData = () =>{
 
     const valores = window.location.href;

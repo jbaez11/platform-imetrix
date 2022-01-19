@@ -28,6 +28,8 @@ export default function EditUser(){
 
     //OnSubmit
     const submitPost = async e => {
+        let currentAdmin = localStorage.getItem("ADMIN");
+        let role = localStorage.getItem("ROLE");
 
         $(".alert").remove();
 
@@ -42,9 +44,23 @@ export default function EditUser(){
             $(".modal-footer").before(`<div class="alert alert-danger">${result.mensaje}</div>`)
         } 
         if(result.status === 200){
-            $(".modal-footer").before(`<div class="alert alert-success">${result.mensaje}</div>`)
+            if(role === "Administrador"){
+            $(".modal-footer").before(
+            `<div class="alert alert-success">${result.mensaje}</div>`
+            );
             $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href=`/usuarios/${currentUserId}`},2000);
+            setTimeout(() => {
+            window.location.href = `/usuarios/${currentUserId}`;
+            }, 2000);
+        }else if(role === "SuperAdministrador"){
+            $(".modal-footer").before(
+            `<div class="alert alert-success">${result.mensaje}</div>`
+            );
+            $('button[type="submit"]').remove();
+            setTimeout(() => {
+            window.location.href = `/usuarios/${currentAdmin}`;
+            }, 2000);
+      }
         }
     
     }
@@ -197,7 +213,6 @@ export default function EditUser(){
                             <label className="small text-secondary" htmlFor="editarState">
                              Habilitado | Inhabilitado
                             </label>
-                            {usuarios.state}
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">
                                     <i className="fas fa-key"></i>

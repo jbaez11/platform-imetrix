@@ -63,7 +63,7 @@ export default function CamaingsInicio() {
                       <div className="container">
                         <div className="row">
                           {campaings.map((campaing) => (
-                            <div class="col-sm">
+                            <div className="col-sm">
                               <div
                                 style={{ width: "18rem" }}
                                 className="card text-center"

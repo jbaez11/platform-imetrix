@@ -20,7 +20,7 @@ export default function SidebarAdminCampaing(){
             let data = await getDataAdministrador();
     
             let verTablero = data.data[0].conversacion.toString()
-            conversacion = localStorage.setItem("CONVERSATION", verTablero)
+            /* conversacion = localStorage.setItem("CONVERSATION", verTablero) */
         }
     
         obtenerDataAdministrador();
@@ -33,6 +33,7 @@ export default function SidebarAdminCampaing(){
                 className="brand-image"
                 style={{ opacity : 0.8 }}
                 src={Logo}/>
+                <i className="nav-icon fas fa-home" style={{color:"darkgray"}}></i>
                 <span className="brand-text" style={{color:"black", 'text-decoration': 'none !important',visibility:"hidden"}}>.</span>
             </a>
             <div className="sidebar">
@@ -127,7 +128,7 @@ export default function SidebarAdminCampaing(){
                             
                            
                     {(() => {
-                            if (role === "Administrador") {
+                            if (role === "Administrador" || role === "SuperAdministrador") {
                                 return (
                                     <>
                                         <li className="nav-item">
@@ -143,7 +144,7 @@ export default function SidebarAdminCampaing(){
                             }
                     })()}  
                     {(() => {
-                            if (conversacion === "false") {
+                            if (conversacion === "false" || role === "SuperAdministrador") {
                                 return (
                                     <>
                                         <li className="nav-item">

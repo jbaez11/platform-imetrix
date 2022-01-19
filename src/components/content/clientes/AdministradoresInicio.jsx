@@ -6,6 +6,8 @@ import SidebarSAdmin from "../../sidebar/SidebarSAdmin";
 
 export default function AdministradoresInicio() {
 
+    
+
     const [admins, setAdmins] = React.useState([]);
 
     React.useEffect(() => {
@@ -15,9 +17,12 @@ export default function AdministradoresInicio() {
     const obtenerAdmins = async () =>{
         const data = await fetch(`${rutaAPI}/getAllAdmins`)
         const admins = await data.json();
-
         setAdmins(admins.data);
-        console.log("Administradores", admins.data)
+        /* console.log("Administradores", admins.data) */
+    }
+
+    const cambiarCurrentID = (id) =>{
+        localStorage.setItem("ADMIN", id);
     }
 
     return(
@@ -71,6 +76,7 @@ export default function AdministradoresInicio() {
                                             style={{ marginTop: "5px" }}
                                             href={`/inicio/${admin._id}`}
                                             className="btn btn-warning"
+                                            onClick={()=> cambiarCurrentID(admin._id)}
                                             >
                                             Ingresar
                                             </a>

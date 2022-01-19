@@ -20,7 +20,7 @@ export default function Clusters() {
 
     getClusters.data.forEach((cluster, index) => {
 
-      console.log("Data Clusters",cluster)
+      /* console.log("Data Clusters",cluster) */
       let userNames = [];
       cluster.users.forEach((user) => {
         userNames.push(user.nombres);
@@ -121,7 +121,7 @@ export default function Clusters() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1 className="m-0 text-dark">Gestor de Clusters</h1>
+                  <h1 className="m-0 text-dark">Gestor de Clientes</h1>
                 </div>
               </div>
             </div>
@@ -138,7 +138,7 @@ export default function Clusters() {
                           data-toggle="modal"
                           data-target="#addCluster"
                         >
-                          Crear Nuevo Cluster
+                          Crear Nuevo Cliente
                         </button>
                       </h5>
                     </div>

@@ -48,7 +48,7 @@ export default function Usuarios() {
           { title: "Role" },
           { title: "Fecha Creación" },
           {
-            title: "Acciones",
+            title: "Editar",
             render: function (data) {
               //console.log("data", data)
               return `
@@ -99,7 +99,7 @@ export default function Usuarios() {
                         <button
                           className="btn btn-warning"
                           data-toggle="modal"
-                          data-target="#addAdmin"
+                          data-target="#addUser"
                         >
                           {" "}
                           Crear nuevo usuario

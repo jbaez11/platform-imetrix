@@ -12,7 +12,7 @@ export default function SidebarSAdmin(){
           style={{ backgroundColor: "#FF9B00" }}
         >
           <a
-            href={"/#"}
+            href={"/adminsInicio"}
             className="brand-link"
             style={{ backgroundColor: "white" }}
           >
@@ -22,12 +22,12 @@ export default function SidebarSAdmin(){
               style={{ opacity: 0.8 }}
               src={Logo}
             />
-    
+            <i className="nav-icon fas fa-home" style={{color:"darkgray"}}></i>
             <span
               className="brand-text "
               style={{
                 color: "black",
-                "text-decoration": "none !important",
+                "textDecoration": "none !important",
                 visibility: "hidden",
               }}
             >
@@ -41,7 +41,7 @@ export default function SidebarSAdmin(){
                 <img className="img-circle elevation-2" alt="user" src={User} />
               </div>
               <div className="info">
-                <a style={{ color: "white", "text-decoration": "none" }} href="#/">
+                <a style={{ color: "white", "textDecoration": "none" }} href="#/">
                   {userName}
                 </a>
               </div>
@@ -62,6 +62,26 @@ export default function SidebarSAdmin(){
                   >
                     <i className="nav-icon fas fa-home"></i>
                     <p>Inicio</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href={"/gestorClientes"}
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    <i className="nav-icon fas fa-user"></i>
+                    <p>Gestor Clientes</p>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    href={"/gestorSAdmins"}
+                    className="nav-link"
+                    style={{ color: "white" }}
+                  >
+                    <i className="nav-icon fas fa-user"></i>
+                    <p>Gestor S.Administradores</p>
                   </a>
                 </li>
               </ul>

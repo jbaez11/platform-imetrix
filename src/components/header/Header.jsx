@@ -11,6 +11,7 @@ export default function Header(){
         localStorage.removeItem("ROLE");
         localStorage.removeItem("CONVERSATION");
         localStorage.removeItem("CREATEDBY");
+        localStorage.removeItem("ADMIN");
     }
 
     return(

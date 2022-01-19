@@ -8,6 +8,8 @@ import 'notie/dist/notie.css';
 export default function AddCampaing(){
 
     const currentUserId = localStorage.getItem("ID");
+    const currentRole = localStorage.getItem("ROLE");
+    const currentAdmin = localStorage.getItem("ADMIN");
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
 
@@ -29,11 +31,22 @@ export default function AddCampaing(){
     }, []);
     
     const obtenerUsuarios = async () => {
-        const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
-        const user = await data.json();
-        //console.log("Admin Users", user.data)
-        setUsers(user.data);
-        /* console.log("Users", user.data); */
+
+        if(currentRole === "Administrador"){
+
+            const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
+            const user = await data.json();
+            setUsers(user.data);
+
+        }else if(currentRole === "SuperAdministrador"){
+
+            const valores = window.location.href;
+            let nuevaURL = valores.split("/");
+            const data = await fetch(`${rutaAPI}/getUser/${currentAdmin}`);
+            const user = await data.json();
+            setUsers(user.data);
+
+        }
     };
     
     /* Users on Change */

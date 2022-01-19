@@ -6,6 +6,7 @@ import "notie/dist/notie.css";
 
 export default function AddCluster() {
   const currentUserId = localStorage.getItem("ID");
+  const currentRole = localStorage.getItem("ROLE");
 
   const [users, setUsers] = React.useState([]);
 
@@ -25,11 +26,23 @@ export default function AddCluster() {
   }, []);
 
   const obtenerUsuarios = async () => {
-    const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
-    const user = await data.json();
-    //console.log("Admin Users", user.data)
-    setUsers(user.data);
-    //console.log("Users", user.data);
+
+    if(currentRole === "Administrador"){
+      const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
+      const user = await data.json();
+      //console.log("Admin Users", user.data)
+      setUsers(user.data);
+      //console.log("Users", user.data);
+    }else if(currentRole === "SuperAdministrador"){
+      const valores = window.location.href;
+      let nuevaURL = valores.split("/");
+      const data = await fetch(`${rutaAPI}/getUser/${nuevaURL[4]}`);
+      const user = await data.json();
+      //console.log("Admin Users", user.data)
+      setUsers(user.data);
+      //console.log("Users", user.data);
+    }
+    
   };
 
   /* Users on Change */
@@ -123,19 +136,32 @@ export default function AddCluster() {
     //Ejecutamos el servicio post
     const result = await postData(cluster);
     console.log("Datos a Guardar", cluster);
+    let currentAdmin = localStorage.getItem("ADMIN");
+    let role = localStorage.getItem("ROLE");
     if (result.status === 400) {
       $(".modal-footer").before(
         `<div class="alert alert-danger">${result.mensaje}</div>`
       );
     }
     if (result.status === 200) {
-      $(".modal-footer").before(
-        `<div class="alert alert-success">${result.mensaje}</div>`
-      );
-      $('button[type="submit"]').remove();
-      setTimeout(() => {
-        window.location.href = `/clusters/${currentUserId}`;
-      }, 2000);
+      if(role === "Administrador"){
+        $(".modal-footer").before(
+          `<div class="alert alert-success">${result.mensaje}</div>`
+        );
+        $('button[type="submit"]').remove();
+        setTimeout(() => {
+          window.location.href = `/clusters/${currentUserId}`;
+        }, 2000);
+      }else if(role === "SuperAdministrador"){
+        $(".modal-footer").before(
+          `<div class="alert alert-success">${result.mensaje}</div>`
+        );
+        $('button[type="submit"]').remove();
+        setTimeout(() => {
+          window.location.href = `/clusters/${currentAdmin}`;
+        }, 2000);
+      }
+     
     }
   };
 
@@ -292,8 +318,14 @@ export default function AddCluster() {
 const postData = (data) => {
 
   const currentUserId = localStorage.getItem("ID");
+  let currentAdmin = localStorage.getItem("ADMIN");
+  let role = localStorage.getItem("ROLE");
 
-  data.createdBy = currentUserId;
+  if(role === "Administrador"){
+      data.createdBy = currentUserId;
+  }else if(role === "SuperAdministrador"){
+    data.createdBy = currentAdmin;
+  }
   const url = `${rutaAPI}/addCluster`;
 
   let formData = new FormData();

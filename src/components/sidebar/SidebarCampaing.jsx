@@ -18,6 +18,7 @@ export default function SidebarCampaing(){
                 className="brand-image"
                 style={{ opacity : 0.8 }}
                 src={Logo}/>
+                <i className="nav-icon fas fa-home" style={{color:"darkgray"}}></i>
                 <span className="brand-text" style={{color:"black", 'text-decoration': 'none !important',visibility:"hidden"}}>.</span>
             </a>
             <div className="sidebar">
@@ -46,7 +47,7 @@ export default function SidebarCampaing(){
                     role="menu"
                     data-accordion="false">
                     {(() => {
-                            if (role === "Administrador") {
+                            if (role === "Administrador" || role === "SuperAdministrador") {
                             return (
                                 <>
                                     <li className="nav-item">

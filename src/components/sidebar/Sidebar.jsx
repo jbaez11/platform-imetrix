@@ -25,6 +25,7 @@ export default function Sidebar() {
           style={{ opacity: 0.8 }}
           src={Logo}
         />
+        <i className="nav-icon fas fa-home" style={{color:"darkgray"}}></i>
 
         <span
           className="brand-text "
@@ -37,7 +38,6 @@ export default function Sidebar() {
           .
         </span>
       </a>
-
       <div className="sidebar">
         <div className="user-panel mt-3 pb-3 mb-3 d-flex">
           <div className="image">
@@ -49,7 +49,6 @@ export default function Sidebar() {
             </a>
           </div>
         </div>
-
         <nav className="mt-2">
           <ul
             className="nav nav-pills nav-sidebar flex-column"
@@ -58,17 +57,17 @@ export default function Sidebar() {
             data-accordion="false"
           >
             <li className="nav-item">
-              <a
-                href={"/inicio/" + nuevaURL[4]}
-                className="nav-link"
-                style={{ color: "white" }}
-              >
-                <i className="nav-icon fas fa-home"></i>
-                <p>Inicio</p>
-              </a>
-            </li>
+                      <a
+                        href={"/inicio/" + nuevaURL[4]}
+                        className="nav-link"
+                        style={{ color: "white" }}
+                      >
+                        <i className="nav-icon fas fa-home"></i>
+                        <p>Clientes</p>
+                      </a>
+                    </li>
             {(() => {
-              if (role === "Administrador") {
+              if (role === "Administrador" || role === "SuperAdministrador") {
                 return (
                   <>
                     <li className="nav-item">
@@ -78,7 +77,7 @@ export default function Sidebar() {
                         style={{ color: "white" }}
                       >
                         <i className="nav-icon fas fa-address-card"></i>
-                        <p>Gestor Clusters</p>
+                        <p>Gestor Clientes</p>
                       </a>
                     </li>
                     <li className="nav-item">
@@ -88,7 +87,7 @@ export default function Sidebar() {
                         style={{ color: "white" }}
                       >
                         <i className="nav-icon fas fa-user-lock"></i>
-                        <p>Usuarios</p>
+                        <p>Gestor Usuarios</p>
                       </a>
                     </li>
                     <li className="nav-item">

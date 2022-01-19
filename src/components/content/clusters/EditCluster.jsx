@@ -6,6 +6,7 @@ import {rutaAPI} from '../../../config/Config';
 export default function EditCluster(){
 
     const currentUserId = localStorage.getItem("ID");
+    const currentRole = localStorage.getItem("ROLE");
 
     const [users, setUsers] = React.useState([]);
 
@@ -14,10 +15,21 @@ export default function EditCluster(){
     }, [])
 
     const obtenerUsuarios = async () =>{
-        const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
-        const user = await data.json()
-        //console.log("Admin Users", user.data)
-        setUsers(user.data);
+        if(currentRole === "Administrador"){
+            const data = await fetch(`${rutaAPI}/getUser/${currentUserId}`);
+            const user = await data.json();
+            //console.log("Admin Users", user.data)
+            setUsers(user.data);
+            //console.log("Users", user.data);
+          }else if(currentRole === "SuperAdministrador"){
+            const valores = window.location.href;
+            let nuevaURL = valores.split("/");
+            const data = await fetch(`${rutaAPI}/getUser/${nuevaURL[4]}`);
+            const user = await data.json();
+            //console.log("Admin Users", user.data)
+            setUsers(user.data);
+            //console.log("Users", user.data);
+          }
     }
 
     /* Users on Change */
@@ -94,6 +106,10 @@ export default function EditCluster(){
 
     //OnSubmit
     const submitPut = async e => {
+
+        let currentAdmin = localStorage.getItem("ADMIN");
+        let role = localStorage.getItem("ROLE");
+        
         $('.alert').remove();
         e.preventDefault();
 
@@ -104,9 +120,23 @@ export default function EditCluster(){
             $(".modal-footer").before(`<div class="alert alert-danger">${result.mensaje}</div>`)
         } 
         if(result.status === 200){
-            $(".modal-footer").before(`<div class="alert alert-success">${result.mensaje}</div>`)
-            $('button[type="submit"]').remove();
-            setTimeout(()=>{window.location.href=`/clusters/${currentUserId}`},2000);
+            if(role === "Administrador"){
+                $(".modal-footer").before(
+                  `<div class="alert alert-success">${result.mensaje}</div>`
+                );
+                $('button[type="submit"]').remove();
+                setTimeout(() => {
+                  window.location.href = `/clusters/${currentUserId}`;
+                }, 2000);
+              }else if(role === "SuperAdministrador"){
+                $(".modal-footer").before(
+                  `<div class="alert alert-success">${result.mensaje}</div>`
+                );
+                $('button[type="submit"]').remove();
+                setTimeout(() => {
+                  window.location.href = `/clusters/${currentAdmin}`;
+                }, 2000);
+              }
         }
     
     }

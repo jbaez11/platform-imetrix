@@ -219,8 +219,13 @@ const postData = data =>{
     
     const role = "Administrador"
     const state = "1"
+    /* const valorMinuto =  0.05 */
+    const conversacion = false
     data.role = role
     data.state = state
+    data.conversacion = conversacion
+    /* data.valorMinuto = valorMinuto */
+    
     const url = `${rutaAPI}/addAdmin`;
     const params = {
 

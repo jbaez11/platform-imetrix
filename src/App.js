@@ -7,7 +7,7 @@ import './App.css';
 import Start from './components/start/Start';
 import Index from './components/content/index/Index';
 /* Componentes Dinamicos */
-import AdministradoresInicio from './components/content/administradores/AdministradoresInicio';
+import AdministradoresInicio from './components/content/clientes/AdministradoresInicio';
 import Usuarios from './components/content/users/Usuarios';
 import Campaings from './components/content/campaings/Campaings';
 import CampaingsInicio from './components/content/campaings/CampaingsInicio';
@@ -24,7 +24,9 @@ import Puntajes from './components/content/puntajes/Puntajes';
 import Estadisticas from './components/content/estadisticas/Estadisticas'
 import Conversacion from './components/content/conversacion/Conversacion';
 import PageNotFound from './components/content/pageNotFound/PageNotFound';
-import PerfilAdmin from './components/content/administradores/PerfilAdmin';
+import PerfilAdmin from './components/content/clientes/PerfilAdmin';
+import GestorAdministradores from './components/content/clientes/GestorAdministradores';
+import SuperAdministradores from './components/content/superAdministradores/SuperAdministradores';
 import PerfilUser from './components/content/users/PerfilUser';
 
 
@@ -50,6 +52,8 @@ export default function App() {
             <Switch>
                <Route exact path="/"><Index/></Route>
                <Route exact path="/adminsInicio"><AdministradoresInicio/></Route>
+               <Route exact path="/gestorClientes"><GestorAdministradores/></Route>
+               <Route exact path="/gestorSAdmins"><SuperAdministradores/></Route>
                <Route exact path="/perfilAdmin/:id">{role ? <PerfilAdmin/> :<PerfilUser/>}</Route>
                <Route exact path="/perfilUser/:id"><PerfilUser/></Route>
                <Route exact path="/inicio/:id"><ClustersInicio/></Route>
@@ -116,7 +120,7 @@ const validarRol = ()=>{
 
     const role = localStorage.getItem("ROLE");
 
-    if(role === 'Administrador'){
+    if(role === 'Administrador' || role === 'SuperAdministrador'){
 
       return true;
 
