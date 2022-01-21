@@ -531,7 +531,10 @@ export default function Auditoria() {
                           placeholder="Busqueda por Nombre"
                           onChange={handleChange}
                         />
-                        <button className="btn btn-success">
+                        <button
+                          className="btn "
+                          style={{ background: "#D3D3D3" }}
+                        >
                           <i class="fas fa-search-minus"></i>
                         </button>
                       </div>
@@ -663,14 +666,15 @@ export default function Auditoria() {
                               </td>
                               <td className="text-center">
                                 <button
-                                  className="btn btn-success btn-sm rounded-pill"
+                                  className="btn  btn-sm rounded-pill"
                                   onClick={() => {
                                     filtrar(agent.name);
                                     tabla2(startDate, endDate, agent.name);
                                     setActiveTabla2(true);
                                   }}
+                                  style={{ background: "#D3D3D3" }}
                                 >
-                                  Ver mas...
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>
@@ -772,14 +776,15 @@ export default function Auditoria() {
                               </td>
                               <td>
                                 <button
-                                  className="btn btn-success btn-sm rounded-pill"
+                                  className="btn  btn-sm rounded-pill"
                                   onClick={() => {
                                     filtrar2(grabacion.keyfile);
                                     tabla3(grabacion.keyfile);
                                     setActiveTabla3(true);
                                   }}
+                                  style={{ background: "#D3D3D3" }}
                                 >
-                                  Ver mas...
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>

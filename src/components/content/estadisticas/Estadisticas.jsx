@@ -641,7 +641,10 @@ export default function Estadisticas() {
                           placeholder="Busqueda por Nombre"
                           onChange={handleChange}
                         />
-                        <button className="btn btn-success">
+                        <button
+                          className="btn "
+                          style={{ background: "#D3D3D3" }}
+                        >
                           <i class="fas fa-search-minus"></i>
                         </button>
                       </div>
@@ -747,7 +750,8 @@ export default function Estadisticas() {
 
                               <td className="text-center">
                                 <button
-                                  className="btn btn-success btn-sm rounded-pill"
+                                  style={{ background: "#D3D3D3" }}
+                                  className="btn btn-sm rounded-pill"
                                   hidden={activeButton1 ? false : true}
                                   onClick={() => {
                                     filtrar(agent.cluster);
@@ -919,7 +923,7 @@ export default function Estadisticas() {
                                     setActiveTabla5(false);
                                   }}
                                 >
-                                  Ver Grabaciones
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>
@@ -984,7 +988,7 @@ export default function Estadisticas() {
                                     setActiveTabla5(true);
                                   }}
                                 >
-                                  Ver Keywords
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>

@@ -170,8 +170,9 @@ export default function Agents() {
                           Crear nuevo agente
                         </button>
                         <button
-                          className="btn btn-success ml-4"
+                          className="btn ml-4"
                           onClick={() => getReport()}
+                          style={{ background: "#D3D3D3" }}
                         >
                           Descargar
                         </button>

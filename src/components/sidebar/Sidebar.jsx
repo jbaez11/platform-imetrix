@@ -15,7 +15,7 @@ export default function Sidebar() {
       style={{ backgroundColor: "#FF9B00" }}
     >
       <a
-        href={"/inicio/" + nuevaURL[4]}
+        href={"/#"}
         className="brand-link"
         style={{ backgroundColor: "white" }}
       >
@@ -25,7 +25,7 @@ export default function Sidebar() {
           style={{ opacity: 0.8 }}
           src={Logo}
         />
-        <i className="nav-icon fas fa-home" style={{color:"darkgray"}}></i>
+        {/* <i className="nav-icon fas fa-home" style={{ color: "darkgray" }}></i> */}
 
         <span
           className="brand-text "
@@ -56,16 +56,36 @@ export default function Sidebar() {
             role="menu"
             data-accordion="false"
           >
-            <li className="nav-item">
+            {(() => {
+              if (role === "SuperAdministrador") {
+                return (
+                  <>
+                    <li className="nav-item">
                       <a
-                        href={"/inicio/" + nuevaURL[4]}
+                        href={"/adminsInicio/"}
                         className="nav-link"
                         style={{ color: "white" }}
                       >
-                        <i className="nav-icon fas fa-home"></i>
-                        <p>Clientes</p>
+                        <i className="nav-icon fas fa-address-card"></i>
+                        <p>volver</p>
                       </a>
                     </li>
+                  </>
+                );
+              }
+            })()}
+            <li className="nav-item">
+              <a
+                href={"/inicio/" + nuevaURL[4]}
+                className="nav-link"
+                style={{ color: "white" }}
+              >
+                <i className="nav-icon fas fa-home"></i>
+
+                <p>Clientes</p>
+              </a>
+            </li>
+
             {(() => {
               if (role === "Administrador" || role === "SuperAdministrador") {
                 return (
