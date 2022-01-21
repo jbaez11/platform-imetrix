@@ -91,6 +91,7 @@ export default function CamaingsAuditor() {
                                     style={{ marginTop: "40px" }}
                                     href={`/agents/${nuevaURL[6]}${campaing.Urltableros}${campaing.pais}`}
                                     className="btn btn-warning"
+                                    style={{marginTop:"10px"}}
                                   >
                                     Ingresar
                                   </a>

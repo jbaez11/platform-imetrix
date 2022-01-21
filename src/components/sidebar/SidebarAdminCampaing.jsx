@@ -186,11 +186,11 @@ const getDataAdministrador = () => {
     return fetch(url, params)
       .then((response) => {
         return response.json();
-      })
+    })
       .then((result) => {
         return result;
-      })
+    })
       .catch((err) => {
         return err;
-      });
-  };
+    });
+};

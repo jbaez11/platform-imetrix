@@ -125,7 +125,7 @@ export default function AddUser() {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h4 className="modal-title">Crear Usuario</h4>
+            <h4 className="modal-title">Crear Auditor</h4>
             <button
               type="button"
               className="btn-close"
@@ -216,7 +216,7 @@ export default function AddUser() {
               </div>
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="clusters">
-                  | Seleccione el cluster(s) al que el auditor tendra acceso
+                  | Seleccione el cliente(s) al que el auditor tendra acceso
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
@@ -304,7 +304,7 @@ export default function AddUser() {
               ))}
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="role">
-                  *Administrador o Auditor
+                  | Auditor
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">

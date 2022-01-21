@@ -87,6 +87,7 @@ export default function CamaingsInicio() {
                                   <a
                                     href={`/agents/${nuevaURL[5]}${campaing.Urltableros}${campaing.pais}`}
                                     className="btn btn-warning"
+                                    style={{marginTop:"10px"}}
                                   >
                                     Ingresar
                                   </a>

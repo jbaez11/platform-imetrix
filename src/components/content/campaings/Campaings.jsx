@@ -77,9 +77,9 @@ export default function Camaings() {
             },
           },
           { title: "Estado" },
-          { title: "Cluster" },
+          { title: "Cliente" },
           { title: "Pais" },
-          { title: "Usuarios" },
+          { title: "Auditores" },
           { title: "Fecha de Creación" },
           {
             title: "Editar",

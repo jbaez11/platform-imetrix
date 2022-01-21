@@ -87,7 +87,7 @@ export default function Sidebar() {
                         style={{ color: "white" }}
                       >
                         <i className="nav-icon fas fa-user-lock"></i>
-                        <p>Gestor Usuarios</p>
+                        <p>Gestor Auditores</p>
                       </a>
                     </li>
                     <li className="nav-item">

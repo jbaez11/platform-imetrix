@@ -53,7 +53,7 @@ export default function SidebarCampaing(){
                                     <li className="nav-item">
                                         <a href={"/campañasinicio/"+nuevaURL[4]+"/"+nuevaURL[5]} className="nav-link" style={{ color: 'white' }}>
                                             <i className="nav-icon fas fa-home"></i>
-                                            <p>Inicio</p>
+                                            <p>Campañas</p>
                                         </a>
                                     </li>
                                     <li className="nav-item">
@@ -70,7 +70,7 @@ export default function SidebarCampaing(){
                                 <li className="nav-item">
                                 <a href={"/campañasAuditor/"+currentUserId+"/"+nuevaURL[5]} className="nav-link" style={{ color: 'white' }}>
                                     <i className="nav-icon fas fa-home"></i>
-                                    <p>Inicio</p>
+                                    <p>Campañas</p>
                                 </a>
                                 </li>
                                 </>

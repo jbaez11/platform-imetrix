@@ -177,7 +177,7 @@ export default function AddCluster() {
       <div className="modal-dialog">
         <div className="modal-content">
           <div className="modal-header">
-            <h4 className="modal-title">Crear Cluster</h4>
+            <h4 className="modal-title">Crear Cliente</h4>
             <button
               type="button"
               className="btn-close"
@@ -206,7 +206,7 @@ export default function AddCluster() {
                     type="text"
                     className="form-control"
                     name="nombre"
-                    placeholder="Ingrese el nombre del Cluster"
+                    placeholder="Ingrese el nombre del Cliente"
                     minLength="2"
                     maxLength="30"
                     pattern="^[A-Za-z]+\s?[A-Za-z]+$"
@@ -258,7 +258,7 @@ export default function AddCluster() {
               </div>
               <div className="form-group">
                 <label className="small text-secondary" htmlFor="users">
-                  | Seleccione el Usuario(s) que quiere agregar al cluster
+                  | Seleccione el Usuario(s) que quiere agregar al cliente
                 </label>
                 <div className="input-group mb-3">
                   <div className="input-group-append input-group-text">
