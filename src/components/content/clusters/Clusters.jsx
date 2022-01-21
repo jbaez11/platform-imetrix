@@ -71,7 +71,7 @@ export default function Clusters() {
             },
           },
           { title: "Estado" },
-          { title: "Usuarios" },
+          { title: "Auditores" },
           { title: "Fecha de Creación" },
           {
             title: "Editar",

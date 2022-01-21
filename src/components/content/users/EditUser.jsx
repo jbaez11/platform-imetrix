@@ -35,7 +35,7 @@ export default function EditUser(){
 
         e.preventDefault();
 
-        //console.log(usuarios);
+        console.log(usuarios);
 
         //Ejecutamos el servicio put
         const result = await putData(usuarios);
@@ -146,7 +146,7 @@ export default function EditUser(){
             <div className="modal-dialog">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h4 className="modal-title">Editar Usuario</h4>
+                    <h4 className="modal-title">Editar Auditor</h4>
                     <button type="button" className="btn-close" data-dismiss="modal"></button>
                 </div>
                 <form onChange={cambiaFormPost} onSubmit={submitPost}>
@@ -227,7 +227,7 @@ export default function EditUser(){
                         </div>        
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarRole">
-                                |Auditor
+                                | Auditor
                             </label>
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">
@@ -259,6 +259,8 @@ const putData = data =>{
 
     const url = `${rutaAPI}/editUser/${data.id}`
     const token =  localStorage.getItem("ACCESS_TOKEN");
+    if(data.state === "Habilitado") data.state = 1
+    else if(data.state === "Inhabilitado") data.state = 0
     const params = {
 
         method: "PUT",

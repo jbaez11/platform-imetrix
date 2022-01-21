@@ -13,7 +13,7 @@ import EditUser from "./EditUser";
 export default function Usuarios() {
   const dataAdministradores = async () => {
     const getAdministradores = await getData();
-    //console.log("getAdmin",getAdministradores)
+    /* console.log("getAuditores",getAdministradores) */
     const dataTable = [];
 
     getAdministradores.data.forEach((admin, index) => {
@@ -84,7 +84,7 @@ export default function Usuarios() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  <h1 className="m-0 text-dark">Usuarios</h1>
+                  <h1 className="m-0 text-dark">Auditores</h1>
                 </div>
               </div>
             </div>
@@ -102,7 +102,7 @@ export default function Usuarios() {
                           data-target="#addUser"
                         >
                           {" "}
-                          Crear nuevo usuario
+                          Crear nuevo auditor
                         </button>
                       </h5>
                     </div>

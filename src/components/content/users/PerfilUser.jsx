@@ -21,8 +21,9 @@ export default function PerfilUser() {
         index + 1,
         user.nombres,
         user.correo,
+        user.password,
         user.createdAt,
-        [user._id, user.nombres, user.correo, user.createdAt],
+        [user._id, user.nombres, user.correo, user.password, user.createdAt],
       ];
     });
     //Ejecutar el Data Table
@@ -33,6 +34,7 @@ export default function PerfilUser() {
           { title: "#" },
           { title: "Nombres y Apellidos" },
           { title: "Correo" },
+          { title: "Contraseña" },
           { title: "Fecha de Creación" },
           {
             title: "Editar Perfil",

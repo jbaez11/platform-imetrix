@@ -231,11 +231,11 @@ export default function EditCluster(){
 
     return(
 
-        <div className="modal" id="editCluster">
+    <div className="modal" id="editCluster">
         <div className="modal-dialog">
             <div className="modal-content">
                 <div className="modal-header">
-                    <h4 className="modal-title">Editar Cluster</h4>
+                    <h4 className="modal-title">Editar Cliente</h4>
                     <button type="button" className="btn-close" data-dismiss="modal"></button>
                 </div>
                 <form onChange={cambiaFormPut} onSubmit={submitPut} encType="multipart/form-data">
@@ -254,7 +254,7 @@ export default function EditCluster(){
                                     type="text"
                                     className="form-control text-uppercase"
                                     name="nombre"
-                                    placeholder="Ingrese el nombre del Cluster"
+                                    placeholder="Ingrese el nombre del Cliente"
                                     minLength="2"
                                     maxLength="30"
                                     pattern="^[A-Z]+\s?[A-Z]+$"
@@ -293,7 +293,7 @@ export default function EditCluster(){
                         </div>
                         <div className="form-group">
                                 <label className="small text-secondary" htmlFor="editUsers">
-                                    | Seleccione el Usuario(s) que quiere agregar o quitar al cluster
+                                    | Seleccione el Usuario(s) que quiere agregar o quitar al cliente
                                 </label>
                                 <div className="input-group mb-3">
                                     <div className="input-group-append input-group-text">
