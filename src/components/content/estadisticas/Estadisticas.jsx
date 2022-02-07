@@ -397,6 +397,7 @@ export default function Estadisticas() {
   };
 
   const tabla4 = async (ini, fin, selectedAgent) => {
+    console.log(ini, fin, selectedAgent);
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
     let fechaFinalOriginal = new Date(fin).toISOString();
@@ -414,8 +415,10 @@ export default function Estadisticas() {
       let records =
         data[i].contents[selectedModulos][selectedClusters].negative
           .agentRecord[selectedAgent];
+
+      console.log("records", records.length);
       for (let j = 0; j < records.length; j++) {
-        //console.log("records", records[j]);
+        console.log("records 2", records[j]);
         superGrabaciones[j] = records[j];
       }
     }
