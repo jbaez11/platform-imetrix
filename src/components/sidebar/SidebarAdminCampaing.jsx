@@ -157,7 +157,17 @@ export default function SidebarAdminCampaing() {
                 <p>Estadisticas</p>
               </a>
             </li>
-            {(() => {
+            <li className="nav-item">
+              <a
+                href={"/consumo/" + nuevaURL[4]}
+                className="nav-link"
+                style={{ color: "white" }}
+              >
+                <i className="nav-icon far fa-chart-bar"></i>
+                <p>Consumo</p>
+              </a>
+            </li>
+            {/* {(() => {
               if (role === "Administrador" || role === "SuperAdministrador") {
                 return (
                   <>
@@ -174,7 +184,7 @@ export default function SidebarAdminCampaing() {
                   </>
                 );
               }
-            })()}
+            })()} */}
             {(() => {
               if (conversacion === "true" || role === "SuperAdministrador") {
                 return (
