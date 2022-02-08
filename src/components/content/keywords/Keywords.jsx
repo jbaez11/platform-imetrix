@@ -70,8 +70,6 @@ export default function Keywords() {
     const dataSet = [];
 
     getKeyWords.data.forEach((keywords, index) => {
-
-      
       dataSet[index] = [
         index + 1,
         keywords.name,
@@ -173,8 +171,9 @@ export default function Keywords() {
                           Crear Keyword
                         </button>
                         <button
-                          className="btn btn-success ml-4"
+                          className="btn  ml-4"
                           onClick={() => getReport()}
+                          style={{ background: "#D3D3D3" }}
                         >
                           Descargar
                         </button>

@@ -397,6 +397,7 @@ export default function Estadisticas() {
   };
 
   const tabla4 = async (ini, fin, selectedAgent) => {
+    console.log(ini, fin, selectedAgent);
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
     let fechaFinalOriginal = new Date(fin).toISOString();
@@ -414,8 +415,10 @@ export default function Estadisticas() {
       let records =
         data[i].contents[selectedModulos][selectedClusters].negative
           .agentRecord[selectedAgent];
+
+      console.log("records", records.length);
       for (let j = 0; j < records.length; j++) {
-        //console.log("records", records[j]);
+        console.log("records 2", records[j]);
         superGrabaciones[j] = records[j];
       }
     }
@@ -641,7 +644,10 @@ export default function Estadisticas() {
                           placeholder="Busqueda por Nombre"
                           onChange={handleChange}
                         />
-                        <button className="btn btn-success">
+                        <button
+                          className="btn "
+                          style={{ background: "#D3D3D3" }}
+                        >
                           <i class="fas fa-search-minus"></i>
                         </button>
                       </div>
@@ -747,7 +753,8 @@ export default function Estadisticas() {
 
                               <td className="text-center">
                                 <button
-                                  className="btn btn-success btn-sm rounded-pill"
+                                  style={{ background: "#D3D3D3" }}
+                                  className="btn btn-sm rounded-pill"
                                   hidden={activeButton1 ? false : true}
                                   onClick={() => {
                                     filtrar(agent.cluster);
@@ -919,7 +926,7 @@ export default function Estadisticas() {
                                     setActiveTabla5(false);
                                   }}
                                 >
-                                  Ver Grabaciones
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>
@@ -984,7 +991,7 @@ export default function Estadisticas() {
                                     setActiveTabla5(true);
                                   }}
                                 >
-                                  Ver Keywords
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>

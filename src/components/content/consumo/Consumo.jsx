@@ -255,8 +255,9 @@ export default function Consumo() {
                 </div>
                 <div className="col-2">
                   <button
-                    className="btn btn-success"
+                    className="btn"
                     onClick={() => getReport(startDate, endDate)}
+                    style={{ background: "#D3D3D3" }}
                   >
                     Descargar
                   </button>

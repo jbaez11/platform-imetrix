@@ -353,11 +353,15 @@ export default function Puntajes() {
     });
     let cabecerasArray2 = [];
     cabecerasArray.forEach((element) => {
-      console.log("element", element.toString());
-      if (element.toString() !== "recomendacion") {
-        if (element.toString() !== "nopermitida") {
-          console.log("elemen2t", element);
-          cabecerasArray2.push(element);
+      //console.log("element", element.toString());
+      if (element.toString() !== "recomendación") {
+        if (element.toString() !== "recomendacion") {
+          if (element.toString() !== "nopermitida") {
+            if (element.toString() !== "no permitida") {
+              // console.log("elemen2t", element);
+              cabecerasArray2.push(element);
+            }
+          }
         }
       }
     });
@@ -415,69 +419,32 @@ export default function Puntajes() {
   };
 
   const tabla3 = async (keyfile) => {
+    console.log("keyfiel", keyfile);
     const getKeywords = await getKeywordsData(keyfile);
-    let data = getKeywords.data;
-    //console.log("data", data);
-    function secondsToTime(seconds) {
-      return new Date(seconds * 1000).toISOString().substr(11, 11);
-    }
 
-    //console.log("keyfile", keyfile);
-    let keywords = data[0].contents;
-    let keywordsArray = [];
+    let data = getKeywords.data;
+    let contents = data[0].contents;
+    let scoringArray = [];
     let id = 0;
-    for (let key in keywords) {
-      for (let i = 0; i < keywords[key].results.length; i++) {
-        //console.log("mostrar", keywords[key].results[i]);
+    for (let moduleKey in contents) {
+      for (let clusterKey in contents[moduleKey]) {
+        let kp = contents[moduleKey][clusterKey].results;
+        let kpStrings = kp.join(", ");
+        let clusterPackage = {
+          id: id,
+          module: moduleKey,
+          cluster: clusterKey,
+          score: contents[moduleKey][clusterKey].score * 100,
+          results: kpStrings,
+        };
+
+        scoringArray.push(clusterPackage);
         id++;
-        let keywordPackage = {
-          id: id + key,
-          name: key,
-          module: keywords[key].clasification.module,
-          category: keywords[key].clasification.category,
-        };
-        keywords[key].results[i]["from"] = secondsToTime(
-          keywords[key].results[i]["from"]
-        );
-        keywords[key].results[i]["to"] = secondsToTime(
-          keywords[key].results[i]["to"]
-        );
-        keywordPackage["speaker"] = keywords[key].results[i]["speaker"];
-        keywordPackage["from"] = keywords[key].results[i]["from"];
-        keywordPackage["to"] = keywords[key].results[i]["to"];
-        keywordPackage["confidence"] = keywords[key].results[i]["confidence"];
-        //console.log("package", keywordPackage);
-        keywordsArray.push(keywordPackage);
       }
-      if (keywords[key].results.length == 0) {
-        let keywordPackage = {
-          id: id + key,
-          name: key,
-          module: keywords[key].clasification.module,
-          category: keywords[key].clasification.category,
-        };
-        keywordPackage["speaker"] = "-";
-        keywordPackage["from"] = "-";
-        keywordPackage["to"] = "-";
-        keywordPackage["confidence"] = "-";
-        //console.log("keywordsPackage", keywordPackage);
-        keywordsArray.push(keywordPackage);
-      }
-      //id++;
+
+      console.log(scoringArray);
     }
-    //console.log("keywordsArray", keywordsArray);
-    let keywordsFound = [];
-    let keywordsNotFound = [];
-    for (let i = 0; i < keywordsArray.length; i++) {
-      if (keywordsArray[i].speaker !== "-") {
-        keywordsFound.push(keywordsArray[i]);
-      } else {
-        keywordsNotFound.push(keywordsArray[i]);
-      }
-    }
-    keywordsArray = keywordsFound.concat(keywordsNotFound);
-    //console.log("keywordArray", keywordsArray);
-    setKeywords(keywordsArray);
+    setKeywords(scoringArray);
   };
 
   const dataAuditoria = async (ini, fin) => {
@@ -550,8 +517,9 @@ export default function Puntajes() {
                                 {showCalendar ? " seleccionar fecha" : " Ir "}
                               </button>
                               <button
-                                className="btn btn-success ml-4"
+                                className="btn  ml-4"
                                 onClick={() => getReport(startDate, endDate)}
+                                style={{ background: "#D3D3D3" }}
                               >
                                 Descargar
                               </button>
@@ -658,7 +626,10 @@ export default function Puntajes() {
                           placeholder="Busqueda por Nombre"
                           onChange={handleChange}
                         />
-                        <button className="btn btn-success">
+                        <button
+                          className="btn "
+                          style={{ background: "#D3D3D3" }}
+                        >
                           <i class="fas fa-search-minus"></i>
                         </button>
                       </div>
@@ -748,7 +719,7 @@ export default function Puntajes() {
 
                               <td className="text-center">
                                 <button
-                                  className="btn btn-success btn-sm rounded-pill"
+                                  className="btn  btn-sm rounded-pill"
                                   onClick={() => {
                                     filtrar(agent.name);
                                     obtenerCabeceras(
@@ -761,8 +732,9 @@ export default function Puntajes() {
 
                                     //tabla2(startDate, endDate, agent.name);
                                   }}
+                                  style={{ background: "#D3D3D3" }}
                                 >
-                                  Ver mas...
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>
@@ -860,14 +832,15 @@ export default function Puntajes() {
                               </td>
                               <td className="text-center">
                                 <button
-                                  className="btn btn-success btn-sm rounded-pill"
+                                  className="btn  btn-sm rounded-pill"
                                   onClick={() => {
                                     filtrar2(grabacion.keyfile);
                                     tabla3(grabacion.keyfile);
                                     setActiveTabla3(true);
                                   }}
+                                  style={{ background: "#D3D3D3" }}
                                 >
-                                  Ver mas...
+                                  <i class="fas fa-arrow-right"></i>
                                 </button>
                               </td>
                             </tr>
@@ -907,35 +880,28 @@ export default function Puntajes() {
                         >
                           <tr>
                             <th onClick={() => sorting3("name")}>
-                              KEYWORD
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th onClick={() => sorting3("category")}>
-                              CATEGORIA
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th onClick={() => sorting3("module")}>
                               MODULO
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("from")}>
-                              DESDE
+                            <th onClick={() => sorting3("category")}>
+                              CLUSTER
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("to")}>
-                              HASTA
+                            <th onClick={() => sorting3("module")}>
+                              PUNTAJE
+                              <i
+                                className="fas fa-arrows-alt-v ml-1"
+                                style={{ color: "black" }}
+                              ></i>
+                            </th>
+                            <th onClick={() => sorting3("from")}>
+                              KEYWORDS
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
@@ -946,11 +912,10 @@ export default function Puntajes() {
                         <tbody style={{ fontSize: "small" }}>
                           {keywords.map((keyword) => (
                             <tr key={keyword.id}>
-                              <td>{keyword.name}</td>
-                              <td>{keyword.category}</td>
                               <td>{keyword.module}</td>
-                              <td>{keyword.from}</td>
-                              <td>{keyword.to}</td>
+                              <td>{keyword.cluster}</td>
+                              <td>{keyword.score.toFixed(1)} %</td>
+                              <td>{keyword.results}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -1021,7 +986,7 @@ const getKeywordsData = (keyfile) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   //console.log("nuevaURL", nuevaURL);
-  const url = `${rutaAPITableros}/${nuevaURL[4]}/keywords?keyfile=${keyfile}`;
+  const url = `${rutaAPITableros}/${nuevaURL[4]}/scoringkeywords?keyfile=${keyfile}`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "GET",
