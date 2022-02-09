@@ -210,177 +210,73 @@ export default function Conversacion() {
     setSumTotalGrabaciones(suma);
   }
 
-  function afectadasNoPermitidas(nopermitidas) {
-    let suma = 0;
-    for (let i = 0; i < nopermitidas.length; i++) {
-      suma += nopermitidas[i].affectedRecordings;
-    }
-
-    setGrabacionesNoPermitidas(suma);
-  }
-
   function tabla1(data) {
-    let superAgentsSummary = {};
-
-    for (let i = 0; i < data.length; i++) {
-      for (let j = 0; j < data[i].agentsSummary.length; j++) {
-        let agentPackage = data[i].agentsSummary[j];
-        let agentName = agentPackage.name;
-
-        if (
-          !Object.prototype.hasOwnProperty.call(superAgentsSummary, agentName)
-        ) {
-          superAgentsSummary[agentName] = {
-            results: agentPackage.results,
-          };
-        } else {
-          superAgentsSummary[agentName].results.recordings +=
-            agentPackage.results.recordings;
-          superAgentsSummary[agentName].results.positivesOfRequired +=
-            agentPackage.results.positivesOfRequired;
-          superAgentsSummary[agentName].results.negativesOfRequired +=
-            agentPackage.results.negativesOfRequired;
-          superAgentsSummary[agentName].results.positivesOfNotAllowed +=
-            agentPackage.results.positivesOfNotAllowed;
-          superAgentsSummary[agentName].results.negativesOfNotAllowed +=
-            agentPackage.results.negativesOfNotAllowed;
-          superAgentsSummary[agentName].results.positivesOfRecommendation +=
-            agentPackage.results.positivesOfRecommendation;
-          superAgentsSummary[agentName].results.negativesOfRecommendation +=
-            agentPackage.results.negativesOfRecommendation;
-        }
-      }
-
-      let superAgentsSummaryArray = [];
-
-      for (let key in superAgentsSummary) {
-        let agentPackage = {
-          name: key,
-          results: superAgentsSummary[key].results,
-        };
-        superAgentsSummaryArray.push(agentPackage);
-      }
-
-      setAgentes(superAgentsSummaryArray);
-      setTableAgentes(superAgentsSummaryArray);
-    }
+    setAgentes(data);
+    setTableAgentes(data);
   }
 
   const tabla2 = async (ini, fin, name) => {
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
-    let fechaFinalOriginal = new Date(fin).toISOString();
-    let fechaFinal = fechaFinalOriginal.split("T");
-    const getAuditoria = await getData(
-      fechaInicial[0] + "T00:00:00.000Z",
-      fechaFinal[0] + "T00:00:00.000Z"
-    );
-    let data = getAuditoria.data;
-    /* console.log("auditoria", data);
-    console.log("name", name); */
+
+    const getAuditoria = await getData(fechaInicial[0] + "T00:00:00.000Z");
+    let data2 = getAuditoria.data;
+    let data = data2[0].recordingsSummary;
+
+    console.log("auditoria", data);
+    console.log("name", name);
 
     // let name = agenteSeleccionado;
     // console.log("agenteSeleccionado",agenteSeleccionado);
-    let recordsByCategory = [];
-    for (let i = 0; i < data.length; i++) {
-      for (let key in data[i].recordingsSummary) {
-        if (key === name) {
-          recordsByCategory = recordsByCategory.concat(
-            data[i].recordingsSummary[key]
-          );
-        }
+    for (let key in data) {
+      if (key == name) {
+        console.log("object", data[key]);
+        setGrabaciones(data[key]);
+        setTableGrabaciones(data[key]);
+        //this.recordsConversations = data[key];
       }
     }
-    setGrabaciones(recordsByCategory);
-    setTableGrabaciones(recordsByCategory);
+
     /* console.log("recordsByCategory", recordsByCategory); */
   };
 
   const tabla3 = async (keyfile) => {
     const getKeywords = await getKeywordsData(keyfile);
     let data = getKeywords.data;
-    /* console.log("data", data); */
+    console.log(keyfile);
+    let conversations = data[0].conversation;
+    console.log("mostrar conversations ", conversations);
+
     function secondsToTime(seconds) {
       return new Date(seconds * 1000).toISOString().substr(11, 11);
     }
-    /* console.log("keyfile", keyfile); */
-    let keywords = data[0].contents;
-    let keywordsArray = [];
-    let id = 0;
-    for (let key in keywords) {
-      for (let i = 0; i < keywords[key].results.length; i++) {
-        /*  console.log("mostrar", keywords[key].results[i]); */
-        id++;
-        let keywordPackage = {
-          id: id + key,
-          name: key,
-          module: keywords[key].clasification.module,
-          category: keywords[key].clasification.category,
-        };
-        keywords[key].results[i]["from"] = secondsToTime(
-          keywords[key].results[i]["from"]
-        );
-        keywords[key].results[i]["to"] = secondsToTime(
-          keywords[key].results[i]["to"]
-        );
-        keywordPackage["speaker"] = keywords[key].results[i]["speaker"];
-        keywordPackage["from"] = keywords[key].results[i]["from"];
-        keywordPackage["to"] = keywords[key].results[i]["to"];
-        keywordPackage["confidence"] = keywords[key].results[i]["confidence"];
-        // console.log("package", keywordPackage);
-        keywordsArray.push(keywordPackage);
-      }
-      if (keywords[key].results.length == 0) {
-        let keywordPackage = {
-          id: id + key,
-          name: key,
-          module: keywords[key].clasification.module,
-          category: keywords[key].clasification.category,
-        };
-        keywordPackage["speaker"] = "-";
-        keywordPackage["from"] = "-";
-        keywordPackage["to"] = "-";
-        keywordPackage["confidence"] = "-";
-        /*  console.log("keywordsPackage", keywordPackage); */
-        keywordsArray.push(keywordPackage);
-      }
-      //id++;
+
+    for (let i = 0; i < conversations.length; i++) {
+      conversations[i].from = secondsToTime(conversations[i].from);
+      conversations[i].to = secondsToTime(conversations[i].to);
     }
+
     /* console.log("keywordsArray", keywordsArray); */
-    let keywordsFound = [];
-    let keywordsNotFound = [];
-    for (let i = 0; i < keywordsArray.length; i++) {
-      if (keywordsArray[i].speaker !== "-") {
-        keywordsFound.push(keywordsArray[i]);
-      } else {
-        keywordsNotFound.push(keywordsArray[i]);
-      }
-    }
-    keywordsArray = keywordsFound.concat(keywordsNotFound);
-    /* console.log("keywordArray", keywordsArray); */
-    setKeywords(keywordsArray);
+    setKeywords(conversations);
   };
 
-  const dataAuditoria = async (ini, fin) => {
-    if (!ini || !fin) {
+  const dataAuditoria = async (ini) => {
+    if (!ini) {
       return;
     }
 
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
-    let fechaFinalOriginal = new Date(fin).toISOString();
-    let fechaFinal = fechaFinalOriginal.split("T");
-    const getAuditoria = await getData(
-      fechaInicial[0] + "T00:00:00.000Z",
-      fechaFinal[0] + "T00:00:00.000Z"
-    );
+    // let fechaFinalOriginal = new Date(fin).toISOString();
+    // let fechaFinal = fechaFinalOriginal.split("T");
+    const getAuditoria = await getData(fechaInicial[0] + "T00:00:00.000Z");
     let auditoria = getAuditoria.data;
     /* console.log("auditoria", auditoria); */
 
     totalGrabaciones(auditoria);
-    afectadasNoPermitidas(auditoria);
+
     setActiveTabla1(true);
-    tabla1(auditoria);
+    tabla1(auditoria[0].agentsSummary);
   };
 
   return (
@@ -505,19 +401,6 @@ export default function Conversacion() {
                                 {sumTotalGrabaciones}
                               </span>
                             </div>
-                            <div className="col-sm text-center">
-                              <h5 className="" style={{ color: "#FF9B00" }}>
-                                AFECTADAS{" "}
-                                <span style={{ color: "#CACACA" }}> POR </span>{" "}
-                                NO PERMITIDAS
-                              </h5>
-                              <span
-                                className=""
-                                style={{ color: "#FF9B00", fontSize: "250%" }}
-                              >
-                                {grabacionesNoPermitidas}
-                              </span>
-                            </div>
                           </div>
                         </div>
                       </h5>
@@ -592,54 +475,7 @@ export default function Conversacion() {
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th
-                              onClick={() => sortingNum("positivesOfRequired")}
-                              className="text-center"
-                              scope="col"
-                            >
-                              INFALTABLE
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() => sortingNum("negativesOfRequired")}
-                              className="text-center"
-                              scope="col"
-                            >
-                              INFALTABLE NO HALLADA
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() =>
-                                sortingNum("positivesOfNotAllowed")
-                              }
-                              className="text-center"
-                              scope="col"
-                            >
-                              NO PERMITIDA
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() =>
-                                sortingNum("positivesOfRecommendation")
-                              }
-                              className="text-center"
-                              scope="col"
-                            >
-                              RECOMENDACION
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
+
                             <th className="text-center" scope="col">
                               ACCION
                             </th>
@@ -652,18 +488,7 @@ export default function Conversacion() {
                               <td className="text-center">
                                 {agent.results.recordings}
                               </td>
-                              <td className="text-center">
-                                {agent.results.positivesOfRequired}
-                              </td>
-                              <td className="text-center">
-                                {agent.results.negativesOfRequired}
-                              </td>
-                              <td className="text-center">
-                                {agent.results.positivesOfNotAllowed}
-                              </td>
-                              <td className="text-center">
-                                {agent.results.positivesOfRecommendation}
-                              </td>
+
                               <td className="text-center">
                                 <button
                                   className="btn  btn-sm rounded-pill"
@@ -721,46 +546,7 @@ export default function Conversacion() {
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th
-                              onClick={() => sortingNum2("positivesOfRequired")}
-                            >
-                              INFALTABLE
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() => sortingNum2("negativesOfRequired")}
-                            >
-                              INFALTABLE NO HALLADA
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() =>
-                                sortingNum2("positivesOfNotAllowed")
-                              }
-                            >
-                              NO PERMITIDA
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() =>
-                                sortingNum2("positivesOfRecommendation")
-                              }
-                            >
-                              RECOMENDACION
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
+
                             <th>ACCION</th>
                           </tr>
                         </thead>
@@ -768,12 +554,7 @@ export default function Conversacion() {
                           {grabaciones.map((grabacion) => (
                             <tr key={grabacion.keyfile}>
                               <td>{grabacion.keyfile}</td>
-                              <td>{grabacion.results.positivesOfRequired}</td>
-                              <td>{grabacion.results.negativesOfRequired}</td>
-                              <td>{grabacion.results.positivesOfNotAllowed}</td>
-                              <td>
-                                {grabacion.results.positivesOfRecommendation}
-                              </td>
+
                               <td>
                                 <button
                                   className="btn  btn-sm rounded-pill"
@@ -824,34 +605,27 @@ export default function Conversacion() {
                         >
                           <tr>
                             <th onClick={() => sorting3("name")}>
-                              KEYWORD
+                              INTERLOCUTOR
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
                             <th onClick={() => sorting3("category")}>
-                              CATEGORIA
+                              TRANSCRIPCIÓN
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
                             <th onClick={() => sorting3("module")}>
-                              MODULO
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th onClick={() => sorting3("from")}>
                               DESDE
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("to")}>
+                            <th onClick={() => sorting3("from")}>
                               HASTA
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
@@ -861,11 +635,10 @@ export default function Conversacion() {
                           </tr>
                         </thead>
                         <tbody style={{ fontSize: "small" }}>
-                          {keywords.map((keyword) => (
-                            <tr key={keyword.id}>
-                              <td>{keyword.name}</td>
-                              <td>{keyword.category}</td>
-                              <td>{keyword.module}</td>
+                          {keywords.map((keyword, index) => (
+                            <tr key={index}>
+                              <td>{keyword.speaker}</td>
+                              <td>{keyword.transcript}</td>
                               <td>{keyword.from}</td>
                               <td>{keyword.to}</td>
                             </tr>
@@ -893,7 +666,7 @@ const getData = (fechaIni, fechaFinal) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
   // console.log("nuevaURL", nuevaURL);
-  const url = `${rutaAPITableros}/${nuevaURL[4]}/auditconversations?eventDate=${fechaIni}&eventDate=${fechaFinal}`;
+  const url = `${rutaAPITableros}/${nuevaURL[4]}/auditconversations?eventDate=${fechaIni}`;
   const token = localStorage.getItem("ACCESS_TOKEN");
   const params = {
     method: "GET",
