@@ -93,7 +93,7 @@ export default function AddKeyWord() {
                     placeholder="Ingrese la KeyWord/Frase"
                     minLength="2"
                     maxLength="150"
-                    pattern="^[a-zA-ZÀ-ÿ?\s]+"
+                    pattern="^[a-zA-ZÀ-ÿ?\s'-]+"
                     required
                   />
                 </div>
@@ -140,7 +140,7 @@ export default function AddKeyWord() {
   );
 }
 
-//PETICION POST PARA USUARIOS
+//PETICION POST PARA MODULOS
 const postData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");

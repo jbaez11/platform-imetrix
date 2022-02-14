@@ -171,7 +171,7 @@ export default function AddCluster() {
   );
 }
 
-//PETICION POST PARA USUARIOS
+//PETICION POST PARA CLIUSTERS
 const postData = (data) => {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
