@@ -102,6 +102,7 @@ export default function Puntajes() {
   const [agentes, setAgentes] = useState([]);
   const [tableAgentes, setTableAgentes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [dataConsultada, setDataConsultada] = useState([]);
 
   //  end  utilizadas en la primera tabla
   //    utilizadas en la segunda tabla
@@ -285,6 +286,7 @@ export default function Puntajes() {
   }
 
   const tabla1 = async (data) => {
+    console.log("dataaa", data);
     let sizeOfData = data.length;
     let superRecordingsSummary = {};
     for (let i = 0; i < sizeOfData; i++) {
@@ -371,16 +373,20 @@ export default function Puntajes() {
   };
 
   const tabla2 = async (ini, fin, cabeceras, name) => {
-    //console.log("cabeceras", cabeceras);
-    let fechaInicialOriginal = new Date(ini).toISOString();
+    console.log("agentes", dataConsultada);
+    setGrabaciones([]);
+    setTableGrabaciones([]);
+    /* let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
     let fechaFinalOriginal = new Date(fin).toISOString();
     let fechaFinal = fechaFinalOriginal.split("T");
     const getPuntajes = await getData(
       fechaInicial[0] + "T00:00:00.000Z",
       fechaFinal[0] + "T00:00:00.000Z"
-    );
-    let data = getPuntajes.data;
+    ); */
+    //let data2 = dataConsultada;
+    let data = dataConsultada;
+    //let data = getPuntajes.data;
     //console.log("data", data);
 
     let recordScoreByKeywords = [];
@@ -463,6 +469,7 @@ export default function Puntajes() {
     let puntajes = getPuntajes.data;
     //console.log("puntajes", puntajes);
     sumaTotalGrabaciones(puntajes);
+    setDataConsultada(puntajes);
     tabla1(puntajes);
   };
 
@@ -879,28 +886,28 @@ export default function Puntajes() {
                           }}
                         >
                           <tr>
-                            <th onClick={() => sorting3("name")}>
+                            <th onClick={() => sorting3("module")}>
                               MODULO
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("category")}>
+                            <th onClick={() => sorting3("cluster")}>
                               CLUSTER
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("module")}>
+                            <th onClick={() => sorting3("score")}>
                               PUNTAJE
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("from")}>
+                            <th onClick={() => sorting3("results")}>
                               KEYWORDS
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
