@@ -17,7 +17,7 @@ export default function SidebarAdminCampaing() {
       let data = await getDataAdministrador();
 
       let verTablero = data.data[0].conversacion.toString();
-      /* conversacion = localStorage.setItem("CONVERSATION", verTablero) */
+      conversacion = localStorage.setItem("CONVERSATION", verTablero);
     };
 
     obtenerDataAdministrador();
