@@ -140,6 +140,7 @@ export default function Conversacion() {
   const [agentes, setAgentes] = useState([]);
   const [tableAgentes, setTableAgentes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [dataConsultada, setDataConsultada] = useState([]);
 
   //  end  utilizadas en la primera tabla
   //    utilizadas en la segunda tabla
@@ -215,13 +216,10 @@ export default function Conversacion() {
     setTableAgentes(data);
   }
 
-  const tabla2 = async (ini, fin, name) => {
-    let fechaInicialOriginal = new Date(ini).toISOString();
-    let fechaInicial = fechaInicialOriginal.split("T");
-
-    const getAuditoria = await getData(fechaInicial[0] + "T00:00:00.000Z");
-    let data2 = getAuditoria.data;
-    let data = data2[0].recordingsSummary;
+  const tabla2 = async (name) => {
+    // setGrabaciones([]);
+    // setTableGrabaciones([]);
+    let data = dataConsultada;
 
     console.log("auditoria", data);
     console.log("name", name);
@@ -269,14 +267,15 @@ export default function Conversacion() {
     let fechaInicial = fechaInicialOriginal.split("T");
     // let fechaFinalOriginal = new Date(fin).toISOString();
     // let fechaFinal = fechaFinalOriginal.split("T");
-    const getAuditoria = await getData(fechaInicial[0] + "T00:00:00.000Z");
-    let auditoria = getAuditoria.data;
+    const getConversacion = await getData(fechaInicial[0] + "T00:00:00.000Z");
+    let conversacion = getConversacion.data;
     /* console.log("auditoria", auditoria); */
 
-    totalGrabaciones(auditoria);
+    totalGrabaciones(conversacion);
 
     setActiveTabla1(true);
-    tabla1(auditoria[0].agentsSummary);
+    setDataConsultada(conversacion[0].recordingsSummary);
+    tabla1(conversacion[0].agentsSummary);
   };
 
   return (
@@ -494,7 +493,7 @@ export default function Conversacion() {
                                   className="btn  btn-sm rounded-pill"
                                   onClick={() => {
                                     filtrar(agent.name);
-                                    tabla2(startDate, endDate, agent.name);
+                                    tabla2(agent.name);
                                     setActiveTabla2(true);
                                   }}
                                   style={{ background: "#D3D3D3" }}
