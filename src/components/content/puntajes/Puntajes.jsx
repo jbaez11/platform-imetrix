@@ -463,8 +463,16 @@ export default function Puntajes() {
   };
 
   const dataAuditoria = async (ini, fin) => {
-    if (!ini || !fin) {
+    if (!ini && !fin) {
       return;
+    }
+
+    if (!ini && fin) {
+      ini = fin;
+    }
+
+    if (ini && !fin) {
+      fin = ini;
     }
 
     let fechaInicialOriginal = new Date(ini).toISOString();

@@ -364,9 +364,21 @@ export default function Auditoria() {
   };
 
   const dataAuditoria = async (ini, fin) => {
-    if (!ini || !fin) {
+    console.log("ini", ini);
+    console.log("fin", fin);
+    if (!ini && !fin) {
       return;
     }
+
+    if (!ini && fin) {
+      ini = fin;
+    }
+
+    if (ini && !fin) {
+      fin = ini;
+    }
+    console.log("ini", ini);
+    console.log("fin", fin);
 
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
