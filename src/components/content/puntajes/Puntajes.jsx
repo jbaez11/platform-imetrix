@@ -102,6 +102,7 @@ export default function Puntajes() {
   const [agentes, setAgentes] = useState([]);
   const [tableAgentes, setTableAgentes] = useState([]);
   const [busqueda, setBusqueda] = useState("");
+  const [dataConsultada, setDataConsultada] = useState([]);
 
   //  end  utilizadas en la primera tabla
   //    utilizadas en la segunda tabla
@@ -224,6 +225,25 @@ export default function Puntajes() {
       setOrderTabla3("ASC");
     }
   };
+  const sortingNum3 = (col) => {
+    // console.log("col", col);
+    if (orderTabla3 === "ASC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a.results[col] > b.results[col] ? 1 : -1
+      );
+
+      // console.log("sorted", sorted);
+      setKeywords(sorted);
+      setOrderTabla3("DSC");
+    }
+    if (orderTabla3 === "DSC") {
+      const sorted = [...keywords].sort((a, b) =>
+        a.results[col] < b.results[col] ? 1 : -1
+      );
+      setKeywords(sorted);
+      setOrderTabla3("ASC");
+    }
+  };
 
   //  end  utilizadas en la TERCERA tabla
   const handleChange = (e) => {
@@ -285,6 +305,7 @@ export default function Puntajes() {
   }
 
   const tabla1 = async (data) => {
+    console.log("dataaa", data);
     let sizeOfData = data.length;
     let superRecordingsSummary = {};
     for (let i = 0; i < sizeOfData; i++) {
@@ -367,21 +388,15 @@ export default function Puntajes() {
     });
     setCabecerasMostrar(cabecerasArray2);
     console.log("cabecerasArray2", cabecerasArray2);
-    tabla2(ini, fin, cabecerasArray2, name);
+    tabla2(cabecerasArray2, name);
   };
 
-  const tabla2 = async (ini, fin, cabeceras, name) => {
-    //console.log("cabeceras", cabeceras);
-    let fechaInicialOriginal = new Date(ini).toISOString();
-    let fechaInicial = fechaInicialOriginal.split("T");
-    let fechaFinalOriginal = new Date(fin).toISOString();
-    let fechaFinal = fechaFinalOriginal.split("T");
-    const getPuntajes = await getData(
-      fechaInicial[0] + "T00:00:00.000Z",
-      fechaFinal[0] + "T00:00:00.000Z"
-    );
-    let data = getPuntajes.data;
-    //console.log("data", data);
+  const tabla2 = async (cabeceras, name) => {
+    console.log("agentes", dataConsultada);
+    setGrabaciones([]);
+    setTableGrabaciones([]);
+
+    let data = dataConsultada;
 
     let recordScoreByKeywords = [];
     //console.log("cabeceras[0]", cabeceras[0]);
@@ -448,8 +463,16 @@ export default function Puntajes() {
   };
 
   const dataAuditoria = async (ini, fin) => {
-    if (!ini || !fin) {
+    if (!ini && !fin) {
       return;
+    }
+
+    if (!ini && fin) {
+      ini = fin;
+    }
+
+    if (ini && !fin) {
+      fin = ini;
     }
 
     let fechaInicialOriginal = new Date(ini).toISOString();
@@ -463,6 +486,7 @@ export default function Puntajes() {
     let puntajes = getPuntajes.data;
     //console.log("puntajes", puntajes);
     sumaTotalGrabaciones(puntajes);
+    setDataConsultada(puntajes);
     tabla1(puntajes);
   };
 
@@ -789,8 +813,9 @@ export default function Puntajes() {
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            {cabecerasMostrar.map((cabecera) => (
+                            {cabecerasMostrar.map((cabecera, index) => (
                               <th
+                                key={index}
                                 className="text-uppercase"
                                 onClick={() => sortingNum2(cabecera)}
                               >
@@ -820,10 +845,10 @@ export default function Puntajes() {
                         </thead>
                         <tbody style={{ fontSize: "small" }}>
                           {grabaciones.map((grabacion, index) => (
-                            <tr /* key={grabacion} */>
+                            <tr key={index}>
                               <td>{grabacion.keyfile}</td>
-                              {cabecerasMostrar.map((c) => (
-                                <td className="text-center">
+                              {cabecerasMostrar.map((c, index) => (
+                                <td key={index} className="text-center">
                                   {grabacion.results[c].toFixed(1)} %
                                 </td>
                               ))}
@@ -879,28 +904,28 @@ export default function Puntajes() {
                           }}
                         >
                           <tr>
-                            <th onClick={() => sorting3("name")}>
+                            <th onClick={() => sorting3("module")}>
                               MODULO
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("category")}>
+                            <th onClick={() => sorting3("cluster")}>
                               CLUSTER
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("module")}>
+                            <th onClick={() => sortingNum3("score")}>
                               PUNTAJE
                               <i
                                 className="fas fa-arrows-alt-v ml-1"
                                 style={{ color: "black" }}
                               ></i>
                             </th>
-                            <th onClick={() => sorting3("from")}>
+                            <th onClick={() => sorting3("results")}>
                               KEYWORDS
                               <i
                                 className="fas fa-arrows-alt-v ml-1"

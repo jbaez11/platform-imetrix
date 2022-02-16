@@ -145,6 +145,7 @@ export default function Auditoria() {
   //    utilizadas en la segunda tabla
   const [grabaciones, setGrabaciones] = useState([]);
   const [tableGrabaciones, setTableGrabaciones] = useState([]);
+  const [dataConsultada, setDataConsultada] = useState([]);
 
   //  end  utilizadas en la segunda tabla
   //    utilizadas en la TERCERA tabla
@@ -267,15 +268,16 @@ export default function Auditoria() {
   }
 
   const tabla2 = async (ini, fin, name) => {
-    let fechaInicialOriginal = new Date(ini).toISOString();
-    let fechaInicial = fechaInicialOriginal.split("T");
-    let fechaFinalOriginal = new Date(fin).toISOString();
-    let fechaFinal = fechaFinalOriginal.split("T");
-    const getAuditoria = await getData(
-      fechaInicial[0] + "T00:00:00.000Z",
-      fechaFinal[0] + "T00:00:00.000Z"
-    );
-    let data = getAuditoria.data;
+    // let fechaInicialOriginal = new Date(ini).toISOString();
+    // let fechaInicial = fechaInicialOriginal.split("T");
+    // let fechaFinalOriginal = new Date(fin).toISOString();
+    // let fechaFinal = fechaFinalOriginal.split("T");
+    // const getAuditoria = await getData(
+    //   fechaInicial[0] + "T00:00:00.000Z",
+    //   fechaFinal[0] + "T00:00:00.000Z"
+    // );
+    let data = dataConsultada;
+    //let data = getAuditoria.data;
     /* console.log("auditoria", data);
     console.log("name", name); */
 
@@ -362,9 +364,21 @@ export default function Auditoria() {
   };
 
   const dataAuditoria = async (ini, fin) => {
-    if (!ini || !fin) {
+    console.log("ini", ini);
+    console.log("fin", fin);
+    if (!ini && !fin) {
       return;
     }
+
+    if (!ini && fin) {
+      ini = fin;
+    }
+
+    if (ini && !fin) {
+      fin = ini;
+    }
+    console.log("ini", ini);
+    console.log("fin", fin);
 
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
@@ -380,6 +394,7 @@ export default function Auditoria() {
     totalGrabaciones(auditoria);
     afectadasNoPermitidas(auditoria);
     setActiveTabla1(true);
+    setDataConsultada(auditoria);
     tabla1(auditoria);
   };
 
