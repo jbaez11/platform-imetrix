@@ -102,7 +102,7 @@ export default function EditKeyWord() {
 
           if (result.status === 400) {
             Swal.fire({
-              type: "error",
+              icon: "error",
               title: result.mensaje,
               showConfirmButton: true,
               confirmButtonText: "Cerrar",
@@ -114,7 +114,7 @@ export default function EditKeyWord() {
           }
           if (result.status === 200) {
             Swal.fire({
-              type: "success",
+              icon: "success",
               title: result.mensaje,
               showConfirmButton: true,
               confirmButtonText: "Cerrar",

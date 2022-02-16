@@ -24,7 +24,8 @@ export default function Modulos() {
         index + 1,
         modulos.name,
         modulos.categoria.name,
-        [modulos._id, modulos.name, modulos.categoria.name],
+        /* modulos.orden, */
+        [modulos._id, modulos.name, modulos.categoria.name/* , modulos.orden */],
       ];
     });
 
@@ -37,8 +38,9 @@ export default function Modulos() {
           { title: "#" },
           { title: "Nombre" },
           { title: "Categoria" },
+        /*   { title: "Orden" }, */
           {
-            title: "Acciones",
+            title: "Editar/Eliminar",
             render: function (data) {
               return `
 							

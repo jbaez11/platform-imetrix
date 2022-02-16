@@ -11,17 +11,6 @@ export default function SidebarAdminCampaing() {
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
 
-  /* Solo ejecutamos esta funcion si el Rol del Usuario es Auditor */
-  if (role === "Auditor") {
-    const obtenerDataAdministrador = async () => {
-      let data = await getDataAdministrador();
-
-      let verTablero = data.data[0].conversacion.toString();
-      /* conversacion = localStorage.setItem("CONVERSATION", verTablero) */
-    };
-
-    obtenerDataAdministrador();
-  }
   return (
     <aside
       className="main-sidebar elevation-4"
@@ -210,28 +199,3 @@ export default function SidebarAdminCampaing() {
     </aside>
   );
 }
-
-const getDataAdministrador = () => {
-  const createdBy = localStorage.getItem("CREATEDBY");
-
-  const url = `${rutaAPI}/getAdmin/${createdBy}`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
-
-  const params = {
-    method: "GET",
-    headers: {
-      Authorization: token,
-      "Content-Type": "application/json",
-    },
-  };
-  return fetch(url, params)
-    .then((response) => {
-      return response.json();
-    })
-    .then((result) => {
-      return result;
-    })
-    .catch((err) => {
-      return err;
-    });
-};

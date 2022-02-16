@@ -100,7 +100,7 @@ export default function EditCluster() {
     }).then((result) => {
       if (result.isConfirmed) {
         //Ejecutamos el servicio delete
-        const borrarUsuario = async () => {
+        const borrarCluster = async () => {
           const result = await deleteData(data);
 
           if (result.status === 400) {
@@ -115,7 +115,34 @@ export default function EditCluster() {
               }
             });
           }
-          if (result.status === 200) {
+
+          let keyWordsNames = [];
+          if(result.data === undefined || result.status === 200){
+            Swal.fire({
+              icon: "success",
+              title: result.mensaje,
+              showConfirmButton: true,
+              confirmButtonText: "Cerrar",
+            }).then(function (result) {
+              if (result.isConfirmed) {
+                window.location.href = `/clusterKeywords/` + nuevaURL[4];
+              }
+            });
+          }else{
+            result.data.forEach((keyword) =>{
+              keyWordsNames.push(keyword.name)
+            })
+            if (result.status === 501) {
+              Swal.fire({
+                icon: 'warning',
+                title: result.mensaje,
+                text: "KeyWords: " + keyWordsNames,
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar",
+              })
+            }
+          }
+          /* if (result.status === 200) {
             Swal.fire({
               type: "success",
               title: result.mensaje,
@@ -126,9 +153,9 @@ export default function EditCluster() {
                 window.location.href = `/clusterKeywords/` + nuevaURL[4];
               }
             });
-          }
+          } */
         };
-        borrarUsuario();
+        borrarCluster();
       }
     });
   });
