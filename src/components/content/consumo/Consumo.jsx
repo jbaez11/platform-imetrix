@@ -186,6 +186,11 @@ export default function Consumo() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
+                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
+                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
+                </div>
+                <br />
+                <br />
                 <div className="col">
                   <h2
                     className="text-center font-weight-bold"

@@ -86,7 +86,6 @@ const getAccessToken = ()=>{
   const userID = localStorage.getItem("ID");
   const correo = localStorage.getItem("CORREO");
 
-
   if(!accessToken || accessToken === null || !userID || userID === null || !correo || correo === null) {
 
      return false;

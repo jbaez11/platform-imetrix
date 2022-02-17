@@ -407,7 +407,12 @@ export default function Auditoria() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-6">
+                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
+                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
+                </div>
+                <br />
+                <br />
+                <div className="col-sm-12">
                   <h3 className="ml-3 " style={{ color: "#FF9B00" }}>
                     AUDITORIA <span style={{ color: "#CACACA" }}>KEYWORDS</span>{" "}
                   </h3>

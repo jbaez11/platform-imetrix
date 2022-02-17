@@ -7,6 +7,8 @@ import SidebarCampaing from "../../sidebar/SidebarCampaing";
 
 export default function CamaingsAuditor() {
   let userID = localStorage.getItem("ID");
+  let campaingActual = localStorage.setItem("CAMPAING_ACTUAL", "");
+  console.log("campaingActual", campaingActual);
 
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
@@ -18,6 +20,10 @@ export default function CamaingsAuditor() {
     //console.log('useEffect');
     obtenerDatos();
   }, []);
+
+  const mostrarCampaingActual = (campaing) => {
+    campaingActual = localStorage.setItem("CAMPAING_ACTUAL", campaing);
+  };
 
   const obtenerDatos = async () => {
     const data = await fetch(
@@ -42,7 +48,6 @@ export default function CamaingsAuditor() {
   };
 
   return (
-
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -91,7 +96,10 @@ export default function CamaingsAuditor() {
                                     style={{ marginTop: "40px" }}
                                     href={`/agents/${nuevaURL[6]}${campaing.Urltableros}${campaing.pais}`}
                                     className="btn btn-warning"
-                                    style={{marginTop:"10px"}}
+                                    style={{ marginTop: "10px" }}
+                                    onClick={() => {
+                                      mostrarCampaingActual(campaing.nombre);
+                                    }}
                                   >
                                     Ingresar
                                   </a>
@@ -111,6 +119,5 @@ export default function CamaingsAuditor() {
         <Footer />
       </div>
     </div>
-    
   );
 }

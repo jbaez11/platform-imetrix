@@ -119,7 +119,7 @@ export default function EditAgente() {
                     name="identification"
                     placeholder="Ingrese numero de documento"
                     maxLength="10"
-                    pattern="[0-9]{10}"
+                    pattern="[0-9]{2,10}"
                     required
                   />
                 </div>
