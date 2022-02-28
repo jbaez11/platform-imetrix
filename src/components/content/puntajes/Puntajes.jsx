@@ -400,6 +400,8 @@ export default function Puntajes() {
 
   const tabla2 = async (cabeceras, name, data) => {
     //console.log("agentes", dataConsultada);
+    setGrabaciones([]);
+    setTableGrabaciones([]);
     console.log("name", name);
 
     for (let i = 0; i < data.length; i++) {
@@ -417,6 +419,9 @@ export default function Puntajes() {
             data[i].recordingsSummary[agent][keyfile].results.totalScore *= 100;
           }
           setGrabaciones(grabaciones.concat(data[i].recordingsSummary[agent]));
+          setTableGrabaciones(
+            grabaciones.concat(data[i].recordingsSummary[agent])
+          );
           // recordScoreByKeywords = recordScoreByKeywords.concat(
           //   data[i].recordingsSummary[agent]
           // );
@@ -425,7 +430,7 @@ export default function Puntajes() {
     }
 
     //setGrabaciones(recordScoreByKeywords);
-    setTableGrabaciones(grabaciones);
+    //setTableGrabaciones(grabaciones);
 
     //console.log("grabaciones", recordScoreByKeywords);
   };
@@ -787,12 +792,12 @@ export default function Puntajes() {
                           setActiveTabla2(false);
                           setActiveTabla3(false);
                           //setAgentes([])
-                          setGrabaciones([]);
-                          setTableGrabaciones([]);
+                          //setGrabaciones([]);
+                          //setTableGrabaciones([]);
                           setKeywords([]);
                         }}
                       >
-                        <i class="fas fa-arrow-left"></i> Volver 2
+                        <i class="fas fa-arrow-left"></i> Volver
                       </button>
                       <br />
                       <br />
