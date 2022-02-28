@@ -89,6 +89,7 @@ export default function Puntajes() {
   const handleFocusChange = (newFocus) => {
     setFocus(newFocus || START_DATE);
   };
+  const [clickCalendar, setClickCalendar] = useState(true);
 
   const [showCalendar, setShowCalendar] = useState(true);
   //activadores de tablas
@@ -108,6 +109,7 @@ export default function Puntajes() {
   //    utilizadas en la segunda tabla
   const [grabaciones, setGrabaciones] = useState([]);
   const [tableGrabaciones, setTableGrabaciones] = useState([]);
+  const [clickGrabaciones, setClickGrabaciones] = useState(true);
 
   //  end  utilizadas en la segunda tabla
   //    utilizadas en la TERCERA tabla
@@ -363,10 +365,17 @@ export default function Puntajes() {
   };
 
   const obtenerCabeceras = async (ini, fin, name) => {
+    if (!clickGrabaciones) {
+      tabla2(cabecerasMostrar, name, dataConsultada);
+      return;
+    }
+    let ObtenerModulos = clickGrabaciones ? false : false;
+    setClickGrabaciones(ObtenerModulos);
+
     const cabecerasData = await getDataModulos();
-    //console.log("cabeceras", cabecerasData.data);
+
     let cabeceras = cabecerasData.data;
-    //console.log("cabeceras object", cabeceras);
+
     let cabecerasArray = [];
 
     cabeceras.forEach((cabecera) => {
@@ -374,12 +383,10 @@ export default function Puntajes() {
     });
     let cabecerasArray2 = [];
     cabecerasArray.forEach((element) => {
-      //console.log("element", element.toString());
       if (element.toString() !== "recomendación") {
         if (element.toString() !== "recomendacion") {
           if (element.toString() !== "nopermitida") {
             if (element.toString() !== "no permitida") {
-              // console.log("elemen2t", element);
               cabecerasArray2.push(element);
             }
           }
@@ -388,20 +395,14 @@ export default function Puntajes() {
     });
     setCabecerasMostrar(cabecerasArray2);
     console.log("cabecerasArray2", cabecerasArray2);
-    tabla2(cabecerasArray2, name);
+    tabla2(cabecerasArray2, name, dataConsultada);
   };
 
-  const tabla2 = async (cabeceras, name) => {
-    console.log("agentes", dataConsultada);
-    setGrabaciones([]);
-    setTableGrabaciones([]);
+  const tabla2 = async (cabeceras, name, data) => {
+    //console.log("agentes", dataConsultada);
+    console.log("name", name);
 
-    let data = dataConsultada;
-
-    let recordScoreByKeywords = [];
-    //console.log("cabeceras[0]", cabeceras[0]);
     for (let i = 0; i < data.length; i++) {
-      //console.log("data.length", data.length);
       for (let agent in data[i].recordingsSummary) {
         if (agent === name) {
           for (
@@ -409,27 +410,23 @@ export default function Puntajes() {
             keyfile < data[i].recordingsSummary[agent].length;
             keyfile++
           ) {
-            //console.log("agent", agent);
             for (let k = 0; k < cabeceras.length; k++) {
               let modulo = cabeceras[k];
               data[i].recordingsSummary[agent][keyfile].results[modulo] *= 100;
-
-              //data[i].recordingsSummary[agent].results.cabeceras[k]=data[i].recordingsSummary[agent].results.cabeceras[k]*100
             }
             data[i].recordingsSummary[agent][keyfile].results.totalScore *= 100;
-            /* data[i].recordingsSummary[agent][keyfile].results.totalScore *
-              100; */
           }
-
-          recordScoreByKeywords = recordScoreByKeywords.concat(
-            data[i].recordingsSummary[agent]
-          );
+          setGrabaciones(grabaciones.concat(data[i].recordingsSummary[agent]));
+          // recordScoreByKeywords = recordScoreByKeywords.concat(
+          //   data[i].recordingsSummary[agent]
+          // );
         }
       }
     }
 
-    setGrabaciones(recordScoreByKeywords);
-    setTableGrabaciones(recordScoreByKeywords);
+    //setGrabaciones(recordScoreByKeywords);
+    setTableGrabaciones(grabaciones);
+
     //console.log("grabaciones", recordScoreByKeywords);
   };
 
@@ -463,6 +460,12 @@ export default function Puntajes() {
   };
 
   const dataAuditoria = async (ini, fin) => {
+    let ObtenerData = clickCalendar ? false : true;
+    setClickCalendar(ObtenerData);
+
+    if (clickCalendar) {
+      return;
+    }
     if (!ini && !fin) {
       return;
     }
@@ -785,10 +788,11 @@ export default function Puntajes() {
                           setActiveTabla3(false);
                           //setAgentes([])
                           setGrabaciones([]);
+                          setTableGrabaciones([]);
                           setKeywords([]);
                         }}
                       >
-                        <i class="fas fa-arrow-left"></i> Volver
+                        <i class="fas fa-arrow-left"></i> Volver 2
                       </button>
                       <br />
                       <br />
