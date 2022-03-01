@@ -10,7 +10,7 @@ export default function AddModulo() {
   const [modulos, crearModulo] = useState({
     name: "",
     categoria: "",
-    orden:""
+    // orden:""
   });
 
   /* Onchange */
@@ -113,16 +113,17 @@ export default function AddModulo() {
                       Seleccionar Categoria
                     </option>
                     {categorias.map((categoria, index) => (
-                        <option 
-                          key={"add-category" + index} 
-                          value={categoria._id}>
-                            {categoria.name}
-                        </option>
+                      <option
+                        key={"add-category" + index}
+                        value={categoria._id}
+                      >
+                        {categoria.name}
+                      </option>
                     ))}
                   </select>
                 </div>
               </div>
-              <div className="form-group">
+              {/* <div className="form-group">
                 <label className="small text-secondary" htmlFor="orden">
                   | Ingresa la posicion para el modulo
                 </label>
@@ -140,7 +141,7 @@ export default function AddModulo() {
                     required
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="modal-footer d-flex justify-content-between">
               <div>

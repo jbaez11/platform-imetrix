@@ -12,16 +12,16 @@ export default function SidebarAdminCampaing() {
   let nuevaURL = valores.split("/");
 
   /* Solo ejecutamos esta funcion si el Rol del Usuario es Auditor */
-  if (role === "Auditor") {
-    const obtenerDataAdministrador = async () => {
-      let data = await getDataAdministrador();
+  // if (role === "Auditor") {
+  //   const obtenerDataAdministrador = async () => {
+  //     let data = await getDataAdministrador();
 
-      let verTablero = data.data[0].conversacion.toString();
-      conversacion = localStorage.setItem("CONVERSATION", verTablero);
-    };
+  //     let verTablero = data.data[0].conversacion.toString();
+  //     conversacion = localStorage.setItem("CONVERSATION", verTablero);
+  //   };
 
-    obtenerDataAdministrador();
-  }
+  //   obtenerDataAdministrador();
+  // }
   return (
     <aside
       className="main-sidebar elevation-4"
