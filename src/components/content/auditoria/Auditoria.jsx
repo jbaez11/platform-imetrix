@@ -18,6 +18,8 @@ export default function Auditoria() {
     setFocus(newFocus || START_DATE);
   };
 
+  const [clickCalendar, setClickCalendar] = useState(true);
+
   const [showCalendar, setShowCalendar] = useState(true);
   const [sumTotalGrabaciones, setSumTotalGrabaciones] = useState(0);
   const [grabacionesNoPermitidas, setGrabacionesNoPermitidas] = useState(0);
@@ -268,21 +270,8 @@ export default function Auditoria() {
   }
 
   const tabla2 = async (ini, fin, name) => {
-    // let fechaInicialOriginal = new Date(ini).toISOString();
-    // let fechaInicial = fechaInicialOriginal.split("T");
-    // let fechaFinalOriginal = new Date(fin).toISOString();
-    // let fechaFinal = fechaFinalOriginal.split("T");
-    // const getAuditoria = await getData(
-    //   fechaInicial[0] + "T00:00:00.000Z",
-    //   fechaFinal[0] + "T00:00:00.000Z"
-    // );
     let data = dataConsultada;
-    //let data = getAuditoria.data;
-    /* console.log("auditoria", data);
-    console.log("name", name); */
 
-    // let name = agenteSeleccionado;
-    // console.log("agenteSeleccionado",agenteSeleccionado);
     let recordsByCategory = [];
     for (let i = 0; i < data.length; i++) {
       for (let key in data[i].recordingsSummary) {
@@ -295,7 +284,6 @@ export default function Auditoria() {
     }
     setGrabaciones(recordsByCategory);
     setTableGrabaciones(recordsByCategory);
-    /* console.log("recordsByCategory", recordsByCategory); */
   };
 
   const tabla3 = async (keyfile) => {
@@ -359,13 +347,18 @@ export default function Auditoria() {
       }
     }
     keywordsArray = keywordsFound.concat(keywordsNotFound);
-    /* console.log("keywordArray", keywordsArray); */
+
     setKeywords(keywordsArray);
   };
 
   const dataAuditoria = async (ini, fin) => {
-    console.log("ini", ini);
-    console.log("fin", fin);
+    let ObtenerData = clickCalendar ? false : true;
+    setClickCalendar(ObtenerData);
+
+    if (clickCalendar) {
+      return;
+    }
+
     if (!ini && !fin) {
       return;
     }
@@ -377,8 +370,6 @@ export default function Auditoria() {
     if (ini && !fin) {
       fin = ini;
     }
-    console.log("ini", ini);
-    console.log("fin", fin);
 
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
@@ -389,7 +380,6 @@ export default function Auditoria() {
       fechaFinal[0] + "T00:00:00.000Z"
     );
     let auditoria = getAuditoria.data;
-    /* console.log("auditoria", auditoria); */
 
     totalGrabaciones(auditoria);
     afectadasNoPermitidas(auditoria);
@@ -407,7 +397,12 @@ export default function Auditoria() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-6">
+                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
+                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
+                </div>
+                <br />
+                <br />
+                <div className="col-sm-12">
                   <h3 className="ml-3 " style={{ color: "#FF9B00" }}>
                     AUDITORIA <span style={{ color: "#CACACA" }}>KEYWORDS</span>{" "}
                   </h3>

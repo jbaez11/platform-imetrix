@@ -28,6 +28,7 @@ import PerfilAdmin from './components/content/clientes/PerfilAdmin';
 import GestorAdministradores from './components/content/clientes/GestorAdministradores';
 import SuperAdministradores from './components/content/superAdministradores/SuperAdministradores';
 import PerfilUser from './components/content/users/PerfilUser';
+import TableroDirectivo from './components/content/directivo/Directivo'
 
 
 export default function App() {
@@ -52,6 +53,7 @@ export default function App() {
             <Switch>
                <Route exact path="/"><Index/></Route>
                <Route exact path="/adminsInicio"><AdministradoresInicio/></Route>
+               <Route exact path="/tablerodirectivo"> <TableroDirectivo/> </Route>
                <Route exact path="/gestorClientes"><GestorAdministradores/></Route>
                <Route exact path="/gestorSAdmins"><SuperAdministradores/></Route>
                <Route exact path="/perfilAdmin/:id">{role ? <PerfilAdmin/> :<PerfilUser/>}</Route>
@@ -71,6 +73,7 @@ export default function App() {
                <Route exact path="/estadisticas/:bd"> <Estadisticas/> </Route>
                <Route exact path="/conversacion/:bd"> <Conversacion/> </Route>
                <Route exact path="/consumo/:bd"> <Consumo/> </Route>
+               
                <Route component={PageNotFound} />
             </Switch>
           </Router>
@@ -85,7 +88,6 @@ const getAccessToken = ()=>{
   const accessToken = localStorage.getItem("ACCESS_TOKEN");
   const userID = localStorage.getItem("ID");
   const correo = localStorage.getItem("CORREO");
-
 
   if(!accessToken || accessToken === null || !userID || userID === null || !correo || correo === null) {
 

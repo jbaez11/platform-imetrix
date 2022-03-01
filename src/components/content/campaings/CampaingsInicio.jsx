@@ -6,6 +6,8 @@ import Header from "../../header/Header";
 import SidebarCampaing from "../../sidebar/SidebarCampaing";
 
 export default function CamaingsInicio() {
+  const campaingActual = localStorage.setItem("CAMPAING_ACTUAL", "");
+  console.log("campaingActual", campaingActual);
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
 
@@ -15,6 +17,10 @@ export default function CamaingsInicio() {
     //console.log('useEffect');
     obtenerDatos();
   }, []);
+
+  const mostrarCampaingActual = (campaing) => {
+    localStorage.setItem("CAMPAING_ACTUAL", campaing);
+  };
 
   const obtenerDatos = async () => {
     const data = await fetch(`${rutaAPI}/getCampaing/${nuevaURL[4]}`);
@@ -38,7 +44,6 @@ export default function CamaingsInicio() {
   };
 
   return (
-
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -87,7 +92,10 @@ export default function CamaingsInicio() {
                                   <a
                                     href={`/agents/${nuevaURL[5]}${campaing.Urltableros}${campaing.pais}`}
                                     className="btn btn-warning"
-                                    style={{marginTop:"10px"}}
+                                    style={{ marginTop: "10px" }}
+                                    onClick={() => {
+                                      mostrarCampaingActual(campaing.nombre);
+                                    }}
                                   >
                                     Ingresar
                                   </a>
@@ -107,7 +115,5 @@ export default function CamaingsInicio() {
         <Footer />
       </div>
     </div>
-    
   );
 }
-
