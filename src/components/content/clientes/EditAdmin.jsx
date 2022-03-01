@@ -271,7 +271,7 @@ export default function EditAdmin() {
                         </div>
                         <div className="form-group">
                             <label className="small text-secondary" htmlFor="editarConversacion">
-                               
+                            | Selecciona si el auditor tendra acceso a las conversaciones de las llamadas
                             </label>
                             <div className="input-group mb-3">
                                 <div className="input-group-append input-group-text">
@@ -279,7 +279,7 @@ export default function EditAdmin() {
                                 </div>
                                 <select required name="conversacion" id="editarConversacion">
                                     <option value="" selected disabled>
-                                    Estado de Conversación
+                                    Acceso a conversaciones
                                     </option>
                                     <option value={true}>
                                     Habilitada

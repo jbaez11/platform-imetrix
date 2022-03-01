@@ -62,7 +62,7 @@ export default function EditModulo() {
     setCategorias(categoria.data);
   };
 
-  //Capturamos los datos para editar el usuario
+  //Capturamos los datos para editar el Modulo
   $(document).on("click", ".editarInputs", async function (e) {
     e.preventDefault();
 
@@ -78,14 +78,14 @@ export default function EditModulo() {
     });
   });
 
-  //Capturamos los datos para borrar el usuario
+  //Capturamos los datos para borrar el Modulo
   $(document).on("click", ".borrarInput", function (e) {
     e.preventDefault();
 
     let data = $(this).attr("data").split(",")[0];
     console.log(data);
 
-    //Validamos si queremos eliminar el usuario
+    //Validamos si queremos eliminar el Modulo
     Swal.fire({
       title: "¿Está seguro de eliminar este registro?",
       text: "Esta acción no se puede revertir",
@@ -97,12 +97,11 @@ export default function EditModulo() {
     }).then((result) => {
       if (result.isConfirmed) {
         //Ejecutamos el servicio delete
-        const borrarUsuario = async () => {
+        const borrarModulo = async () => {
           const result = await deleteData(data);
-
           if (result.status === 400) {
             Swal.fire({
-              type: "error",
+              icon: "error",
               title: result.mensaje,
               showConfirmButton: true,
               confirmButtonText: "Cerrar",
@@ -112,7 +111,36 @@ export default function EditModulo() {
               }
             });
           }
-          if (result.status === 200) {
+
+          let clusterNames = [];
+          if(result.data === undefined || result.status === 200){
+            Swal.fire({
+              icon: "success",
+              title: result.mensaje,
+              showConfirmButton: true,
+              confirmButtonText: "Cerrar",
+            }).then(function (result) {
+              if (result.isConfirmed) {
+                window.location.href = `/moduloKeywords/` + nuevaURL[4];
+              }
+            });
+          }else{
+            result.data.forEach((cluster) =>{
+              clusterNames.push(cluster.name)
+            })
+            if (result.status === 501) {
+              console.log(result.data)
+              Swal.fire({
+                icon: 'warning',
+                title: result.mensaje,
+                text: "Clusters: " + clusterNames,
+                showConfirmButton: true,
+                confirmButtonText: "Cerrar",
+              })
+            } 
+          }
+         
+        /*   if (result.status === 200) {
             Swal.fire({
               type: "success",
               title: result.mensaje,
@@ -123,9 +151,9 @@ export default function EditModulo() {
                 window.location.href = `/moduloKeywords/` + nuevaURL[4];
               }
             });
-          }
+          } */
         };
-        borrarUsuario();
+        borrarModulo();
       }
     });
   });
@@ -180,7 +208,8 @@ export default function EditModulo() {
                     {categorias.map((categoria, index) => (
                         <option 
                           key={"edit-category" + index} 
-                          value={categoria._id}>
+                          value={categoria._id}
+                        >
                             {categoria.name}
                         </option>
                     ))}

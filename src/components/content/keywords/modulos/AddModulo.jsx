@@ -10,6 +10,7 @@ export default function AddModulo() {
   const [modulos, crearModulo] = useState({
     name: "",
     categoria: "",
+    orden:""
   });
 
   /* Onchange */
@@ -59,7 +60,7 @@ export default function AddModulo() {
     let nuevaURL = valores.split("/");
     const data = await fetch(`${rutaAPITableros}/${nuevaURL[4]}/getCategorias`);
     const categoria = await data.json();
-    console.log("Categorias", categoria.data);
+    /* console.log("Categorias", categoria.data); */
     setCategorias(categoria.data);
   };
 
@@ -119,6 +120,25 @@ export default function AddModulo() {
                         </option>
                     ))}
                   </select>
+                </div>
+              </div>
+              <div className="form-group">
+                <label className="small text-secondary" htmlFor="orden">
+                  | Ingresa la posicion para el modulo
+                </label>
+                <div className="input-group mb-3">
+                  <div className="input-group-append input-group-text">
+                    <i className="fas fa-signature"></i>
+                  </div>
+                  <input
+                    id="orden"
+                    type="text"
+                    className="form-control"
+                    name="orden"
+                    placeholder="Ingrese el orden del Modulo"
+                    pattern="[0-9]?[0-9]*"
+                    required
+                  />
                 </div>
               </div>
             </div>

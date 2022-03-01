@@ -14,6 +14,7 @@ export default function EditUser(){
         password:"",
         state:"",
         role:"",
+   /*      conversacion:"", */
         id:""
     });
 
@@ -71,11 +72,12 @@ export default function EditUser(){
         e.preventDefault();
 
         let data = $(this).attr("data").split(",");
-        /* console.log("Data para Editar", data); */
+        console.log("Data para Editar", data);
         $("#editarNombre").val(data[1]);
         $("#editarUsuario").val(data[2]);
         $("#editarState").val(data[3]);
         $("#editarRole").val(data[6]);
+        $("#editarConversacion").val(data[7]);
 
         editarUsuario({
             'nombres':  $("#editarNombre").val(),
@@ -83,6 +85,7 @@ export default function EditUser(){
             'password':  $("#editarPassword").val(),
             'state':  data[3],
             'role':  data[4],
+            'conversacion':  data[5],
             'id': data[0]
         })
     })
@@ -240,6 +243,20 @@ export default function EditUser(){
                                 </select>
                             </div>
                         </div>
+                        {/* <div className="form-group">
+                            <label className="small text-secondary" htmlFor="editarConversacion">
+                            | Selecciona si el auditor tendra acceso a las conversaciones de las llamadas
+                            </label>
+                            <div className="input-group mb-3">
+                                <div className="input-group-append input-group-text">
+                                    <i className="fas fa-signature"></i>
+                                </div>
+                                <select required name="conversacion" id="editarConversacion">
+                                    <option selected={usuarios.conversacion === "Habilitada"} value={true}>Habilitada</option>
+                                    <option selected={usuarios.conversacion === "Inhabilitada"} value={false}>Inhabilitada</option>
+                                </select>
+                            </div>
+                        </div> */}
 
                     </div>
                     <div className="modal-footer d-flex justify-content-between">
@@ -256,11 +273,13 @@ export default function EditUser(){
 
 //METODO PUT
 const putData = data =>{
-
+    console.log("Data nueva de Auditor", data)
     const url = `${rutaAPI}/editUser/${data.id}`
     const token =  localStorage.getItem("ACCESS_TOKEN");
     if(data.state === "Habilitado") data.state = 1
     else if(data.state === "Inhabilitado") data.state = 0
+    /* if(data.conversacion === "Habilitada") data.conversacion = true
+    else if(data.conversacion === "Inhabilitada") data.conversacion = false */
     const params = {
 
         method: "PUT",

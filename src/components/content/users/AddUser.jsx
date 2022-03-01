@@ -39,7 +39,7 @@ export default function AddUser() {
       ...usuarios,
       clusters: nClusters,
     });
-    console.log("Clusters", usuarios);
+    /* console.log("Clusters", usuarios); */
   };
 
   const campaingChange = (campaing) => {
@@ -54,7 +54,7 @@ export default function AddUser() {
       ...usuarios,
       campaings: nCampaings,
     });
-    console.log("Campañas", usuarios);
+    /* console.log("Campañas", usuarios); */
   };
 
   let checkedSelectedCluster = (cluster) => {
@@ -70,6 +70,7 @@ export default function AddUser() {
     clusters: [],
     campaings: [],
     role: "",
+    /* conversacion: "" */
   });
 
   //Onchange
@@ -320,6 +321,27 @@ export default function AddUser() {
                   </select>
                 </div>
               </div>
+              {/* <div className="form-group">
+                  <label className="small text-secondary" htmlFor="conversacion">
+                    | Selecciona si el auditor tendra acceso a las conversaciones de las llamadas
+                  </label>
+                  <div className="input-group mb-3">
+                    <div className="input-group-append input-group-text">
+                      <i className="fas fa-signature"></i>
+                    </div>
+                    <select required name="conversacion" id="conversacion">
+                      <option value="" selected disabled>
+                        Acceso a conversaciones
+                      </option>
+                      <option value={true}>
+                        Habilitada
+                      </option>
+                      <option value={false}>
+                        Inhabilitada
+                      </option>
+                    </select>
+                  </div>
+              </div> */}
             </div>
             <div className="modal-footer d-flex justify-content-between">
               <div>
@@ -364,7 +386,7 @@ const postData = (data) => {
       "Content-Type": "application/json",
     },
   };
-  console.log("Data", data);
+  console.log("Data nuevo auditor", data);
   return fetch(url, params)
     .then((response) => {
       return response.json();
@@ -377,27 +399,3 @@ const postData = (data) => {
     });
 };
 
-//Petición Get para Clusters asociados al Administrador
-// const getData = () =>{
-
-//     const valores = window.location.href;
-//     let nuevaURL = valores.split("/");
-
-//     const url = `${rutaAPI}/getCluster/${nuevaURL[4]}`;
-
-//     const params = {
-//         method: "GET",
-//         headers: {
-//             "Content-Type": "application/json"
-//         }
-//     }
-
-//     return fetch(url, params).then(response =>{
-//         return response.json();
-//     }).then(result => {
-//         return result;
-//     }).catch(err=>{
-//         return err;
-//     })
-
-// }

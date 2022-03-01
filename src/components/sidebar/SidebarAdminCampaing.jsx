@@ -210,28 +210,3 @@ export default function SidebarAdminCampaing() {
     </aside>
   );
 }
-
-const getDataAdministrador = () => {
-  const createdBy = localStorage.getItem("CREATEDBY");
-
-  const url = `${rutaAPI}/getAdmin/${createdBy}`;
-  const token = localStorage.getItem("ACCESS_TOKEN");
-
-  const params = {
-    method: "GET",
-    headers: {
-      Authorization: token,
-      "Content-Type": "application/json",
-    },
-  };
-  return fetch(url, params)
-    .then((response) => {
-      return response.json();
-    })
-    .then((result) => {
-      return result;
-    })
-    .catch((err) => {
-      return err;
-    });
-};

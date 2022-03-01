@@ -25,6 +25,9 @@ export default function Usuarios() {
           ? (admin.state = "Habilitado")
           : (admin.state = "Inhabilitado"),
         admin.role,
+       /*  admin.conversacion === true 
+        ? (admin.conversacion = "Habilitada")
+        : (admin.conversacion = "Inhabilitada"), */
         admin.createdAt,
         [
           admin._id,
@@ -32,6 +35,7 @@ export default function Usuarios() {
           admin.correo,
           admin.state,
           admin.role,
+         /*  admin.conversacion, */
           admin.createdAt,
         ],
       ];
@@ -46,6 +50,7 @@ export default function Usuarios() {
           { title: "Correo" },
           { title: "Estado" },
           { title: "Role" },
+          /* { title: "Conversación" }, */
           { title: "Fecha Creación" },
           {
             title: "Editar",
