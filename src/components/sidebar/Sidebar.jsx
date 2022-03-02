@@ -1,13 +1,27 @@
 import React from "react";
 import Logo from "./logo.png";
 import User from "./user2-160x160.jpg";
-//import {rutaAPI} from '../../config/Config';
+import {rutaAPI} from '../../config/Config';
 
 export default function Sidebar() {
   const userName = localStorage.getItem("NAME");
   let role = localStorage.getItem("ROLE");
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
+
+  /* Solo ejecutamos esta funcion si el Rol del Usuario es Auditor */
+  if (role === "Auditor") {
+    const getDataAdmin = async () => {
+      let data = await getDataAdministrador();
+      console.log("Data Administrador",data)
+
+      let verTablero = data.data[0].conversacion.toString();
+      localStorage.setItem("ADMINCONVERSATION", verTablero);
+    };
+
+    getDataAdmin();
+  }
+
 
   return (
     <aside
@@ -144,4 +158,29 @@ export default function Sidebar() {
       </div>
     </aside>
   );
+}
+
+
+/* Peticion para obtener el administrador que creo a el auditor con la sesión activa */
+const getDataAdministrador = () => {
+  const createdBy = localStorage.getItem("CREATEDBY");
+  const url = `${rutaAPI}/getAdmin/${createdBy}`;
+
+  const params = {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  };
+
+  return fetch(url, params)
+    .then((response) => {
+      return response.json();
+    })
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return err;
+    });
 }

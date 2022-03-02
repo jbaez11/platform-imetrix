@@ -77,7 +77,7 @@ export default function EditUser(){
         $("#editarUsuario").val(data[2]);
         $("#editarState").val(data[3]);
         $("#editarRole").val(data[6]);
-        $("#editarConversacion").val(data[7]);
+        /* $("#editarConversacion").val(data[7]); */
 
         editarUsuario({
             'nombres':  $("#editarNombre").val(),
@@ -85,7 +85,7 @@ export default function EditUser(){
             'password':  $("#editarPassword").val(),
             'state':  data[3],
             'role':  data[4],
-            'conversacion':  data[5],
+            /* 'conversacion':  data[5], */
             'id': data[0]
         })
     })

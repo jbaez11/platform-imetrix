@@ -5,6 +5,7 @@ import { rutaAPI } from "../../../config/Config";
 
 export default function AddUser() {
   const currentUserId = localStorage.getItem("ID");
+  let conversacion = localStorage.getItem("CONVERSACION");
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
 
@@ -70,7 +71,7 @@ export default function AddUser() {
     clusters: [],
     campaings: [],
     role: "",
-    /* conversacion: "" */
+/*     conversacion: "" */
   });
 
   //Onchange
@@ -321,7 +322,7 @@ export default function AddUser() {
                   </select>
                 </div>
               </div>
-              {/* <div className="form-group">
+             {/*  <div className="form-group">
                   <label className="small text-secondary" htmlFor="conversacion">
                     | Selecciona si el auditor tendra acceso a las conversaciones de las llamadas
                   </label>
@@ -329,17 +330,17 @@ export default function AddUser() {
                     <div className="input-group-append input-group-text">
                       <i className="fas fa-signature"></i>
                     </div>
-                    <select required name="conversacion" id="conversacion">
-                      <option value="" selected disabled>
-                        Acceso a conversaciones
-                      </option>
-                      <option value={true}>
-                        Habilitada
-                      </option>
-                      <option value={false}>
-                        Inhabilitada
-                      </option>
-                    </select>
+                      <select required name="conversacion" id="conversacion">
+                        <option value="" selected disabled>
+                          Acceso a conversaciones
+                        </option>
+                        <option value={true}>
+                          Habilitada
+                        </option>
+                        <option value={false}>
+                          Inhabilitada
+                        </option>
+                      </select>
                   </div>
               </div> */}
             </div>
@@ -386,7 +387,7 @@ const postData = (data) => {
       "Content-Type": "application/json",
     },
   };
-  console.log("Data nuevo auditor", data);
+  /* console.log("Data nuevo auditor", data); */
   return fetch(url, params)
     .then((response) => {
       return response.json();

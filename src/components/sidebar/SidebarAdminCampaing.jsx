@@ -6,22 +6,12 @@ import { rutaAPI } from "../../config/Config";
 export default function SidebarAdminCampaing() {
   const userName = localStorage.getItem("NAME");
   const currentUserId = localStorage.getItem("ID");
-  let conversacion = localStorage.getItem("CONVERSATION");
+  let conversacion = localStorage.getItem("CONVERSACION");
+  let conversacionAdmin = localStorage.getItem("ADMINCONVERSATION");
   let role = localStorage.getItem("ROLE");
   const valores = window.location.href;
   let nuevaURL = valores.split("/");
 
-  /* Solo ejecutamos esta funcion si el Rol del Usuario es Auditor */
-  // if (role === "Auditor") {
-  //   const obtenerDataAdministrador = async () => {
-  //     let data = await getDataAdministrador();
-
-  //     let verTablero = data.data[0].conversacion.toString();
-  //     conversacion = localStorage.setItem("CONVERSATION", verTablero);
-  //   };
-
-  //   obtenerDataAdministrador();
-  // }
   return (
     <aside
       className="main-sidebar elevation-4"
@@ -186,7 +176,7 @@ export default function SidebarAdminCampaing() {
               }
             })()} */}
             {(() => {
-              if (conversacion === "true" || role === "SuperAdministrador") {
+              if (conversacion === "true" || role === "SuperAdministrador" || conversacionAdmin === "true") {
                 return (
                   <>
                     <li className="nav-item">

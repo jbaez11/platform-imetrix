@@ -38,16 +38,16 @@ export default function LoginAdmin() {
       }, 2000);
     } else {
 
-      localStorage.setItem("CONVERSATION", result.data.conversacion);
       localStorage.setItem("ACCESS_TOKEN", result.token);
       localStorage.setItem("ID", result.data._id);
       localStorage.setItem("CORREO", result.data.correo);
       localStorage.setItem("NAME", result.data.nombres);
       localStorage.setItem("ROLE", result.data.role);
+      localStorage.setItem("CONVERSACION", result.data.conversacion);
       localStorage.setItem("CREATEDBY", result.data.createdBy);
 
       const role = localStorage.getItem("ROLE")
-      console.log(role);
+      
       if(role === "SuperAdministrador"){
         window.location.href = `/adminsInicio`;
       }else{
