@@ -411,12 +411,11 @@ export default function Puntajes() {
           ) {
             //console.log("agent", agent);
             for (let k = 0; k < cabeceras.length; k++) {
-              let modulo = cabeceras[k];
-              data[i].recordingsSummary[agent][keyfile].results[modulo] *= 100;
-
+              // let modulo = cabeceras[k];
+              //data[i].recordingsSummary[agent][keyfile].results[modulo] *= 100;
               //data[i].recordingsSummary[agent].results.cabeceras[k]=data[i].recordingsSummary[agent].results.cabeceras[k]*100
             }
-            data[i].recordingsSummary[agent][keyfile].results.totalScore *= 100;
+            //data[i].recordingsSummary[agent][keyfile].results.totalScore *= 100;
             /* data[i].recordingsSummary[agent][keyfile].results.totalScore *
               100; */
           }
@@ -711,7 +710,7 @@ export default function Puntajes() {
                             <th
                               className="text-center"
                               scope="col"
-                              onClick={() => sortingNum("nrecordings")}
+                              onClick={() => sortingNum("recordings")}
                             >
                               GRABACIONES
                               <i
@@ -854,11 +853,14 @@ export default function Puntajes() {
                               <td>{grabacion.keyfile}</td>
                               {cabecerasMostrar.map((c, index) => (
                                 <td key={index} className="text-center">
-                                  {grabacion.results[c].toFixed(1)} %
+                                  {(grabacion.results[c] * 100).toFixed(1)} %
                                 </td>
                               ))}
                               <td>
-                                {grabacion.results.totalScore.toFixed(1)} %
+                                {(grabacion.results.totalScore * 100).toFixed(
+                                  1
+                                )}{" "}
+                                %
                               </td>
                               <td className="text-center">
                                 <button
