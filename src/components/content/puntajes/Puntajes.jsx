@@ -362,7 +362,14 @@ export default function Puntajes() {
     setTableAgentes(superRecordingsSummaryArray);
   };
 
-  const obtenerCabeceras = async (ini, fin, name) => {
+  const [cabecerasConsulta, setcabecerasConsulta] = useState(true);
+
+  const obtenerCabeceras = async (name) => {
+    if (!cabecerasConsulta) {
+      tabla2(cabecerasMostrar, name);
+      return;
+    }
+
     const cabecerasData = await getDataModulos();
     //console.log("cabeceras", cabecerasData.data);
     let cabeceras = cabecerasData.data;
@@ -386,6 +393,7 @@ export default function Puntajes() {
         }
       }
     });
+    setcabecerasConsulta(false);
     setCabecerasMostrar(cabecerasArray2);
     console.log("cabecerasArray2", cabecerasArray2);
     tabla2(cabecerasArray2, name);
@@ -460,8 +468,13 @@ export default function Puntajes() {
     }
     setKeywords(scoringArray);
   };
-
+  const [clickCalendar, setClickCalendar] = useState(true);
   const dataAuditoria = async (ini, fin) => {
+    let ObtenerData = clickCalendar ? false : true;
+    setClickCalendar(ObtenerData);
+    if (clickCalendar) {
+      return;
+    }
     if (!ini && !fin) {
       return;
     }
@@ -750,11 +763,7 @@ export default function Puntajes() {
                                   className="btn  btn-sm rounded-pill"
                                   onClick={() => {
                                     filtrar(agent.name);
-                                    obtenerCabeceras(
-                                      startDate,
-                                      endDate,
-                                      agent.name
-                                    );
+                                    obtenerCabeceras(agent.name);
 
                                     setActiveTabla2(true);
 
