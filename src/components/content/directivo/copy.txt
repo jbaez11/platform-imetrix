@@ -5,6 +5,414 @@ import SidebarSAdmin from "../../sidebar/SidebarSAdmin";
 
 import { rutaAPITableros } from "../../../config/Config";
 
+const clientes = [
+  {
+    name: "Juan Carlos Motta",
+    minAnt: 0,
+    ingresosAnt: 0,
+    minAct: 0,
+    ingresosAct: 0,
+    ejecucion: 0,
+    image:
+      "https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png",
+    clusters: [
+      {
+        name: "IGS",
+        minAnt: 0,
+        ingresosAnt: 0,
+        minAct: 0,
+        ingresosAct: 0,
+        ejecucion: 0,
+        image:
+          "https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png",
+        campaings: [
+          {
+            name: "Almacenes SI",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsAlmacenesSiCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1383646894107234307/YaD7uv_L_400x400.jpg",
+          },
+          {
+            name: "AV VILLAS",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsAvVillasCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1383646894107234307/YaD7uv_L_400x400.jpg",
+          },
+
+          {
+            name: "Banrural",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsBanruralGT/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1383646894107234307/YaD7uv_L_400x400.jpg",
+          },
+          {
+            name: "Banco De Occidente",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsBancoDeOccidenteCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "http://oncor.com.pa/wp-content/uploads/2018/12/logo-banistmo.jpg",
+          },
+          {
+            name: "Banco Popular",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsBancoPopularCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "http://oncor.com.pa/wp-content/uploads/2018/12/logo-banistmo.jpg",
+          },
+          {
+            name: "Banorte",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsBanorteMX/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://logosvector.net/wp-content/uploads/2012/12/banorte-logo-vector.png",
+          },
+          {
+            name: "Banorte TD",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsBanorteTdMX/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://logosvector.net/wp-content/uploads/2012/12/banorte-logo-vector.png",
+          },
+          {
+            name: "Colpatria",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsColpatriaCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://logosvector.net/wp-content/uploads/2012/12/banorte-logo-vector.png",
+          },
+          {
+            name: "Claro",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsClaroCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://logosvector.net/wp-content/uploads/2012/12/banorte-logo-vector2.png",
+          },
+          {
+            name: "COOPCAFAM",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsCoopcafamCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://logosvector.net/wp-content/uploads/2012/12/banorte-logo-vector2.png",
+          },
+          {
+            name: "Comfamiliar",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsComfamiliarCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://logosvector.net/wp-content/uploads/2012/12/banorte-logo-vector.png",
+          },
+          {
+            name: "Enel",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsEnelCL/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://play-lh.googleusercontent.com/xn2S7Djvn3x05DbnPukGu9ePyk_QlWzPvhbBSaIgjkEZ2vPfkRn9pPmfob8tbBwbUb8",
+          },
+          {
+            name: "Entel",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsEntelCL/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://play-lh.googleusercontent.com/xn2S7Djvn3x05DbnPukGu9ePyk_QlWzPvhbBSaIgjkEZ2vPfkRn9pPmfob8tbBwbUb8",
+          },
+
+          {
+            name: "Promerica",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsPromericaCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://play-lh.googleusercontent.com/xn2S7Djvn3x05DbnPukGu9ePyk_QlWzPvhbBSaIgjkEZ2vPfkRn9pPmfob8tbBwbUb8",
+          },
+          {
+            name: "Serfinanza",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsSerfinanzaCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1112753927513100290/hzwsOJl2_400x400.png",
+          },
+          {
+            name: "Tuya",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/igsTuyaCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1112753927513100290/hzwsOJl2_400x400.png",
+          },
+        ],
+      },
+      {
+        name: "GRUPO BANCOLOMBIA",
+        minAnt: 0,
+        ingresosAnt: 0,
+        minAct: 0,
+        ingresosAct: 0,
+        ejecucion: 0,
+        image:
+          "https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png",
+        campaings: [
+          {
+            name: "Banco Agricola",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/grupoBancolombiaBancoAgricolaSV/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1383646894107234307/YaD7uv_L_400x400.jpg",
+          },
+          {
+            name: "Bancolombia Ahorro A La Mano",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/grupoBancolombiaBancolombiaAhorroALaManoCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1383646894107234307/YaD7uv_L_400x400.jpg",
+          },
+          {
+            name: "Banistmo",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/grupoBancolombiaBanistmoPA/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "http://oncor.com.pa/wp-content/uploads/2018/12/logo-banistmo.jpg",
+          },
+          {
+            name: "Bancolombia",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/grupoBancolombiaBancolombiaCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1383646894107234307/YaD7uv_L_400x400.jpg",
+          },
+          {
+            name: "Sufi",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/grupoBancolombiaSufiCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/1112753927513100290/hzwsOJl2_400x400.png",
+          },
+        ],
+      },
+      {
+        name: "DAVIVIENDA",
+        minAnt: 0,
+        ingresosAnt: 0,
+        minAct: 0,
+        ingresosAct: 0,
+        ejecucion: 0,
+        image:
+          "https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png",
+        campaings: [
+          {
+            name: "Jelpit",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/daviviendaJelpitPensionadosCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://play-lh.googleusercontent.com/xn2S7Djvn3x05DbnPukGu9ePyk_QlWzPvhbBSaIgjkEZ2vPfkRn9pPmfob8tbBwbUb8",
+          },
+          {
+            name: "Nómina",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/daviviendaNóminaCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://play-lh.googleusercontent.com/xn2S7Djvn3x05DbnPukGu9ePyk_QlWzPvhbBSaIgjkEZ2vPfkRn9pPmfob8tbBwbUb8",
+          },
+          {
+            name: "Daviplata",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/daviviendaDaviplataCO/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://www.nencata.felipepeinado.com/wp-content/uploads/2020/12/Daviplata.png",
+          },
+          {
+            name: "Davivivienda Costa Rica",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/daviviendaDaviviendaCostaRicaCR/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://www.nencata.felipepeinado.com/wp-content/uploads/2020/12/Daviplata.png",
+          },
+        ],
+      },
+      {
+        name: "GALICIA ARGENTINA",
+        minAnt: 0,
+        ingresosAnt: 0,
+        minAct: 0,
+        ingresosAct: 0,
+        ejecucion: 0,
+        image:
+          "https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png",
+        campaings: [
+          {
+            name: "Galicia AR",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/galiciaArgentinaGaliciaAR/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://logosvector.net/wp-content/uploads/2012/12/banorte-logo-vector.png",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    name: "Gustavo Chaparro",
+    minAnt: 0,
+    ingresosAnt: 0,
+    minAct: 0,
+    ingresosAct: 0,
+    ejecucion: 0,
+    image:
+      "https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png",
+    clusters: [
+      {
+        name: "BPOGS",
+        minAnt: 0,
+        ingresosAnt: 0,
+        minAct: 0,
+        ingresosAct: 0,
+        ejecucion: 0,
+        image:
+          "https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png",
+        campaings: [
+          {
+            name: "Bold English",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/bpogsBoldEnglishUS/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://codigos-ascii.com/wp-content/uploads/letra-b-mayuscula.png",
+          },
+          {
+            name: "Bold French",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/bpogsBoldFrenchFR/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://pbs.twimg.com/profile_images/904678151317573632/2y7ZCBhU_400x400.jpg",
+          },
+          {
+            name: "Bold Retention",
+            urlBD: `https://api-platform-tableros-imetrix.azurewebsites.net/bpogsBoldRetentionUS/consumo`,
+            minAnt: 0,
+            ingresosAnt: 0,
+            minAct: 0.0,
+            ingresosAct: 0,
+            ejecucion: 0,
+            image:
+              "https://inversionistas.hites.com/image/journal/article?img_id=25988",
+          },
+        ],
+      },
+    ],
+  },
+];
+
 export default function Agents() {
   return (
     <div className="sidebar-mini">
@@ -29,232 +437,171 @@ export default function Agents() {
                     <div className="card-header"></div>
                     <div className="card-body">
                       <div className="row">
-                        <div className="col-lg-3">
-                          <div className="card col-lg-12">
-                            <h4 class=" text-center font-weight-bold">IGS</h4>
-                            <img
-                              class="card-img-top img-responsive"
-                              src="https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png"
-                              alt="cliente"
-                              width="150"
-                              height="150"
-                            ></img>
-                            <h5 className="text-center font-weight-bold">
-                              Minutos
-                            </h5>
-                            <div>
-                              <div className="row">
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Enero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    247639
-                                  </h6>
+                        {clientes.map((cliente) => (
+                          <div className="col-lg-3">
+                            <div className="card col-lg-12">
+                              <h4 class=" text-center font-weight-bold">
+                                {cliente.name}
+                              </h4>
+                              <img
+                                class="card-img-top img-responsive"
+                                src="https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png"
+                                alt="cliente"
+                                width="150"
+                                height="150"
+                              ></img>
+                              <h5 className="text-center font-weight-bold">
+                                Minutos
+                              </h5>
+                              <div>
+                                <div className="row">
+                                  <div className="col">
+                                    <h6 className="text-center font-weight-bold">
+                                      Enero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.minAnt}
+                                    </h6>
+                                  </div>
+                                  <div className="col">
+                                    <h6
+                                      className="text-center font-weight-bold"
+                                      style={{ color: "#FF9B00" }}
+                                    >
+                                      Febrero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.minAct}
+                                    </h6>
+                                  </div>
                                 </div>
-                                <div className="col">
-                                  <h6
-                                    className="text-center font-weight-bold"
-                                    style={{ color: "#FF9B00" }}
-                                  >
-                                    Febrero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    91648
-                                  </h6>
+                                <div className="row">
+                                  <div className="col">
+                                    <h6 className="text-center font-weight-bold">
+                                      Ingresos Enero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.ingresosAnt} $
+                                    </h6>
+                                  </div>
+                                  <div className="col">
+                                    <h6
+                                      className="text-center font-weight-bold"
+                                      style={{ color: "#FF9B00" }}
+                                    >
+                                      Ingresos Febrero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.ingresosAct} $
+                                    </h6>
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div className="col">
+                                    <p></p>
+                                  </div>
+                                  <div className="col">
+                                    <h6 className="text-center font-weight-bold">
+                                      Ejecución
+                                    </h6>
+                                    <h5 className="text-center font-weight-bold">
+                                      {cliente.ejecucion}%
+                                    </h5>
+                                  </div>
                                 </div>
                               </div>
-                              <div className="row">
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Ingresos Enero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    4.952,74 $
-                                  </h6>
-                                </div>
-                                <div className="col">
-                                  <h6
-                                    className="text-center font-weight-bold"
-                                    style={{ color: "#FF9B00" }}
-                                  >
-                                    Ingresos Febrero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    1.832,94 $
-                                  </h6>
-                                </div>
-                              </div>
-                              <div className="row">
-                                <div className="col">
-                                  <p></p>
-                                </div>
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Ejecución
-                                  </h6>
-                                  <h5 className="text-center font-weight-bold">
-                                    37.0%
-                                  </h5>
-                                </div>
-                              </div>
+                              <button className="btn btn-warning">
+                                Ingresar
+                              </button>
                             </div>
-                            <a href="#" class="btn btn-warning">
-                              Ingresar
-                            </a>
                           </div>
-                        </div>
-                        <div className="col-lg-3">
-                          <div className="card col-lg-12">
-                            <h4 class=" text-center font-weight-bold">BPOGS</h4>
-                            <img
-                              class="card-img-top "
-                              src="https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png"
-                              alt="cliente"
-                              width="150"
-                              height="150"
-                            ></img>
-                            <h5 className="text-center font-weight-bold">
-                              Minutos
-                            </h5>
-                            <div>
-                              <div className="row">
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Enero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    247639
-                                  </h6>
-                                </div>
-                                <div className="col">
-                                  <h6
-                                    className="text-center font-weight-bold"
-                                    style={{ color: "#FF9B00" }}
-                                  >
-                                    Febrero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    91648
-                                  </h6>
-                                </div>
-                              </div>
-                              <div className="row">
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Ingresos Enero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    4.952,74 $
-                                  </h6>
-                                </div>
-                                <div className="col">
-                                  <h6
-                                    className="text-center font-weight-bold"
-                                    style={{ color: "#FF9B00" }}
-                                  >
-                                    Ingresos Febrero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    1.832,94 $
-                                  </h6>
-                                </div>
-                              </div>
-                              <div className="row">
-                                <div className="col">
-                                  <p></p>
-                                </div>
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Ejecución
-                                  </h6>
-                                  <h5 className="text-center font-weight-bold">
-                                    37.0%
-                                  </h5>
-                                </div>
-                              </div>
-                            </div>
-                            <a href="#" class="btn btn-warning">
-                              Ingresar
-                            </a>
-                          </div>
-                        </div>
-                        <div className="col-lg-3">
-                          <div className="card col-lg-12">
-                            <h4 class="text-center font-weight-bold">DEMO</h4>
-                            <img
-                              class="card-img-top img-responsive"
-                              src="https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png"
-                              alt="cliente"
-                              width="150"
-                              height="150"
-                            ></img>
-                            <h5 className="text-center font-weight-bold">
-                              Minutos
-                            </h5>
-                            <div>
-                              <div className="row">
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Enero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    247639
-                                  </h6>
-                                </div>
-                                <div className="col">
-                                  <h6
-                                    className="text-center font-weight-bold"
-                                    style={{ color: "#FF9B00" }}
-                                  >
-                                    Febrero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    91648
-                                  </h6>
-                                </div>
-                              </div>
-                              <div className="row">
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Ingresos Enero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    4.952,74 $
-                                  </h6>
-                                </div>
-                                <div className="col">
-                                  <h6
-                                    className="text-center font-weight-bold"
-                                    style={{ color: "#FF9B00" }}
-                                  >
-                                    Ingresos Febrero
-                                  </h6>
-                                  <h6 className="text-center font-weight-bold">
-                                    1.832,94 $
-                                  </h6>
-                                </div>
-                              </div>
-                              <div className="row">
-                                <div className="col">
-                                  <p></p>
-                                </div>
-                                <div className="col">
-                                  <h6 className="text-center font-weight-bold">
-                                    Ejecución
-                                  </h6>
-                                  <h5 className="text-center font-weight-bold">
-                                    37.0%
-                                  </h5>
-                                </div>
-                              </div>
-                            </div>
-                            <a href="#" class="btn btn-warning">
-                              Ingresar
-                            </a>
-                          </div>
-                        </div>
+                        ))}
                       </div>
+
+                      {/**/}
+
+                      <div className="row">
+                        {clientes.map((cliente) => (
+                          <div className="col-lg-3">
+                            <div className="card col-lg-12">
+                              <h4 class=" text-center font-weight-bold">
+                                {cliente["Juan Carlos Motta"].clusters.name}
+                              </h4>
+                              <img
+                                class="card-img-top img-responsive"
+                                src="https://w7.pngwing.com/pngs/270/122/png-transparent-corporation-business-brand-public-relations-subscribe-icon-public-relations-logo-business.png"
+                                alt="cliente"
+                                width="150"
+                                height="150"
+                              ></img>
+                              <h5 className="text-center font-weight-bold">
+                                Minutos
+                              </h5>
+                              <div>
+                                <div className="row">
+                                  <div className="col">
+                                    <h6 className="text-center font-weight-bold">
+                                      Enero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.minAnt}
+                                    </h6>
+                                  </div>
+                                  <div className="col">
+                                    <h6
+                                      className="text-center font-weight-bold"
+                                      style={{ color: "#FF9B00" }}
+                                    >
+                                      Febrero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.minAct}
+                                    </h6>
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div className="col">
+                                    <h6 className="text-center font-weight-bold">
+                                      Ingresos Enero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.ingresosAnt} $
+                                    </h6>
+                                  </div>
+                                  <div className="col">
+                                    <h6
+                                      className="text-center font-weight-bold"
+                                      style={{ color: "#FF9B00" }}
+                                    >
+                                      Ingresos Febrero
+                                    </h6>
+                                    <h6 className="text-center font-weight-bold">
+                                      {cliente.ingresosAct} $
+                                    </h6>
+                                  </div>
+                                </div>
+                                <div className="row">
+                                  <div className="col">
+                                    <p></p>
+                                  </div>
+                                  <div className="col">
+                                    <h6 className="text-center font-weight-bold">
+                                      Ejecución
+                                    </h6>
+                                    <h5 className="text-center font-weight-bold">
+                                      {cliente.ejecucion}%
+                                    </h5>
+                                  </div>
+                                </div>
+                              </div>
+                              <button className="btn btn-warning">
+                                Ingresar
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      {/** */}
                     </div>
                   </div>
                 </div>

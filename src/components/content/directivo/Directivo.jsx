@@ -16,7 +16,7 @@ export default function Agents() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-12">
-                  {/* <h1 className="m-0 text-dark">Tablero Directivo</h1> */}
+                  <h1 className="m-0 text-dark">Tablero Directivo</h1>
                 </div>
               </div>
             </div>
