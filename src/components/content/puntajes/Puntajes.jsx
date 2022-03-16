@@ -9,8 +9,12 @@ import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
 import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
 import "react-nice-dates/build/style.css";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 
 export default function Puntajes() {
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [loading3, setLoading3] = useState(false);
   const objectToCsv = (data) => {
     const csvRows = [];
     const headers = Object.keys(data[0]);
@@ -395,17 +399,17 @@ export default function Puntajes() {
     });
     setcabecerasConsulta(false);
     setCabecerasMostrar(cabecerasArray2);
-    console.log("cabecerasArray2", cabecerasArray2);
+    /* console.log("cabecerasArray2", cabecerasArray2); */
     tabla2(cabecerasArray2, name);
   };
 
   const tabla2 = async (cabeceras, name) => {
-    console.log("agentes", dataConsultada);
+    /* console.log("agentes", dataConsultada); */
     setGrabaciones([]);
     setTableGrabaciones([]);
 
     let data = dataConsultada;
-
+    setLoading2(true);
     let recordScoreByKeywords = [];
     //console.log("cabeceras[0]", cabeceras[0]);
     for (let i = 0; i < data.length; i++) {
@@ -441,9 +445,9 @@ export default function Puntajes() {
   };
 
   const tabla3 = async (keyfile) => {
-    console.log("keyfiel", keyfile);
+    /* console.log("keyfiel", keyfile); */
     const getKeywords = await getKeywordsData(keyfile);
-
+    setLoading3(true);
     let data = getKeywords.data;
     let contents = data[0].contents;
     let scoringArray = [];
@@ -495,6 +499,7 @@ export default function Puntajes() {
       fechaInicial[0] + "T00:00:00.000Z",
       fechaFinal[0] + "T00:00:00.000Z"
     );
+    setLoading(true);
     let puntajes = getPuntajes.data;
     //console.log("puntajes", puntajes);
     sumaTotalGrabaciones(puntajes);
@@ -513,11 +518,9 @@ export default function Puntajes() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
-                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
-                </div>
-                <br />
-                <br />
+                <h2 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h2>
                 <div className="col-sm-12">
                   <h3 className="ml-3 " style={{ color: "#FF9B00" }}>
                     PUNTAJES{" "}
@@ -552,6 +555,9 @@ export default function Puntajes() {
                                   setActiveTabla1(true);
                                   setActiveTabla2(false);
                                   setActiveTabla3(false);
+                                  setLoading(false);
+                                  setLoading2(false);
+                                  setLoading3(false);
                                 }}
                               >
                                 <i class="far fa-calendar-alt"></i>
@@ -697,91 +703,99 @@ export default function Puntajes() {
                       <br />
 
                       {/* <div className="table-responsive"> */}
+                      {loading ? 
                       <table
-                        className="table  table-borderless table-hover"
-                        hidden={activeTabla1 ? false : true}
+                      className="table  table-borderless table-hover"
+                      hidden={activeTabla1 ? false : true}
+                    >
+                      <thead
+                        style={{
+                          backgroundColor: "#CACACA",
+                          color: "white",
+                          fontSize: "small",
+                        }}
                       >
-                        <thead
-                          style={{
-                            backgroundColor: "#CACACA",
-                            color: "white",
-                            fontSize: "small",
-                          }}
-                        >
-                          <tr>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sorting("name")}
-                            >
-                              NOMBRE
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sortingNum("recordings")}
-                            >
-                              GRABACIONES
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sortingNum("totalScore")}
-                            >
-                              PUNTAJE PROMEDIO
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th className="text-center" scope="col">
-                              ACCION
-                            </th>
+                        <tr>
+                          <th
+                            className="text-center"
+                            scope="col"
+                            onClick={() => sorting("name")}
+                          >
+                            NOMBRE
+                            <i
+                              className="fas fa-arrows-alt-v ml-1"
+                              style={{ color: "black" }}
+                            ></i>
+                          </th>
+                          <th
+                            className="text-center"
+                            scope="col"
+                            onClick={() => sortingNum("nrecordings")}
+                          >
+                            GRABACIONES
+                            <i
+                              className="fas fa-arrows-alt-v ml-1"
+                              style={{ color: "black" }}
+                            ></i>
+                          </th>
+                          <th
+                            className="text-center"
+                            scope="col"
+                            onClick={() => sortingNum("totalScore")}
+                          >
+                            PUNTAJE PROMEDIO
+                            <i
+                              className="fas fa-arrows-alt-v ml-1"
+                              style={{ color: "black" }}
+                            ></i>
+                          </th>
+                          <th className="text-center" scope="col">
+                            ACCION
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody style={{ fontSize: "small" }}>
+                        {agentes.map((agent) => (
+                          <tr key={agent.name}>
+                            <td>{agent.name}</td>
+                            <td className="text-center">
+                              {agent.results.recordings}
+                            </td>
+                            <td className="text-center">
+                              {agent.results.totalScore.toFixed(1)} %
+                            </td>
+
+                            <td className="text-center">
+                              <button
+                                className="btn  btn-sm rounded-pill"
+                                onClick={() => {
+                                  filtrar(agent.name);
+                                  obtenerCabeceras(
+                                    startDate,
+                                    endDate,
+                                    agent.name
+                                  );
+
+                                  setActiveTabla2(true);
+
+                                  //tabla2(startDate, endDate, agent.name);
+                                }}
+                                style={{ background: "#D3D3D3" }}
+                              >
+                                <i class="fas fa-arrow-right"></i>
+                              </button>
+                            </td>
                           </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "small" }}>
-                          {agentes.map((agent) => (
-                            <tr key={agent.name}>
-                              <td>{agent.name}</td>
-                              <td className="text-center">
-                                {agent.results.recordings}
-                              </td>
-                              <td className="text-center">
-                                {agent.results.totalScore.toFixed(1)} %
-                              </td>
-
-                              <td className="text-center">
-                                <button
-                                  className="btn  btn-sm rounded-pill"
-                                  onClick={() => {
-                                    filtrar(agent.name);
-                                    obtenerCabeceras(agent.name);
-
-                                    setActiveTabla2(true);
-
-                                    //tabla2(startDate, endDate, agent.name);
-                                  }}
-                                  style={{ background: "#D3D3D3" }}
-                                >
-                                  <i class="fas fa-arrow-right"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                        ))}
+                      </tbody>
+                    </table>
+                      :
+                      <LoadingScreen/>
+                      }
 
                       {/* </div> */}
 
-                      {/**TAbla 2 */}
+                      {/* Tabla 2 */}
                       <button
                         className="btn btn-warning btn-sm rounded-pill"
                         hidden={activeTabla2 ? false : true}
@@ -791,6 +805,8 @@ export default function Puntajes() {
                           setBusqueda("");
                           setActiveTabla2(false);
                           setActiveTabla3(false);
+                          setLoading2(false);
+                          setLoading3(false);
                           //setAgentes([])
                           setGrabaciones([]);
                           setKeywords([]);
@@ -802,92 +818,91 @@ export default function Puntajes() {
                       <br />
 
                       {/* <div className="table-responsive"> */}
+                        {loading2 ? 
+                                              <table
+                                              className="table  table-borderless table-hover"
+                                              hidden={activeTabla2 ? false : true}
+                                            >
+                                              <thead
+                                                style={{
+                                                  backgroundColor: "#CACACA",
+                                                  color: "white",
+                                                  fontSize: "small",
+                                                }}
+                                              >
+                                                <tr>
+                                                  <th
+                                                    className="text-center"
+                                                    scope="col"
+                                                    onClick={() => sorting2("keyfile")}
+                                                  >
+                                                    NOMBRE GRABACION
+                                                    <i
+                                                      className="fas fa-arrows-alt-v ml-1"
+                                                      style={{ color: "black" }}
+                                                    ></i>
+                                                  </th>
+                                                  {cabecerasMostrar.map((cabecera, index) => (
+                                                    <th
+                                                      key={index}
+                                                      className="text-uppercase"
+                                                      onClick={() => sortingNum2(cabecera)}
+                                                    >
+                                                      {cabecera}
+                                                      <i
+                                                        className="fas fa-arrows-alt-v ml-1"
+                                                        style={{ color: "black" }}
+                                                      ></i>
+                                                    </th>
+                                                  ))}
+                      
+                                                  <th
+                                                    className="text-center"
+                                                    scope="col"
+                                                    onClick={() => sortingNum2("totalScore")}
+                                                  >
+                                                    PUNTAJE
+                                                    <i
+                                                      className="fas fa-arrows-alt-v ml-1"
+                                                      style={{ color: "black" }}
+                                                    ></i>
+                                                  </th>
+                                                  <th className="text-center" scope="col">
+                                                    ACCION
+                                                  </th>
+                                                </tr>
+                                              </thead>
+                                              <tbody style={{ fontSize: "small" }}>
+                                                {grabaciones.map((grabacion, index) => (
+                                                  <tr key={index}>
+                                                    <td>{grabacion.keyfile}</td>
+                                                    {cabecerasMostrar.map((c, index) => (
+                                                      <td key={index} className="text-center">
+                                                        {grabacion.results[c].toFixed(1)} %
+                                                      </td>
+                                                    ))}
+                                                    <td>
+                                                      {grabacion.results.totalScore.toFixed(1)} %
+                                                    </td>
+                                                    <td className="text-center">
+                                                      <button
+                                                        className="btn  btn-sm rounded-pill"
+                                                        onClick={() => {
+                                                          filtrar2(grabacion.keyfile);
+                                                          tabla3(grabacion.keyfile);
+                                                          setActiveTabla3(true);
+                                                        }}
+                                                        style={{ background: "#D3D3D3" }}
+                                                      >
+                                                        <i class="fas fa-arrow-right"></i>
+                                                      </button>
+                                                    </td>
+                                                  </tr>
+                                                ))}
+                                              </tbody>
+                                            </table>
+                        : <div hidden={activeTabla2 ? false : true} ><LoadingScreen/></div>}
 
-                      <table
-                        className="table  table-borderless table-hover"
-                        hidden={activeTabla2 ? false : true}
-                      >
-                        <thead
-                          style={{
-                            backgroundColor: "#CACACA",
-                            color: "white",
-                            fontSize: "small",
-                          }}
-                        >
-                          <tr>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sorting2("keyfile")}
-                            >
-                              NOMBRE GRABACION
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            {cabecerasMostrar.map((cabecera, index) => (
-                              <th
-                                key={index}
-                                className="text-uppercase"
-                                onClick={() => sortingNum2(cabecera)}
-                              >
-                                {cabecera}
-                                <i
-                                  className="fas fa-arrows-alt-v ml-1"
-                                  style={{ color: "black" }}
-                                ></i>
-                              </th>
-                            ))}
-
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sortingNum2("totalScore")}
-                            >
-                              PUNTAJE
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th className="text-center" scope="col">
-                              ACCION
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "small" }}>
-                          {grabaciones.map((grabacion, index) => (
-                            <tr key={index}>
-                              <td>{grabacion.keyfile}</td>
-                              {cabecerasMostrar.map((c, index) => (
-                                <td key={index} className="text-center">
-                                  {(grabacion.results[c] * 100).toFixed(1)} %
-                                </td>
-                              ))}
-                              <td>
-                                {(grabacion.results.totalScore * 100).toFixed(
-                                  1
-                                )}{" "}
-                                %
-                              </td>
-                              <td className="text-center">
-                                <button
-                                  className="btn  btn-sm rounded-pill"
-                                  onClick={() => {
-                                    filtrar2(grabacion.keyfile);
-                                    tabla3(grabacion.keyfile);
-                                    setActiveTabla3(true);
-                                  }}
-                                  style={{ background: "#D3D3D3" }}
-                                >
-                                  <i class="fas fa-arrow-right"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
                       {/**Tabla 2 end */}
 
                       {/* <!--Table3 -->                */}
@@ -899,8 +914,8 @@ export default function Puntajes() {
                         onClick={() => {
                           filtrar2("");
                           setKeywords([]);
-
                           setActiveTabla3(false);
+                          setLoading3(false);
                         }}
                       >
                         <i class="fas fa-arrow-left"></i> Volver
@@ -908,59 +923,62 @@ export default function Puntajes() {
                       <br />
                       <br />
                       {/* <div className="table-responsive"> */}
-                      <table
-                        className="table  table-borderless table-hover"
-                        hidden={activeTabla3 ? false : true}
-                      >
-                        <thead
-                          style={{
-                            backgroundColor: "#CACACA",
-                            color: "white",
-                            fontSize: "small",
-                          }}
-                        >
-                          <tr>
-                            <th onClick={() => sorting3("module")}>
-                              MODULO
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th onClick={() => sorting3("cluster")}>
-                              CLUSTER
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th onClick={() => sortingNum3("score")}>
-                              PUNTAJE
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th onClick={() => sorting3("results")}>
-                              KEYWORDS
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "small" }}>
-                          {keywords.map((keyword) => (
-                            <tr key={keyword.id}>
-                              <td>{keyword.module}</td>
-                              <td>{keyword.cluster}</td>
-                              <td>{keyword.score.toFixed(1)} %</td>
-                              <td>{keyword.results}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                      {loading3 ? 
+                                            <table
+                                            className="table  table-borderless table-hover"
+                                            hidden={activeTabla3 ? false : true}
+                                          >
+                                            <thead
+                                              style={{
+                                                backgroundColor: "#CACACA",
+                                                color: "white",
+                                                fontSize: "small",
+                                              }}
+                                            >
+                                              <tr>
+                                                <th onClick={() => sorting3("module")}>
+                                                  MODULO
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th onClick={() => sorting3("cluster")}>
+                                                  CLUSTER
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th onClick={() => sortingNum3("score")}>
+                                                  PUNTAJE
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th onClick={() => sorting3("results")}>
+                                                  KEYWORDS
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                              </tr>
+                                            </thead>
+                                            <tbody style={{ fontSize: "small" }}>
+                                              {keywords.map((keyword) => (
+                                                <tr key={keyword.id}>
+                                                  <td>{keyword.module}</td>
+                                                  <td>{keyword.cluster}</td>
+                                                  <td>{keyword.score.toFixed(1)} %</td>
+                                                  <td>{keyword.results}</td>
+                                                </tr>
+                                              ))}
+                                            </tbody>
+                                          </table>
+                      : <div hidden={activeTabla3 ? false : true} ><LoadingScreen/></div>}
+
                       {/* </div> */}
                       {/* end table 3 */}
                     </div>

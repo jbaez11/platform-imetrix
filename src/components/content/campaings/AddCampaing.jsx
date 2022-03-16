@@ -335,10 +335,21 @@ export default function AddCampaing(){
 
 //PETICION POST PARA CAMPAÑAS
 const postData = data =>{
+
+    const currentUserId = localStorage.getItem("ID");
+    let currentAdmin = localStorage.getItem("ADMIN");
+    let role = localStorage.getItem("ROLE");
+
     const url = `${rutaAPI}/addCampaing`
     const valores = window.location.href;
     let nuevaURL = valores.split("/");
     data.cluster = nuevaURL[4];
+
+    if(role === "Administrador"){
+        data.createdBy = currentUserId;
+    }else if(role === "SuperAdministrador"){
+      data.createdBy = currentAdmin;
+    }
     
     let formData = new FormData();
     formData.append("nombre", data.nombre);
@@ -347,6 +358,7 @@ const postData = data =>{
     formData.append("cluster", data.cluster);
     formData.append("pais", data.pais);
     formData.append("users", JSON.stringify(data.users.map((u) => u._id)));
+    formData.append("createdBy", data.createdBy);
     
     
     const token =  localStorage.getItem("ACCESS_TOKEN");

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from "react";
 import 'datatables.net';
 import 'datatables.net-bs5';
 import 'datatables.net-responsive';
@@ -6,15 +6,17 @@ import Footer from '../../footer/Footer';
 import Header from '../../header/Header';
 import Sidebar from '../../sidebar/Sidebar';
 import EditProfileAdmin from './EditProfileAdmin';
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import $ from 'jquery';
 import {rutaAPI} from '../../../config/Config';
 
 export default function PerfilAdmin(){
-
+    const [loading, setLoading] = useState(false);
     const dataAdministrador = async() =>{
-
+        
+        
         const getAdministrador = await getData();
-
+        setLoading(true)
         const dataTable = [];
 
         getAdministrador.data.forEach((admin, index) =>{
@@ -86,7 +88,8 @@ export default function PerfilAdmin(){
                             </div>
                         </div>
                     </div>
-                    <div className="content">
+                    {loading ? 
+                        <div className="content">
                         <div className="container-fluid">
                             <div className="row">
                                 <div className="col-lg-12">
@@ -102,6 +105,8 @@ export default function PerfilAdmin(){
                             </div>
                         </div>
                     </div>
+                    : <LoadingScreen/> }
+                    
             </div>
            <Footer/>
         </div>

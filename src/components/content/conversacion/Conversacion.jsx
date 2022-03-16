@@ -287,14 +287,12 @@ export default function Conversacion() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
-                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
-                </div>
-                <br />
-                <br />
+                <h2 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h2>
                 <div className="col-sm-12">
-                  <h3 className="ml-3 " style={{ color: "#FF9B00" }}>
-                    CONVERSACIONES <span style={{ color: "#CACACA" }}></span>{" "}
+                  <h3 className="ml-3 " style={{ color: "black" }}>
+                    CONVERSACIONES 
                   </h3>
                 </div>
               </div>

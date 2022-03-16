@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "datatables.net";
 import "datatables.net-bs5";
 import "datatables.net-responsive";
@@ -6,12 +6,15 @@ import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import Sidebar from "../../sidebar/Sidebar";
 import EditProfileUser from "./EditProfileUser";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import $ from "jquery";
 import { rutaAPI } from "../../../config/Config";
 
 export default function PerfilUser() {
+  const [loading, setLoading] = useState(false);
   const dataUser = async () => {
     const getUser = await getData();
+    setLoading(true)
     //console.log("getAdmin",getAdministradores)
     const dataTable = [];
 
@@ -73,7 +76,8 @@ export default function PerfilUser() {
               </div>
             </div>
           </div>
-          <div className="content">
+          {loading ? 
+            <div className="content">
             <div className="container-fluid">
               <div className="row">
                 <div className="col-lg-12">
@@ -90,6 +94,8 @@ export default function PerfilUser() {
               </div>
             </div>
           </div>
+          : <LoadingScreen/> }
+          
         </div>
         <Footer />
       </div>

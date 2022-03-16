@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import SidebarAdminCampaing from "../../sidebar/SidebarAdminCampaing";
 import AddAgentes from "./AddAgentes";
 import EditAgente from "./EditAgente";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import $ from "jquery";
 import "datatables.net";
 import "datatables.net-bs5";
@@ -11,6 +12,9 @@ import "datatables.net-responsive";
 import { rutaAPITableros } from "../../../config/Config";
 
 export default function Agents() {
+
+  const [loading, setLoading] = useState(false);
+  
   const objectToCsv = (data) => {
     const csvRows = [];
     const headers = Object.keys(data[0]);
@@ -51,14 +55,14 @@ export default function Agents() {
   const getReport = async () => {
     // console.log('this.agents', this.agents);
     const getAgentes = await getData();
-    console.log("getAgentes", getAgentes);
+    /* console.log("getAgentes", getAgentes); */
     const data = getAgentes.data.map((row) => ({
       nombre: row.name,
       identificacion: row.identification,
       genero: row.gender,
       creacion: row.createdAt,
     }));
-    console.log("data", data);
+    /* console.log("data", data); */
     //const csvData =
     const csvData = objectToCsv(data);
     download(csvData);
@@ -67,6 +71,7 @@ export default function Agents() {
   const dataAgentes = async () => {
     // crear el dataset para datatables
     const getAgentes = await getData();
+    setLoading(true)
 
     const dataSet = [];
 
@@ -141,6 +146,7 @@ export default function Agents() {
   dataAgentes();
 
   return (
+    
     <div className="sidebar-mini">
       <div className="wrapper">
         <Header />
@@ -150,52 +156,57 @@ export default function Agents() {
             <div className="container-fluid">
               <div className="row mb-2">
                 <div className="col-sm-6">
-                  {/* <h1 className="m-0 text-dark">Agentes</h1> */}
+                <h3 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h3>
+                  <h1 className="m-0 text-dark">Agentes</h1>
                 </div>
               </div>
             </div>
           </div>
-          <div className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="card card-warning card-outline">
-                    <div className="card-header">
-                      <h5 className="m-0">
-                        <button
-                          className="btn btn-warning"
-                          data-toggle="modal"
-                          data-target="#addAgent"
-                        >
-                          Crear nuevo agente
-                        </button>
-                        <button
-                          className="btn ml-4"
-                          onClick={() => getReport()}
-                          style={{ background: "#D3D3D3" }}
-                        >
-                          Descargar
-                        </button>
-                        {/* <button
-                          className="btn btn-primary ml-4"
-                          data-toggle="modal"
-                          data-target="#"
-                        >
-                          Subir
-                        </button> */}
-                      </h5>
+          {loading ? 
+                      <div className="content">
+                      <div className="container-fluid">
+                        <div className="row">
+                          <div className="col-lg-12">
+                            <div className="card card-warning card-outline">
+                              <div className="card-header">
+                                <h5 className="m-0">
+                                  <button
+                                    className="btn btn-warning"
+                                    data-toggle="modal"
+                                    data-target="#addAgent"
+                                  >
+                                    Crear nuevo agente
+                                  </button>
+                                  <button
+                                    className="btn ml-4"
+                                    onClick={() => getReport()}
+                                    style={{ background: "#D3D3D3" }}
+                                  >
+                                    Descargar
+                                  </button>
+                                  {/* <button
+                                    className="btn btn-primary ml-4"
+                                    data-toggle="modal"
+                                    data-target="#"
+                                  >
+                                    Subir
+                                  </button> */}
+                                </h5>
+                              </div>
+                              <div className="card-body">
+                                <table
+                                  className="table table-striped dt-responsive"
+                                  style={{ width: "100%" }}
+                                ></table>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="card-body">
-                      <table
-                        className="table table-striped dt-responsive"
-                        style={{ width: "100%" }}
-                      ></table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                    : <LoadingScreen/> }
         </div>
         <Footer />
       </div>

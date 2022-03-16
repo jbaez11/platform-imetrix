@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import Footer from "../../../footer/Footer";
 import Header from "../../../header/Header";
 import SidebarAdminCampaing from "../../../sidebar/SidebarAdminCampaing";
+import LoadingScreen from "../../../loading_screen/LoadingScreen";
 import AddModulo from "./AddModulo";
 import EditModulo from "./EditModulo";
 import $ from "jquery";
@@ -11,10 +12,11 @@ import "datatables.net-responsive";
 import { rutaAPITableros } from "../../../../config/Config";
 
 export default function Modulos() {
+  const [loading, setLoading] = useState(false);
   const dataModulos = async () => {
     // crear el dataset para datatables
     const getModulos = await getData();
-
+    setLoading(true)
     const dataSet = [];
 
     getModulos.data.forEach((modulos, index) => {
@@ -100,17 +102,16 @@ export default function Modulos() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
-                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
-                </div>
-                <br />
-                <br />
+                <h3 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h3>
                 <div className="col-sm-12">
                   <h1 className="m-0 text-dark">Modulos</h1>
                 </div>
               </div>
             </div>
           </div>
+          {loading ? 
           <div className="content">
             <div className="container-fluid">
               <div className="row">
@@ -137,7 +138,8 @@ export default function Modulos() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> : <LoadingScreen/>}
+
         </div>
         <Footer />
         {/* Modal para crear un Modulo */}

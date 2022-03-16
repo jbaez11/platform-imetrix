@@ -1,0 +1,17 @@
+.LoadingScreen{
+    background-size: 100%;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.spinner{
+    margin-left: 8cm;
+    height: 80px;
+    width: 80px;
+}
+
+.logo{
+    margin-top: 2cm;
+    margin-left: 10cm;
+}
+

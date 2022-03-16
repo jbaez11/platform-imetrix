@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
 import { DateRangePickerCalendar, START_DATE } from "react-nice-dates";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import "react-nice-dates/build/style.css";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
@@ -11,6 +12,7 @@ import { Bar } from "react-chartjs-2";
 import { rutaAPITableros } from "../../../config/Config";
 
 export default function Consumo() {
+  const [loading, setLoading] = useState(false);
   const objectToCsv = (data) => {
     const csvRows = [];
     const headers = Object.keys(data[0]);
@@ -167,6 +169,7 @@ export default function Consumo() {
       fechaInicial[0] + "T00:00:00.000Z",
       fechaFinal[0] + "T00:00:00.000Z"
     );
+    setLoading(true);
     let consumos = getConsumo.data;
 
     sumaTotalMinutos(consumos);
@@ -186,11 +189,9 @@ export default function Consumo() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
-                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
-                </div>
-                <br />
-                <br />
+                <h2 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h2>
                 <div className="col">
                   <h2
                     className="text-center font-weight-bold"
@@ -210,6 +211,7 @@ export default function Consumo() {
                     onClick={() => {
                       setShowCalendar(!showCalendar);
                       dataConsumo(startDate, endDate);
+                      setLoading(false);
                     }}
                   >
                     {showCalendar ? "seleccionar nueva fecha" : "ir"}
@@ -270,108 +272,111 @@ export default function Consumo() {
               </div>
             </div>
           </div>
-          <div className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="card card-warning card-outline">
-                    <div className="card-header"></div>
-                    <div className="card-body">
-                      {/* inicio */}
-                      <div class="container">
-                        <div class="row">
-                          <div className="col-sm">
-                            <div className="card">
-                              <h5
-                                style={{
-                                  color: "#FF9B00",
-                                  textAlign: "center",
-                                }}
-                              >
-                                TOTAL MINUTOS <br />
-                              </h5>
-                              <h1 style={{ textAlign: "center" }}>
-                                <span style={{ color: "#4C4C4C" }}>
-                                  {totalMinutos.toFixed(0)}
-                                </span>
-                              </h1>
+          {loading ?  
+                    <div className="content">
+                    <div className="container-fluid">
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <div className="card card-warning card-outline">
+                            <div className="card-header"></div>
+                            <div className="card-body">
+                              {/* inicio */}
+                              <div class="container">
+                                <div class="row">
+                                  <div className="col-sm">
+                                    <div className="card">
+                                      <h5
+                                        style={{
+                                          color: "#FF9B00",
+                                          textAlign: "center",
+                                        }}
+                                      >
+                                        TOTAL MINUTOS <br />
+                                      </h5>
+                                      <h1 style={{ textAlign: "center" }}>
+                                        <span style={{ color: "#4C4C4C" }}>
+                                          {totalMinutos.toFixed(0)}
+                                        </span>
+                                      </h1>
+                                    </div>
+                                  </div>
+                                  <div className="col-sm">
+                                    <h5
+                                      style={{ color: "#FF9B00", textAlign: "center" }}
+                                    >
+                                      TOTAL GRABACIONES <br />
+                                    </h5>
+                                    <h1 style={{ textAlign: "center" }}>
+                                      <span style={{ color: "#4C4C4C" }}>
+                                        {totalGrabaciones}
+                                      </span>
+                                    </h1>
+                                  </div>
+                                  <div className="col-sm">
+                                    <h5
+                                      style={{ color: "#FF9B00", textAlign: "center" }}
+                                    >
+                                      GRABACIONES LEIDAS <br />
+                                    </h5>
+                                    <h1 style={{ textAlign: "center" }}>
+                                      <span style={{ color: "#4C4C4C" }}>
+                                        {totalGrabacionesLeidas}
+                                      </span>
+                                    </h1>
+                                  </div>
+                                </div>
+        
+                                <h4 style={{ color: "#FF9B00" }}>Minutos</h4>
+                                <br />
+        
+                                <Bar
+                                  data={{
+                                    labels: labelsMinutosLeidos, //["1", "2", "3", "4"],
+                                    datasets: [
+                                      {
+                                        label: "Minutos leidos",
+                                        data: dataMinutosLeidos, //[100, 200, 500, 200],
+                                        backgroundColor: "#FFCD7F",
+                                      },
+                                      {
+                                        label: "Minutos no leidos",
+                                        data: dataMinutosNoLeidos,
+                                        backgroundColor: "#ff4f9a",
+                                      },
+                                    ],
+                                  }}
+                                ></Bar>
+        
+                                <h4 style={{ color: "#FF9B00" }}>Grabaciones</h4>
+                                <br />
+        
+                                <Bar
+                                  data={{
+                                    labels: labelsMinutosLeidos,
+                                    datasets: [
+                                      {
+                                        label: "Grabaciones leidos",
+                                        data: dataGrabacionesLeidos, //[100, 200, 300, 200],
+                                        backgroundColor: "#FFCD7F",
+                                      },
+                                      {
+                                        label: "Grabaciones no leidos",
+                                        data: dataGrabacionesNoLeidos, //[23, 45, 5, 20],
+                                        backgroundColor: "#ff4f9a",
+                                      },
+                                    ],
+                                  }}
+                                ></Bar>
+                              </div>
+                              {/* fin */}
                             </div>
                           </div>
-                          <div className="col-sm">
-                            <h5
-                              style={{ color: "#FF9B00", textAlign: "center" }}
-                            >
-                              TOTAL GRABACIONES <br />
-                            </h5>
-                            <h1 style={{ textAlign: "center" }}>
-                              <span style={{ color: "#4C4C4C" }}>
-                                {totalGrabaciones}
-                              </span>
-                            </h1>
-                          </div>
-                          <div className="col-sm">
-                            <h5
-                              style={{ color: "#FF9B00", textAlign: "center" }}
-                            >
-                              GRABACIONES LEIDAS <br />
-                            </h5>
-                            <h1 style={{ textAlign: "center" }}>
-                              <span style={{ color: "#4C4C4C" }}>
-                                {totalGrabacionesLeidas}
-                              </span>
-                            </h1>
-                          </div>
                         </div>
-
-                        <h4 style={{ color: "#FF9B00" }}>Minutos</h4>
-                        <br />
-
-                        <Bar
-                          data={{
-                            labels: labelsMinutosLeidos, //["1", "2", "3", "4"],
-                            datasets: [
-                              {
-                                label: "Minutos leidos",
-                                data: dataMinutosLeidos, //[100, 200, 500, 200],
-                                backgroundColor: "#FFCD7F",
-                              },
-                              {
-                                label: "Minutos no leidos",
-                                data: dataMinutosNoLeidos,
-                                backgroundColor: "#ff4f9a",
-                              },
-                            ],
-                          }}
-                        ></Bar>
-
-                        <h4 style={{ color: "#FF9B00" }}>Grabaciones</h4>
-                        <br />
-
-                        <Bar
-                          data={{
-                            labels: labelsMinutosLeidos,
-                            datasets: [
-                              {
-                                label: "Grabaciones leidos",
-                                data: dataGrabacionesLeidos, //[100, 200, 300, 200],
-                                backgroundColor: "#FFCD7F",
-                              },
-                              {
-                                label: "Grabaciones no leidos",
-                                data: dataGrabacionesNoLeidos, //[23, 45, 5, 20],
-                                backgroundColor: "#ff4f9a",
-                              },
-                            ],
-                          }}
-                        ></Bar>
                       </div>
-                      {/* fin */}
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          : <LoadingScreen/>}
+
         </div>
         <Footer />
       </div>
