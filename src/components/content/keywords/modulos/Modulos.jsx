@@ -58,7 +58,6 @@ export default function Modulos() {
               </a>
 							`;
             },
-            
           },
         ],
         language: {

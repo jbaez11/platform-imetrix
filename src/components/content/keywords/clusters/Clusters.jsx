@@ -58,7 +58,6 @@ export default function Clusters() {
               </a>
 							`;
             },
-            
           },
         ],
         language: {

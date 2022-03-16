@@ -366,7 +366,14 @@ export default function Puntajes() {
     setTableAgentes(superRecordingsSummaryArray);
   };
 
-  const obtenerCabeceras = async (ini, fin, name) => {
+  const [cabecerasConsulta, setcabecerasConsulta] = useState(true);
+
+  const obtenerCabeceras = async (name) => {
+    if (!cabecerasConsulta) {
+      tabla2(cabecerasMostrar, name);
+      return;
+    }
+
     const cabecerasData = await getDataModulos();
     //console.log("cabeceras", cabecerasData.data);
     let cabeceras = cabecerasData.data;
@@ -390,6 +397,7 @@ export default function Puntajes() {
         }
       }
     });
+    setcabecerasConsulta(false);
     setCabecerasMostrar(cabecerasArray2);
     /* console.log("cabecerasArray2", cabecerasArray2); */
     tabla2(cabecerasArray2, name);
@@ -415,12 +423,11 @@ export default function Puntajes() {
           ) {
             //console.log("agent", agent);
             for (let k = 0; k < cabeceras.length; k++) {
-              let modulo = cabeceras[k];
-              data[i].recordingsSummary[agent][keyfile].results[modulo] *= 100;
-
+              // let modulo = cabeceras[k];
+              //data[i].recordingsSummary[agent][keyfile].results[modulo] *= 100;
               //data[i].recordingsSummary[agent].results.cabeceras[k]=data[i].recordingsSummary[agent].results.cabeceras[k]*100
             }
-            data[i].recordingsSummary[agent][keyfile].results.totalScore *= 100;
+            //data[i].recordingsSummary[agent][keyfile].results.totalScore *= 100;
             /* data[i].recordingsSummary[agent][keyfile].results.totalScore *
               100; */
           }
@@ -465,8 +472,13 @@ export default function Puntajes() {
     }
     setKeywords(scoringArray);
   };
-
+  const [clickCalendar, setClickCalendar] = useState(true);
   const dataAuditoria = async (ini, fin) => {
+    let ObtenerData = clickCalendar ? false : true;
+    setClickCalendar(ObtenerData);
+    if (clickCalendar) {
+      return;
+    }
     if (!ini && !fin) {
       return;
     }
