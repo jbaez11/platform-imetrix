@@ -1,11 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import { rutaAPI } from "../../../config/Config";
-
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import SidebarCampaing from "../../sidebar/SidebarCampaing";
 
 export default function CamaingsAuditor() {
+  const [loading, setLoading] = useState(false);
   let userID = localStorage.getItem("ID");
   let campaingActual = localStorage.setItem("CAMPAING_ACTUAL", "");
   console.log("campaingActual", campaingActual);
@@ -30,6 +31,7 @@ export default function CamaingsAuditor() {
       `${rutaAPI}/getCampaingUser/${userID}/${nuevaURL[5]}`
     );
     const camp = await data.json();
+    setLoading(true)
     camp.data.forEach((campaing) => {
       let descompenerUrl = campaing.nombre.split(" ");
       let lowerURL = "";
@@ -62,59 +64,59 @@ export default function CamaingsAuditor() {
               </div>
             </div>
           </div>
-          <div className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="card card-warning card-outline">
-                    <div className="card-header"></div>
-                    <div className="card-body">
-                      <div className="container">
+          {loading ? 
+                      <div className="content">
+                      <div className="container-fluid">
                         <div className="row">
-                          {campaings.map((campaing) => (
-                            <div class="col-sm">
-                              <div
-                                style={{ width: "18rem" }}
-                                className="card text-center"
-                              >
-                                <div className="card-body">
-                                  <h5 className=" text-center">
-                                    {campaing.nombre}
-                                  </h5>
-                                  <img
-                                    className="card-img-top"
-                                    height="100"
-                                    alt="img"
-                                    src={
-                                      rutaAPI +
-                                      "/getImgCampaing/" +
-                                      campaing.foto
-                                    }
-                                  />
-                                  <br />
-                                  <a
-                                    style={{ marginTop: "40px" }}
-                                    href={`/agents/${nuevaURL[6]}${campaing.Urltableros}${campaing.pais}`}
-                                    className="btn btn-warning"
-                                    style={{ marginTop: "10px" }}
-                                    onClick={() => {
-                                      mostrarCampaingActual(campaing.nombre);
-                                    }}
-                                  >
-                                    Ingresar
-                                  </a>
+                          <div className="col-lg-12">
+                            <div className="card card-warning card-outline">
+                              <div className="card-header"></div>
+                              <div className="card-body">
+                                <div className="container">
+                                  <div className="row">
+                                    {campaings.map((campaing) => (
+                                      <div class="col-sm">
+                                        <div
+                                          style={{ width: "18rem" }}
+                                          className="card text-center"
+                                        >
+                                          <div className="card-body">
+                                            <h5 className=" text-center">
+                                              {campaing.nombre}
+                                            </h5>
+                                            <img
+                                              className="card-img-top"
+                                              height="100"
+                                              alt="img"
+                                              src={
+                                                rutaAPI +
+                                                "/getImgCampaing/" +
+                                                campaing.foto
+                                              }
+                                            />
+                                            <br />
+                                            <a
+                                              style={{ marginTop: "40px" }}
+                                              href={`/agents/${nuevaURL[6]}${campaing.Urltableros}${campaing.pais}`}
+                                              className="btn btn-warning"
+                                              onClick={() => {
+                                                mostrarCampaingActual(campaing.nombre);
+                                              }}
+                                            >
+                                              Ingresar
+                                            </a>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          ))}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                    </div> : <LoadingScreen/> }
         </div>
         <Footer />
       </div>

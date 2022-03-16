@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import { rutaAPI } from "../../../config/Config";
 import $ from "jquery";
 import Footer from "../../footer/Footer";
@@ -6,13 +6,16 @@ import Header from "../../header/Header";
 import SidebarCampaing from "../../sidebar/SidebarCampaing";
 import AddCampaing from "./AddCampaing";
 import EditCampaing from "./EditCampaing";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import "datatables.net";
 import "datatables.net-bs5";
 import "datatables.net-responsive";
 
 export default function Camaings() {
+  const [loading, setLoading] = useState(false);
   const dataCampaings = async () => {
     const getCampaings = await getData();
+    setLoading(true)
     /* console.log("Campañas", getCampaings); */
 
     const dataTable = [];
@@ -133,34 +136,38 @@ export default function Camaings() {
               </div>
             </div>
           </div>
-          <div className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="card card-warning card-outline">
-                    <div className="card-header">
-                      <h5 className="m-0">
-                        <button
-                          className="btn btn-warning limpiarFormulario"
-                          data-toggle="modal"
-                          data-target="#addCampaing"
-                        >
-                          {" "}
-                          Crear Nueva Campaña
-                        </button>
-                      </h5>
-                    </div>
-                    <div className="card-body">
-                      <table
-                        className="table table-striped dt-responsive"
-                        style={{ width: "100%" }}
-                      ></table>
+          {loading ? 
+            <div className="content">
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="card card-warning card-outline">
+                      <div className="card-header">
+                        <h5 className="m-0">
+                          <button
+                            className="btn btn-warning limpiarFormulario"
+                            data-toggle="modal"
+                            data-target="#addCampaing"
+                          >
+                            {" "}
+                            Crear Nueva Campaña
+                          </button>
+                        </h5>
+                      </div>
+                      <div className="card-body">
+                        <table
+                          className="table table-striped dt-responsive"
+                          style={{ width: "100%" }}
+                          >
+                        </table>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          : <LoadingScreen/> }
+
         </div>
         <Footer />
       </div>

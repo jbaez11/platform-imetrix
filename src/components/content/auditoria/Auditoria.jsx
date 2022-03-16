@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import SidebarAdminCampaing from "../../sidebar/SidebarAdminCampaing";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 //import { getDay, setMinutes } from "date-fns";
 import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
@@ -11,6 +12,9 @@ import "./Auditoria.css";
 import { rutaAPITableros } from "../../../config/Config";
 
 export default function Auditoria() {
+  const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [loading3, setLoading3] = useState(false);
   const [startDate, setStartDate] = useState();
   const [endDate, setEndDate] = useState();
   const [focus, setFocus] = useState(START_DATE);
@@ -271,7 +275,7 @@ export default function Auditoria() {
 
   const tabla2 = async (ini, fin, name) => {
     let data = dataConsultada;
-
+    setLoading2(true)
     let recordsByCategory = [];
     for (let i = 0; i < data.length; i++) {
       for (let key in data[i].recordingsSummary) {
@@ -288,6 +292,7 @@ export default function Auditoria() {
 
   const tabla3 = async (keyfile) => {
     const getKeywords = await getKeywordsData(keyfile);
+    setLoading3(true)
     let data = getKeywords.data;
     /* console.log("data", data); */
     function secondsToTime(seconds) {
@@ -370,15 +375,18 @@ export default function Auditoria() {
     if (ini && !fin) {
       fin = ini;
     }
-
+  
     let fechaInicialOriginal = new Date(ini).toISOString();
     let fechaInicial = fechaInicialOriginal.split("T");
     let fechaFinalOriginal = new Date(fin).toISOString();
     let fechaFinal = fechaFinalOriginal.split("T");
+    
     const getAuditoria = await getData(
       fechaInicial[0] + "T00:00:00.000Z",
       fechaFinal[0] + "T00:00:00.000Z"
     );
+    setLoading(true);
+    
     let auditoria = getAuditoria.data;
 
     totalGrabaciones(auditoria);
@@ -397,11 +405,9 @@ export default function Auditoria() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
-                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
-                </div>
-                <br />
-                <br />
+                <h2 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h2>
                 <div className="col-sm-12">
                   <h3 className="ml-3 " style={{ color: "#FF9B00" }}>
                     AUDITORIA <span style={{ color: "#CACACA" }}>KEYWORDS</span>{" "}
@@ -435,6 +441,9 @@ export default function Auditoria() {
                                   setKeywords([]);
                                   setSumTotalGrabaciones(0);
                                   setGrabacionesNoPermitidas(0);
+                                  setLoading(false);
+                                  setLoading2(false);
+                                  setLoading3(false);
                                 }}
                               >
                                 <i class="far fa-calendar-alt"></i>
@@ -560,6 +569,8 @@ export default function Auditoria() {
                           setKeywords([]);
                           setActiveTabla2(false);
                           setActiveTabla3(false);
+                          setLoading2(false);
+                          setLoading3(false);
                         }}
                       >
                         <i class="fas fa-arrow-left"></i> Volver
@@ -568,7 +579,7 @@ export default function Auditoria() {
                       <br />
 
                       {/* <div className="table-responsive"> */}
-                      <table
+                      {loading ? <table
                         className="table  table-borderless table-hover"
                         hidden={activeTabla1 ? false : true}
                       >
@@ -690,7 +701,10 @@ export default function Auditoria() {
                             </tr>
                           ))}
                         </tbody>
-                      </table>
+                      </table> 
+                      : 
+                      <LoadingScreen/>}
+                      
                       {/* </div> */}
 
                       {/* <!--Table2 -->                */}
@@ -705,6 +719,8 @@ export default function Auditoria() {
                           setKeywords([]);
                           setActiveTabla3(false);
                           setActiveTabla2(false);
+                          setLoading2(false);
+                          setLoading3(false);
                         }}
                       >
                         <i class="fas fa-arrow-left"></i> Volver
@@ -712,95 +728,99 @@ export default function Auditoria() {
                       <br />
                       <br />
                       {/* <div className="table-responsive"> */}
-                      <table
-                        className="table  table-borderless table-hover"
-                        hidden={activeTabla2 ? false : true}
-                      >
-                        <thead
-                          style={{
-                            backgroundColor: "#CACACA",
-                            color: "white",
-                            fontSize: "small",
-                          }}
-                        >
-                          <tr>
-                            <th onClick={() => sorting2("keyfile")}>
-                              NOMBRE GRABACIÓN
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() => sortingNum2("positivesOfRequired")}
-                            >
-                              INFALTABLE
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() => sortingNum2("negativesOfRequired")}
-                            >
-                              INFALTABLE NO HALLADA
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() =>
-                                sortingNum2("positivesOfNotAllowed")
-                              }
-                            >
-                              NO PERMITIDA
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              onClick={() =>
-                                sortingNum2("positivesOfRecommendation")
-                              }
-                            >
-                              RECOMENDACION
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th>ACCION</th>
-                          </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "small" }}>
-                          {grabaciones.map((grabacion) => (
-                            <tr key={grabacion.keyfile}>
-                              <td>{grabacion.keyfile}</td>
-                              <td>{grabacion.results.positivesOfRequired}</td>
-                              <td>{grabacion.results.negativesOfRequired}</td>
-                              <td>{grabacion.results.positivesOfNotAllowed}</td>
-                              <td>
-                                {grabacion.results.positivesOfRecommendation}
-                              </td>
-                              <td>
-                                <button
-                                  className="btn  btn-sm rounded-pill"
-                                  onClick={() => {
-                                    filtrar2(grabacion.keyfile);
-                                    tabla3(grabacion.keyfile);
-                                    setActiveTabla3(true);
-                                  }}
-                                  style={{ background: "#D3D3D3" }}
-                                >
-                                  <i class="fas fa-arrow-right"></i>
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                      {loading2 ? 
+                                            
+                                            <table
+                                            className="table  table-borderless table-hover"
+                                            hidden={activeTabla2 ? false : true}
+                                          >
+                                            <thead
+                                              style={{
+                                                backgroundColor: "#CACACA",
+                                                color: "white",
+                                                fontSize: "small",
+                                              }}
+                                            >
+                                              <tr>
+                                                <th onClick={() => sorting2("keyfile")}>
+                                                  NOMBRE GRABACIÓN
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th
+                                                  onClick={() => sortingNum2("positivesOfRequired")}
+                                                >
+                                                  INFALTABLE
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th
+                                                  onClick={() => sortingNum2("negativesOfRequired")}
+                                                >
+                                                  INFALTABLE NO HALLADA
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th
+                                                  onClick={() =>
+                                                    sortingNum2("positivesOfNotAllowed")
+                                                  }
+                                                >
+                                                  NO PERMITIDA
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th
+                                                  onClick={() =>
+                                                    sortingNum2("positivesOfRecommendation")
+                                                  }
+                                                >
+                                                  RECOMENDACION
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th>ACCION</th>
+                                              </tr>
+                                            </thead>
+                                            <tbody style={{ fontSize: "small" }}>
+                                              {grabaciones.map((grabacion) => (
+                                                <tr key={grabacion.keyfile}>
+                                                  <td>{grabacion.keyfile}</td>
+                                                  <td>{grabacion.results.positivesOfRequired}</td>
+                                                  <td>{grabacion.results.negativesOfRequired}</td>
+                                                  <td>{grabacion.results.positivesOfNotAllowed}</td>
+                                                  <td>
+                                                    {grabacion.results.positivesOfRecommendation}
+                                                  </td>
+                                                  <td>
+                                                    <button
+                                                      className="btn  btn-sm rounded-pill"
+                                                      onClick={() => {
+                                                        filtrar2(grabacion.keyfile);
+                                                        tabla3(grabacion.keyfile);
+                                                        setActiveTabla3(true);
+                                                      }}
+                                                      style={{ background: "#D3D3D3" }}
+                                                    >
+                                                      <i class="fas fa-arrow-right"></i>
+                                                    </button>
+                                                  </td>
+                                                </tr>
+                                              ))}
+                                            </tbody>
+                                          </table>
+                      : <div hidden={activeTabla2 ? false : true} ><LoadingScreen/></div>}
+
                       {/* </div> */}
                       {/* end table 2 */}
 
@@ -814,6 +834,7 @@ export default function Auditoria() {
                           filtrar2("");
                           setKeywords([]);
                           setActiveTabla3(false);
+                          setLoading3(false);
                         }}
                       >
                         <i class="fas fa-arrow-left"></i> Volver
@@ -821,7 +842,8 @@ export default function Auditoria() {
                       <br />
                       <br />
                       {/* <div className="table-responsive"> */}
-                      <table
+                      {loading3 ?  
+                                            <table
                         className="table  table-borderless table-hover"
                         hidden={activeTabla3 ? false : true}
                       >
@@ -882,6 +904,8 @@ export default function Auditoria() {
                           ))}
                         </tbody>
                       </table>
+                      : <div hidden={activeTabla3 ? false : true} ><LoadingScreen/></div>}
+
                       {/* </div> */}
                       {/* end table 3 */}
                     </div>

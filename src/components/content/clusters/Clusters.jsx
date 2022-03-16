@@ -1,21 +1,23 @@
-import React from "react";
+import React, {useState} from "react";
 import { rutaAPI } from "../../../config/Config";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import Sidebar from "../../sidebar/Sidebar";
 import AddCluster from "./AddCluster";
 import EditCluster from "./EditCluster";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import "datatables.net";
 import "datatables.net-bs5";
 import "datatables.net-responsive";
 import $ from "jquery";
 
 export default function Clusters() {
-
+  const [loading, setLoading] = useState(false);
   const dataClusters = async () => {
-    const getClusters = await getData();
 
-    
+    const getClusters = await getData();
+    setLoading(true)
+
     const dataTable = [];
 
     getClusters.data.forEach((cluster, index) => {
@@ -111,58 +113,60 @@ export default function Clusters() {
   dataClusters();
 
   return (
-
     <div className="sidebar-mini">
-      <div className="wrapper">
-        <Header />
-        <Sidebar />
-        <div className="content-wrapper" style={{ minHeight: "494px" }}>
-          <div className="content-header">
-            <div className="container-fluid">
-              <div className="row mb-2">
-                <div className="col-sm-6">
-                  <h1 className="m-0 text-dark">Gestor de Clientes</h1>
+        <div className="wrapper">
+          <Header />
+          <Sidebar />
+          <div className="content-wrapper" style={{ minHeight: "494px" }}>
+            <div className="content-header">
+              <div className="container-fluid">
+                <div className="row mb-2">
+                  <div className="col-sm-6">
+                    <h1 className="m-0 text-dark">Gestor de Clientes</h1>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="card card-warning card-outline">
-                    <div className="card-header">
-                      <h5 className="m-0">
-                        <button
-                          className="btn btn-warning"
-                          data-toggle="modal"
-                          data-target="#addCluster"
-                        >
-                          Crear Nuevo Cliente
-                        </button>
-                      </h5>
-                    </div>
-                    <div
-                      style={{ backgroundColor: "white" }}
-                      className="card-body"
-                    >
-                      <table
-                        className="table table-striped dt-responsive"
-                        style={{ width: "100%" }}
-                      ></table>
+            {loading ? 
+            <div className="content">
+              <div className="container-fluid">
+                <div className="row">
+                  <div className="col-lg-12">
+                    <div className="card card-warning card-outline">
+                      <div className="card-header">
+                        <h5 className="m-0">
+                          <button
+                            className="btn btn-warning"
+                            data-toggle="modal"
+                            data-target="#addCluster"
+                          >
+                            Crear Nuevo Cliente
+                          </button>
+                        </h5>
+                      </div>
+                      <div
+                        style={{ backgroundColor: "white" }}
+                        className="card-body"
+                      >
+                        <table
+                          className="table table-striped dt-responsive"
+                          style={{ width: "100%" }}
+                        ></table>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+          
+        
+          : <LoadingScreen/>}
           </div>
-        </div>
-        <Footer />
-      </div>
+          <Footer />
       <AddCluster />
       <EditCluster />
     </div>
-    
+  </div>  
   );
 }
 

@@ -28,7 +28,7 @@ export default function LoginAdmin() {
     $(".alert").remove();
     e.preventDefault();
     const result = await loginAdmin(administradores);
-    console.log(result)
+    /* console.log(result) */
     if (result.status !== 200) {
       $("button[type='submit']").before(
         `<div class="alert alert-danger">${result.mensaje} </div>`

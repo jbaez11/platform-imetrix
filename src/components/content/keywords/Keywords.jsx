@@ -1,7 +1,8 @@
-import React from "react";
+import React, {useState} from "react";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import SidebarAdminCampaing from "../../sidebar/SidebarAdminCampaing";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import AddKeyWord from "./AddKeyWord";
 import EditKeyWord from "./EditKeyWords";
 import $ from "jquery";
@@ -11,6 +12,7 @@ import "datatables.net-responsive";
 import { rutaAPITableros } from "../../../config/Config";
 
 export default function Keywords() {
+  const [loading, setLoading] = useState(false);
   const objectToCsv = (data) => {
     const csvRows = [];
     const headers = Object.keys(data[0]);
@@ -49,7 +51,7 @@ export default function Keywords() {
     document.body.removeChild(a);
   };
   const getReport = async () => {
-    // console.log('this.agents', this.agents);
+    
     const getKeyWords = await getData();
     let bdKeywords = getKeyWords.data;
     /* console.log("bdKeywords", bdKeywords); */
@@ -58,7 +60,7 @@ export default function Keywords() {
       cluster: row.cluster.name,
       creacion: row.createdAt,
     }));
-    console.log("data", data);
+    /* console.log("data", data); */
     //const csvData =
     const csvData = objectToCsv(data);
     download(csvData);
@@ -66,7 +68,7 @@ export default function Keywords() {
   const dataKeyWords = async () => {
     // crear el dataset para datatables
     const getKeyWords = await getData();
-
+    setLoading(true)
     const dataSet = [];
 
     getKeyWords.data.forEach((keywords, index) => {
@@ -150,17 +152,16 @@ export default function Keywords() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
-                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
-                </div>
-                <br />
-                <br />
                 <div className="col-sm-12">
-                  <h1 className="m-0 text-dark">Keywords</h1>
+                <h3 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h3>
+                <h1 className="m-0 text-dark">Keywords</h1>
                 </div>
               </div>
             </div>
           </div>
+          {loading ? 
           <div className="content">
             <div className="container-fluid">
               <div className="row">
@@ -194,7 +195,8 @@ export default function Keywords() {
                 </div>
               </div>
             </div>
-          </div>
+          </div>  
+          : <LoadingScreen/> }
         </div>
         <Footer />
         {/* Modal para crear una KeyWord */}

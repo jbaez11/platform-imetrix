@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import SidebarAdminCampaing from "../../sidebar/SidebarAdminCampaing";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 //import { getDay, setMinutes } from "date-fns";
 import { format } from "date-fns";
 import { enGB } from "date-fns/locale";
@@ -27,6 +28,8 @@ export default function Estadisticas() {
   const [activeTabla5, setActiveTabla5] = useState(false);
   const [activeButton1, setActiveButton1] = useState(true);
   const [activeButton2, setActiveButton2] = useState(true);
+  const [loading, setLoading] = useState(false);
+  
   //    utilizadas en la primera tabla
   const [modulosAndClusters, setModulosAndClusters] = useState([]);
   const [tableModulosAndClusters, setTableModulosAndClusters] = useState([]);
@@ -515,6 +518,7 @@ export default function Estadisticas() {
       fechaInicial[0] + "T00:00:00.000Z",
       fechaFinal[0] + "T00:00:00.000Z"
     );
+    setLoading(true);
     let estadisticas = getEstadisticas.data;
     //console.log("estadisticas", estadisticas);
 
@@ -531,11 +535,9 @@ export default function Estadisticas() {
           <div className="content-header">
             <div className="container-fluid">
               <div className="row mb-2">
-                <div className="col-sm-12" style={{ color: "#FF9B00" }}>
-                  Campaña actual: {localStorage.getItem("CAMPAING_ACTUAL")}
-                </div>
-                <br />
-                <br />
+                <h2 style={{ color: "#FF9B00"}}>
+                  {localStorage.getItem("CAMPAING_ACTUAL")}
+                </h2>
                 <div className="col-sm-12">
                   <h3 className="ml-3 " style={{ color: "#FF9B00" }}>
                     ESTADISTICAS POR{" "}
@@ -569,6 +571,7 @@ export default function Estadisticas() {
                                   setModulosAndClusters([]);
                                   setActiveButton1(true);
                                   setActiveButton2(true);
+                                  setLoading(false);
                                   setGrabaciones([]);
                                   setKeywords([]);
                                 }}
@@ -682,127 +685,129 @@ export default function Estadisticas() {
                       <br />
 
                       {/* <div className="table-responsive"> */}
-                      <table
-                        className="table  table-borderless table-hover"
-                        hidden={activeTabla1 ? false : true}
-                      >
-                        <thead
-                          style={{
-                            backgroundColor: "#CACACA",
-                            color: "white",
-                            fontSize: "small",
-                          }}
-                        >
-                          <tr>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sorting("modulo")}
-                            >
-                              MODULOS
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sorting("cluster")}
-                            >
-                              CLUSTER
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sortingNum("positive")}
-                            >
-                              ENCONTRADAS
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-                            <th
-                              className="text-center"
-                              scope="col"
-                              onClick={() => sortingNum("negative")}
-                            >
-                              NO ENCONTRADAS
-                              <i
-                                className="fas fa-arrows-alt-v ml-1"
-                                style={{ color: "black" }}
-                              ></i>
-                            </th>
-
-                            <th className="text-center" scope="col">
-                              ACCION
-                            </th>
-                          </tr>
-                        </thead>
-                        <tbody style={{ fontSize: "small" }}>
-                          {modulosAndClusters.map((agent) => (
-                            <tr key={agent.id}>
-                              <td>{agent.modulo}</td>
-                              <td className="text-center">{agent.cluster}</td>
-                              <td className="text-center">
-                                {agent.positive.toFixed(1)} %
-                              </td>
-                              <td className="text-center">
-                                {agent.negative.toFixed(1)} %
-                              </td>
-
-                              <td className="text-center">
-                                <button
-                                  style={{ background: "#D3D3D3" }}
-                                  className="btn btn-sm rounded-pill"
-                                  hidden={activeButton1 ? false : true}
-                                  onClick={() => {
-                                    filtrar(agent.cluster);
-                                    tabla2(
-                                      startDate,
-                                      endDate,
-                                      agent.modulo,
-                                      agent.cluster
-                                    );
-                                    setActiveTabla2(true);
-                                    setActiveTabla3(false);
-                                    setActiveTabla4(false);
-                                    setActiveTabla5(false);
-                                    setActiveButton2(false);
-                                  }}
-                                >
-                                  Encontradas
-                                </button>
-                                <button
-                                  className="btn btn-warning btn-sm rounded-pill"
-                                  hidden={activeButton2 ? false : true}
-                                  onClick={() => {
-                                    filtrar(agent.cluster);
-                                    tabla3(
-                                      startDate,
-                                      endDate,
-                                      agent.modulo,
-                                      agent.cluster
-                                    );
-                                    setActiveTabla2(false);
-                                    setActiveTabla3(true);
-                                    setActiveTabla4(false);
-                                    setActiveTabla5(false);
-                                    setActiveButton1(false);
-                                  }}
-                                >
-                                  No Encontradas
-                                </button>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                      {loading ? 
+                                            <table
+                                            className="table  table-borderless table-hover"
+                                            hidden={activeTabla1 ? false : true}
+                                          >
+                                            <thead
+                                              style={{
+                                                backgroundColor: "#CACACA",
+                                                color: "white",
+                                                fontSize: "small",
+                                              }}
+                                            >
+                                              <tr>
+                                                <th
+                                                  className="text-center"
+                                                  scope="col"
+                                                  onClick={() => sorting("modulo")}
+                                                >
+                                                  MODULOS
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th
+                                                  className="text-center"
+                                                  scope="col"
+                                                  onClick={() => sorting("cluster")}
+                                                >
+                                                  CLUSTER
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th
+                                                  className="text-center"
+                                                  scope="col"
+                                                  onClick={() => sortingNum("positive")}
+                                                >
+                                                  ENCONTRADAS
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                                                <th
+                                                  className="text-center"
+                                                  scope="col"
+                                                  onClick={() => sortingNum("negative")}
+                                                >
+                                                  NO ENCONTRADAS
+                                                  <i
+                                                    className="fas fa-arrows-alt-v ml-1"
+                                                    style={{ color: "black" }}
+                                                  ></i>
+                                                </th>
+                    
+                                                <th className="text-center" scope="col">
+                                                  ACCION
+                                                </th>
+                                              </tr>
+                                            </thead>
+                                            <tbody style={{ fontSize: "small" }}>
+                                              {modulosAndClusters.map((agent) => (
+                                                <tr key={agent.id}>
+                                                  <td>{agent.modulo}</td>
+                                                  <td className="text-center">{agent.cluster}</td>
+                                                  <td className="text-center">
+                                                    {agent.positive.toFixed(1)} %
+                                                  </td>
+                                                  <td className="text-center">
+                                                    {agent.negative.toFixed(1)} %
+                                                  </td>
+                    
+                                                  <td className="text-center">
+                                                    <button
+                                                      style={{ background: "#D3D3D3" }}
+                                                      className="btn btn-sm rounded-pill"
+                                                      hidden={activeButton1 ? false : true}
+                                                      onClick={() => {
+                                                        filtrar(agent.cluster);
+                                                        tabla2(
+                                                          startDate,
+                                                          endDate,
+                                                          agent.modulo,
+                                                          agent.cluster
+                                                        );
+                                                        setActiveTabla2(true);
+                                                        setActiveTabla3(false);
+                                                        setActiveTabla4(false);
+                                                        setActiveTabla5(false);
+                                                        setActiveButton2(false);
+                                                      }}
+                                                    >
+                                                      Encontradas
+                                                    </button>
+                                                    <button
+                                                      className="btn btn-warning btn-sm rounded-pill"
+                                                      hidden={activeButton2 ? false : true}
+                                                      onClick={() => {
+                                                        filtrar(agent.cluster);
+                                                        tabla3(
+                                                          startDate,
+                                                          endDate,
+                                                          agent.modulo,
+                                                          agent.cluster
+                                                        );
+                                                        setActiveTabla2(false);
+                                                        setActiveTabla3(true);
+                                                        setActiveTabla4(false);
+                                                        setActiveTabla5(false);
+                                                        setActiveButton1(false);
+                                                      }}
+                                                    >
+                                                      No Encontradas
+                                                    </button>
+                                                  </td>
+                                                </tr>
+                                              ))}
+                                            </tbody>
+                                          </table>
+                      : <LoadingScreen/> }
                       {/* </div> */}
 
                       {/* <!--Table2 -->                */}

@@ -1,18 +1,21 @@
-import React from "react";
+import React, {useState} from "react";
 import "datatables.net";
 import "datatables.net-bs5";
 import "datatables.net-responsive";
 import Footer from "../../footer/Footer";
 import Header from "../../header/Header";
 import Sidebar from "../../sidebar/Sidebar";
+import LoadingScreen from "../../loading_screen/LoadingScreen";
 import $ from "jquery";
 import { rutaAPI } from "../../../config/Config";
 import AddUser from "./AddUser";
 import EditUser from "./EditUser";
 
 export default function Usuarios() {
+  const [loading, setLoading] = useState(false);
   const dataAdministradores = async () => {
     const getAdministradores = await getData();
+    setLoading(true)
     /* console.log("getAuditores",getAdministradores) */
     const dataTable = [];
 
@@ -94,38 +97,41 @@ export default function Usuarios() {
               </div>
             </div>
           </div>
-          <div className="content">
-            <div className="container-fluid">
-              <div className="row">
-                <div className="col-lg-12">
-                  <div className="card card-warning card-outline">
-                    <div className="card-header">
-                      <h5 className="m-0">
-                        <button
-                          className="btn btn-warning"
-                          data-toggle="modal"
-                          data-target="#addUser"
-                        >
-                          {" "}
-                          Crear nuevo auditor
-                        </button>
-                      </h5>
-                    </div>
-                    <div
-                      style={{ backgroundColor: "white" }}
-                      className="card-body"
-                    >
-                      <table
-                        className="table table-striped dt-responsive"
-                        style={{ width: "100%" }}
-                      >
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          {loading ? 
+                        <div className="content">
+                        <div className="container-fluid">
+                          <div className="row">
+                            <div className="col-lg-12">
+                              <div className="card card-warning card-outline">
+                                <div className="card-header">
+                                  <h5 className="m-0">
+                                    <button
+                                      className="btn btn-warning"
+                                      data-toggle="modal"
+                                      data-target="#addUser"
+                                    >
+                                      {" "}
+                                      Crear nuevo auditor
+                                    </button>
+                                  </h5>
+                                </div>
+                                <div
+                                  style={{ backgroundColor: "white" }}
+                                  className="card-body"
+                                >
+                                  <table
+                                    className="table table-striped dt-responsive"
+                                    style={{ width: "100%" }}
+                                  >
+                                  </table>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      : <LoadingScreen/> }
+
         </div>
         <Footer />
       </div>
